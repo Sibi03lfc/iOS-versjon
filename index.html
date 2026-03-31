@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="no">
 <head>
 <meta charset="UTF-8">
@@ -628,50 +628,51 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 
 <!-- PROFIL PAGE -->
 <div id="pgProfil" class="page">
-  <div class="prof-hero">
-    <div class="prof-top">
-      <div class="prof-avatar" id="profAvatar" onclick="openEditProfile()">
-        <span id="profAvatarEmoji">😎</span>
-        <div class="avatar-edit">✏️</div>
+  <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding:0 0 20px">
+
+  <!-- HEADER -->
+  <div style="background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;border-bottom:1px solid var(--border)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+      <div style="font-size:32px">⚙️</div>
+      <div>
+        <div style="font-size:20px;font-weight:800;letter-spacing:-.3px">Innstillinger</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:2px">SparkNorge v2.1</div>
       </div>
-      <div class="prof-info">
-        <div class="prof-name" id="profName">Ole Anders</div>
-        <div class="prof-handle" id="profHandle">@oleanders · Trondheim</div>
-        <div class="prof-level" id="profLevel">⚡ Nivå 3 – Byentusiast</div>
+    </div>
+  </div>
+
+  <!-- BY-INNSTILLING -->
+  <div style="padding:16px 16px 0">
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      🏙️ By <span style="flex:1;height:1px;background:var(--border);display:inline-block;margin-left:4px"></span>
+    </div>
+  </div>
+  <div class="sett-group">
+    <div class="sett-row">
+      <div class="sett-ico">📍</div>
+      <div class="sett-body" style="flex:1">
+        <div class="sett-lbl">Velg by manuelt</div>
+        <div class="sett-sub">Ellers brukes GPS automatisk</div>
       </div>
-    </div>
-    <div class="prof-stats">
-      <div class="pstat"><div class="pstat-n" id="statTrips">0</div><div class="pstat-l">Turer</div></div>
-      <div class="pstat"><div class="pstat-n" id="statKm">0</div><div class="pstat-l">km</div></div>
-      <div class="pstat"><div class="pstat-n" id="statCo2">0</div><div class="pstat-l">kg CO₂</div></div>
-      <div class="pstat"><div class="pstat-n" id="statRating">4.9</div><div class="pstat-l">Rating</div></div>
-    </div>
-  </div>
-  <div class="xp-card">
-    <div class="xp-head">
-      <div class="xp-level" id="xpLevel">Nivå 3 – Byentusiast</div>
-      <div class="xp-next" id="xpNext">200 XP til nivå 4</div>
-    </div>
-    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:40%"></div></div>
-    <div class="xp-marks"><span>0</span><span id="xpCurrent">200 XP</span><span>500 XP</span></div>
-  </div>
-  <div class="sec-hd"><span class="sec-hd-txt">💰 Lommebok</span></div>
-  <div class="wallet-card">
-    <div class="wallet-lbl">Tilgjengelig saldo</div>
-    <div class="wallet-amount"><span id="walletAmount">124,50</span><span> kr</span></div>
-    <div class="wallet-btns">
-      <button class="wbtn primary" onclick="openModal('topupModal')">+ Fyll på</button>
-      <button class="wbtn sec" onclick="showTripHistory()">Historikk</button>
+      <select class="city-sel" style="max-width:140px" onchange="changeCity(this.value);document.getElementById('citySel').value=this.value">
+        <option value="oslo">Oslo</option>
+        <option value="bergen">Bergen</option>
+        <option value="trondheim">Trondheim</option>
+        <option value="stavanger">Stavanger</option>
+        <option value="kristiansand">Kristiansand</option>
+        <option value="lillestrom">Lillestrøm</option>
+        <option value="fredrikstad">Fredrikstad</option>
+        <option value="drammen">Drammen</option>
+      </select>
     </div>
   </div>
-  <div class="sec-hd"><span class="sec-hd-txt">💳 Betalingsmetoder</span></div>
-  <div class="pay-list2" id="payList"></div>
-  <div class="add-pay" onclick="openModal('addPayModal')"><span>+</span> Legg til betalingsmetode</div>
-  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">🏆 Merker</span></div>
-  <div class="ach-grid" id="achGrid"></div>
-  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">🗺 Siste turer</span></div>
-  <div class="trip-list" id="tripList"></div>
-  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">⚙️ Innstillinger</span></div>
+
+  <!-- TILKOBLING -->
+  <div style="padding:16px 16px 0">
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      🔗 Datatilkobling <span style="flex:1;height:1px;background:var(--border);display:inline-block;margin-left:4px"></span>
+    </div>
+  </div>
   <div class="sett-group">
     <div class="sett-row">
       <div class="sett-ico">🔗</div>
@@ -683,7 +684,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     </div>
     <div class="sett-row">
       <div class="sett-ico">🔔</div>
-      <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Lav batteristatus m.m.</div></div>
+      <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Tilbud og nye sykler i nærheten</div></div>
       <div class="tgl on" onclick="this.classList.toggle('on')"></div>
     </div>
     <div class="sett-row">
@@ -692,27 +693,112 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <div class="tgl on"></div>
     </div>
   </div>
+
+  <!-- TIPS OG FAKTA -->
+  <div style="padding:16px 16px 0">
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      💡 Tips og fakta <span style="flex:1;height:1px;background:var(--border);display:inline-block;margin-left:4px"></span>
+    </div>
+  </div>
+  <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">🛴 Hvilken sykkel passer deg?</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        <b style="color:var(--text)">Ryde</b> – størst hjul, best demping. Bra for norske fortau og brostein.<br>
+        <b style="color:var(--text)">Bolt</b> – billigst per minutt (2,5 kr). Best for korte turer.<br>
+        <b style="color:var(--text)">Voi</b> – størst dekning. Alltid noe tilgjengelig.<br>
+        <b style="color:var(--text)">Dott</b> – kun Trondheim, sesong mars–desember.
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">⚖️ Norske trafikkregler</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • Maks <b style="color:var(--text)">20 km/t</b> – samme som sykkel<br>
+        • Ikke lov på <b style="color:var(--text)">fortau</b> – bruk sykkelveier og veibane<br>
+        • <b style="color:var(--text)">Promillegrense</b> gjelder – 0,2 ‰<br>
+        • Kun <b style="color:var(--text)">én person</b> per sykkel<br>
+        • Hjelm anbefales sterkt
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">📋 Oslo-regler 2025–2027</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • Kun <b style="color:var(--text)">Voi, Bolt og Ryde</b> er godkjente<br>
+        • Stengt <b style="color:var(--text)">kl. 23:00–05:00</b> alle dager<br>
+        • Maks <b style="color:var(--text)">8 000 sykler</b> totalt i Oslo<br>
+        • Tillatelse gjelder til <b style="color:var(--text)">mars 2027</b>
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">📋 Trondheim-regler 2025–2026</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • <b style="color:var(--text)">Dott (Tier), Voi og Ryde</b> er godkjente<br>
+        • Sesong: <b style="color:var(--text)">15. mars – 1. desember</b><br>
+        • Aldersgrense: Dott <b style="color:var(--text)">18 år</b> · Voi/Ryde <b style="color:var(--text)">16 år</b>
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">💸 Spar penger</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • <b style="color:var(--text)">Bolt månedspass</b>: 389 kr / 300 min = 1,30 kr/min<br>
+        • <b style="color:var(--text)">Voi dagspass</b>: 69 kr for 100 min<br>
+        • <b style="color:var(--text)">Ryde 14-dagers</b>: 249 kr for 200 min<br>
+        • Ca. <b style="color:var(--text)">1 av 5 nordmenn</b> i storbyene bruker elsparkesykkel
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">🌿 Miljø</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • Elsparkesykkel erstatter i snitt <b style="color:var(--text)">0,21 kg CO₂</b> per km vs bil<br>
+        • En gjennomsnittlig tur er ca. <b style="color:var(--text)">1 km</b> og varer <b style="color:var(--text)">10 min</b><br>
+        • Lades om natten – ikke i rushtiden
+      </div>
+    </div>
+
+    <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">🔋 Batteri-tips</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7">
+        • Under <b style="color:var(--text)">20%</b> – velg en annen sykkel<br>
+        • <b style="color:var(--text)">50%+</b> rekker typisk 5–8 km<br>
+        • Rødt batteri i appen betyr under 20%<br>
+        • Gult betyr 20–50%, grønt betyr 50%+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- OM OG PERSONVERN -->
+  <div style="padding:16px 16px 0">
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      ℹ️ Om appen <span style="flex:1;height:1px;background:var(--border);display:inline-block;margin-left:4px"></span>
+    </div>
+  </div>
   <div class="sett-group">
     <div class="sett-row">
       <div class="sett-ico">📊</div>
-      <div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 · PWA · Entur GBFS · Priser 2025</div></div>
+      <div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 · Entur GBFS · Oppdatert mars 2026</div></div>
     </div>
     <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer">
       <div class="sett-ico">🔒</div>
-      <div class="sett-body"><div class="sett-lbl">Personvern og vilkår</div><div class="sett-sub">Krav fra Apple og GDPR</div></div>
+      <div class="sett-body"><div class="sett-lbl">Personvern og vilkår</div><div class="sett-sub">Oppdatert mars 2026 · GDPR</div></div>
       <span style="color:var(--dim);font-size:18px">›</span>
-    </div>
-    <div class="sett-row" onclick="logOut()" style="cursor:pointer">
-      <div class="sett-ico" style="color:var(--red)">🚪</div>
-      <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Logg ut</div></div>
     </div>
     <div class="sett-row" onclick="deleteAccount()" style="cursor:pointer">
       <div class="sett-ico" style="color:var(--red)">🗑️</div>
-      <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all din data</div></div>
+      <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett all data</div><div class="sett-sub">Fjerner innstillinger fra denne enheten</div></div>
     </div>
   </div>
+
   <div style="height:20px"></div>
+  </div>
 </div>
+
 
 <!-- PRISER PAGE -->
 <div id="pgPris" class="page">
@@ -828,7 +914,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div>
   </div>
   <div class="tab" id="tab-profil" onclick="switchTab('profil')">
-    <div class="tab-ico" id="tabProfilIco">😎</div><div class="tab-lbl">Profil</div>
+    <div class="tab-ico" id="tabProfilIco">⚙️</div><div class="tab-lbl">Innstillinger</div>
   </div>
   <div class="tab" id="tab-pris" onclick="switchTab('pris')">
     <div class="tab-ico">💸</div><div class="tab-lbl">Priser</div>
@@ -944,7 +1030,7 @@ let routeLayer=null;
 let rideTimer=null, rideSec=0, rideProvStart=0, rideProvPm=0;
 
 let profile=JSON.parse(localStorage.getItem('sn_profile')||JSON.stringify({
-  name:'Ole Anders', city:'Trondheim', avatar:'😎',
+  name:'', city:'', avatar:'⚙️',
   wallet:124.5, trips:7, km:19.4, xp:200,
   payments:[{type:'vipps',label:'Vipps',num:'400 00 000',ico:'🟠',active:true}],
 }));
@@ -1203,8 +1289,8 @@ function renderProfile(){
   const lv=Math.floor(profile.xp/100)+1,xpIn=profile.xp%100;
   const names=['','Nybegynner','Byentusiast','Sparkefan','Kjøreekspert','Byekspert','Mester','Legende','Elite','Pro','Diamond'];
   const nm=names[Math.min(lv,10)]||'Legende';
-  document.getElementById('profAvatarEmoji').textContent=profile.avatar;document.getElementById('tabProfilIco').textContent=profile.avatar;
-  document.getElementById('profName').textContent=profile.name;document.getElementById('profHandle').textContent=`@${profile.name.toLowerCase().replace(/\s/g,'')} · ${profile.city}`;
+  document.getElementById('profAvatarEmoji').textContent=profile.avatar;document.getElementById('tabProfilIco').textContent='⚙️';
+  document.getElementById('profName').textContent=profile.name;
   document.getElementById('profLevel').textContent=`⚡ Nivå ${lv} – ${nm}`;document.getElementById('xpLevel').textContent=`Nivå ${lv} – ${nm}`;
   document.getElementById('xpNext').textContent=`${100-xpIn} XP til nivå ${lv+1}`;document.getElementById('xpFill').style.width=xpIn+'%';document.getElementById('xpCurrent').textContent=`${profile.xp} XP`;
   document.getElementById('walletAmount').textContent=profile.wallet.toFixed(2).replace('.',',');
