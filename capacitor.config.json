@@ -1,0 +1,47 @@
+{
+  "$schema": "https://capacitorjs.com/docs/v7/config",
+  "appId": "no.sparknorge.app",
+  "appName": "SparkNorge",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "hostname": "sparknorge.no",
+    "iosScheme": "sparknorge",
+    "androidScheme": "https",
+    "allowNavigation": [
+      "*.tile.openstreetmap.org",
+      "router.project-osrm.org",
+      "cdn.jsdelivr.net",
+      "unpkg.com",
+      "*.workers.dev",
+      "ridedott.com",
+      "voi.com",
+      "bolt.eu",
+      "ryde-technology.com"
+    ]
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#080c18",
+    "preferredContentMode": "mobile",
+    "limitsNavigationsToAppBoundDomains": true,
+    "scheme": "sparknorge",
+    "deploymentTarget": "16.0"
+  },
+  "plugins": {
+    "Geolocation": {
+      "requestAlways": false
+    },
+    "Camera": {
+      "presentationStyle": "fullscreen"
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#00e5a0",
+      "sound": "beep.wav"
+    }
+  }
+}

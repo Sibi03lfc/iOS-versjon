@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PrivacyInfo.xcprivacy – OBLIGATORISK siden mai 2024
+  =====================================================
+  Plassering i prosjektet: ios/App/App/PrivacyInfo.xcprivacy
+  
+  SparkNorge sporer IKKE brukere og selger INGEN data.
+  Vi bruker kun: localStorage (via UserDefaults i WKWebView) og GPS.
+-->
+<plist version="1.0">
+<dict>
+
+  <!-- Ingen sporing av brukere på tvers av apper -->
+  <key>NSPrivacyTracking</key>
+  <false/>
+
+  <!-- Ingen sporings-domener -->
+  <key>NSPrivacyTrackingDomains</key>
+  <array/>
+
+  <!-- API-er vi bruker og HVORFOR (required reason codes) -->
+  <key>NSPrivacyAccessedAPITypes</key>
+  <array>
+
+    <!-- UserDefaults – brukes av WKWebView/localStorage for å lagre profil og innstillinger -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <!-- CA92.1: Kun for å lagre appspesifikke innstillinger -->
+        <string>CA92.1</string>
+      </array>
+    </dict>
+
+    <!-- File timestamp – brukes av WKWebView for cache-håndtering -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <!-- C617.1: For å vise eller forstå om en fil er ny eller gammel -->
+        <string>C617.1</string>
+      </array>
+    </dict>
+
+  </array>
+
+  <!-- Data vi samler inn (kun lokal enhetsfunksjonalitet) -->
+  <key>NSPrivacyCollectedDataTypes</key>
+  <array>
+
+    <!-- Posisjonsdata: brukes til kart og gangrute, aldri lagret/delt -->
+    <dict>
+      <key>NSPrivacyCollectedDataType</key>
+      <string>NSPrivacyCollectedDataTypePreciseLocation</string>
+      <key>NSPrivacyCollectedDataTypeLinked</key>
+      <false/>
+      <key>NSPrivacyCollectedDataTypeTracking</key>
+      <false/>
+      <key>NSPrivacyCollectedDataTypePurposes</key>
+      <array>
+        <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+      </array>
+    </dict>
+
+    <!-- Brukerinnhold: profil, navn og by som brukeren selv oppgir -->
+    <dict>
+      <key>NSPrivacyCollectedDataType</key>
+      <string>NSPrivacyCollectedDataTypeOtherUserContent</string>
+      <key>NSPrivacyCollectedDataTypeLinked</key>
+      <false/>
+      <key>NSPrivacyCollectedDataTypeTracking</key>
+      <false/>
+      <key>NSPrivacyCollectedDataTypePurposes</key>
+      <array>
+        <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+      </array>
+    </dict>
+
+  </array>
+
+</dict>
+</plist>

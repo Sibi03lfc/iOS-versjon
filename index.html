@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<!-- Content Security Policy: no inline eval, only trusted origins -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline'; connect-src 'self' https: wss:; img-src 'self' https: data: blob:;">
+<meta name="theme-color" content="#080c18">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SparkNorge">
+<title>SparkNorge – Elsparkesykkel Norge</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-title" content="SparkNorge">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<style>
+:root {
+  --bg:#080c18; --bg2:#0d1224; --surf:#121930; --surf2:#1c2440;
+  --border:rgba(255,255,255,0.08); --text:#e8edf8; --dim:#5a6a8a;
+  /* PATCH 1: Added --dott */
+  --voi:#e91e8c; --bolt:#34d16b; --ryde:#ff5722; --dott:#0066cc;
+  --accent:#00e5a0; --red:#ff4d4d; --yellow:#ffb800; --blue:#00b8ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(0,229,160,.15)!important}
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:rgba(0,229,160,.55)!important;color:#040a14!important;font-weight:800!important;font-size:13px!important}
+.marker-cluster{border-radius:50%!important}
+
+#onboarding{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+#onboarding.hide{display:none}
+.ob-slides{display:flex;transition:transform .4s cubic-bezier(.32,.72,0,1);height:100%}
+.ob-slide{min-width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px calc(120px + env(safe-area-inset-bottom));text-align:center;gap:20px}
+.ob-ico{font-size:80px;line-height:1;animation:obpulse 2s ease infinite}
+@keyframes obpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.ob-title{font-size:28px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
+.ob-title em{color:var(--accent);font-style:normal}
+.ob-desc{font-size:15px;color:var(--dim);line-height:1.7;max-width:280px}
+.ob-dots{display:flex;gap:8px}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:var(--surf2);transition:all .3s}
+.ob-dot.on{background:var(--accent);width:24px;border-radius:50px}
+.ob-bottom{position:absolute;bottom:0;left:0;right:0;padding:20px 24px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;align-items:center;background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.ob-next{width:100%;max-width:320px;padding:16px;border-radius:16px;border:none;background:var(--accent);color:#040a14;font-size:16px;font-weight:800;cursor:pointer;transition:opacity .2s,transform .1s}
+.ob-next:active{opacity:.8;transform:scale(.97)}
+.ob-skip{font-size:13px;color:var(--dim);cursor:pointer;padding:4px}
+
+#activeRideBanner{position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:800;background:linear-gradient(135deg,rgba(0,20,10,.97),rgba(0,30,20,.97));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,160,.3);padding:12px 16px;display:none;align-items:center;gap:12px;transform:translateY(-100%);transition:transform .4s cubic-bezier(.32,.72,0,1)}
+#activeRideBanner.show{display:flex;transform:translateY(0)}
+#pgMap.with-banner{top:calc(108px + env(safe-area-inset-top))!important}
+.ar-pulse{width:10px;height:10px;border-radius:50%;background:var(--accent);position:relative;flex-shrink:0}
+.ar-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent);animation:arpulse 1.5s ease infinite}
+@keyframes arpulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.6);opacity:0}}
+@keyframes fadeout{to{opacity:0;transform:scale(.96)}}
+.ar-info{flex:1}
+.ar-timer{font-size:22px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+.ar-meta{font-size:11px;color:var(--dim);margin-top:1px}
+.ar-cost{text-align:right}
+.ar-cost-n{font-size:18px;font-weight:800}
+.ar-cost-l{font-size:10px;color:var(--dim)}
+.ar-stop{padding:8px 14px;border-radius:10px;border:none;background:var(--red);color:white;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
+.ar-stop:active{opacity:.8;transform:scale(.95)}
+
+#topNav{position:fixed;top:0;left:0;right:0;z-index:1000;height:calc(52px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);background:rgba(8,12,24,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:flex-end}
+#topNav .inner{width:100%;height:52px;display:flex;align-items:center;padding:0 14px;gap:10px}
+.logo{font-weight:800;font-size:17px;display:flex;align-items:center;gap:6px}
+.logo em{color:var(--accent);font-style:normal}
+.city-sel{background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:12px;padding:6px 8px;border-radius:9px;cursor:pointer;outline:none;-webkit-appearance:none;max-width:130px}
+.city-sel option{background:var(--bg2)}
+.nav-live{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:11px;color:var(--dim);padding-right:6px}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--red)}
+.ldot.on{background:var(--accent);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+#tabBar{position:fixed;bottom:0;left:0;right:0;z-index:1000;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(8,12,24,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start}
+.tab{flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:3px;color:var(--dim);transition:color .2s;-webkit-user-select:none}
+.tab:active{transform:scale(.88)}
+.tab.on{color:var(--accent)}
+.tab-ico{font-size:22px;line-height:1}
+.tab-lbl{font-size:10px;font-weight:600}
+
+.page{display:none;position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));background:var(--bg);z-index:100}
+.page.on{display:block}
+
+#pgMap{overflow:hidden}
+#map{position:absolute;inset:0;z-index:1}
+.leaflet-tile-pane{filter:brightness(.52) saturate(.3) hue-rotate(200deg)}
+.leaflet-control-attribution{font-size:9px!important;opacity:.2}
+.leaflet-control-zoom{margin-top:8px!important;margin-right:8px!important}
+.leaflet-control-zoom a{background:rgba(13,18,36,.92)!important;color:var(--text)!important;border:1px solid var(--border)!important;width:34px!important;height:34px!important;line-height:34px!important;font-size:18px!important}
+
+#zoomBadge{position:absolute;right:52px;top:8px;z-index:500;background:rgba(8,12,24,.9);border:1px solid var(--border);border-radius:8px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--dim);pointer-events:none}
+
+.fab{position:absolute;z-index:500;width:50px;height:50px;border-radius:14px;background:var(--bg2);border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;-webkit-user-select:none}
+.fab:active{transform:scale(.88)}
+.fab.on{border-color:var(--accent);background:rgba(0,229,160,.1)}
+#fabGps{left:14px;bottom:80px}
+#fabQr{left:14px;bottom:22px}
+#fabRoute{right:14px;bottom:22px;font-size:16px;font-weight:700;color:var(--accent);border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.06);display:none}
+.fab.spinning{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+#strip{position:absolute;bottom:22px;left:72px;right:70px;z-index:400;display:flex;gap:5px;overflow:hidden;pointer-events:none}
+.chip{background:rgba(8,12,24,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:50px;padding:5px 11px;font-size:11px;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
+.chip b{font-weight:700}
+.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.gm{width:18px;height:18px;border-radius:50%;background:#4a90f0;border:3px solid white;box-shadow:0 0 0 4px rgba(74,144,240,.25),0 2px 8px rgba(0,0,0,.4)}
+.gp{width:50px;height:50px;border-radius:50%;background:rgba(74,144,240,.15);border:1px solid rgba(74,144,240,.3);animation:gpa 2s ease infinite}
+@keyframes gpa{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.4);opacity:0}}
+.pin{display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.pbub{padding:4px 9px;border-radius:50px;font-size:11px;font-weight:700;box-shadow:0 3px 14px rgba(0,0,0,.5);white-space:nowrap}
+.ptail{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid}
+
+.sheet{position:absolute;bottom:0;left:0;right:0;height:72%;background:var(--bg2);border-top:1px solid var(--border);border-radius:20px 20px 0 0;z-index:600;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.32,.72,0,1)}
+.sheet.peek{transform:translateY(calc(100% - 72px))}
+.sh{display:flex;flex-direction:column;align-items:center;padding:9px 0 4px;cursor:pointer;flex-shrink:0;gap:3px;-webkit-user-select:none}
+.shb{width:36px;height:4px;border-radius:50px;background:var(--surf2)}
+.shc{font-size:12px;color:var(--dim);font-weight:500}
+.sf{padding:0 12px 8px;display:flex;gap:5px;flex-wrap:wrap;flex-shrink:0}
+.fb{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid;transition:all .2s;-webkit-user-select:none}
+.fb.off{opacity:.2}
+.sort-bar{display:flex;gap:6px;padding:0 12px 8px;flex-shrink:0}
+.sort-btn{padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600;border:1px solid var(--border);background:var(--surf2);color:var(--dim);cursor:pointer;white-space:nowrap;transition:all .15s}
+.sort-btn.on{background:rgba(0,229,160,.12);border-color:rgba(0,229,160,.3);color:var(--accent)}
+.sl{flex:1;overflow-y:auto;padding:0 10px 10px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sl::-webkit-scrollbar{display:none}
+
+.card{display:flex;align-items:center;gap:9px;background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:11px 12px;margin-bottom:7px;cursor:pointer;position:relative;overflow:hidden;-webkit-user-select:none;transition:all .15s}
+.card:active{transform:scale(.97);background:var(--surf2)}
+.card.selected{border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.04)}
+.cbar{position:absolute;left:0;top:0;bottom:0;width:4px}
+.cico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.cbody{flex:1;min-width:0}
+.cn{font-size:13px;font-weight:600;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim);flex-wrap:wrap}
+.cb{display:flex;align-items:center;gap:3px;font-weight:600}
+.bb{width:26px;height:8px;border-radius:3px;background:var(--surf2);overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.bf{height:100%;border-radius:2px}
+.walk-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2);border-radius:50px;padding:2px 7px;font-size:11px;font-weight:600;color:var(--blue)}
+.lei{padding:6px 13px;border-radius:9px;border:none;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
+.lei:active{opacity:.7;transform:scale(.93)}
+.shim{height:62px;border-radius:14px;margin-bottom:7px;background:linear-gradient(90deg,var(--surf) 25%,var(--surf2) 50%,var(--surf) 75%);background-size:200% 100%;animation:shim 1.2s infinite}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.empty{text-align:center;padding:30px 14px;color:var(--dim);font-size:13px;line-height:1.8}
+
+.leaflet-popup-content-wrapper{background:var(--bg2)!important;color:var(--text)!important;border:1px solid var(--border)!important;border-radius:16px!important;box-shadow:0 12px 40px rgba(0,0,0,.7)!important;padding:0!important}
+.leaflet-popup-content{margin:14px 15px!important}
+.leaflet-popup-tip{background:var(--bg2)!important}
+.leaflet-popup-close-button{color:var(--dim)!important;top:8px!important;right:10px!important;font-size:20px!important;padding:5px!important}
+.pst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0}
+.psc{background:var(--surf);border-radius:10px;padding:9px;text-align:center}
+.psn{font-weight:800;font-size:16px}
+.psl{font-size:10px;color:var(--dim);margin-top:2px}
+.pbtn{width:100%;padding:11px;border-radius:11px;border:none;font-weight:700;font-size:14px;cursor:pointer;margin-top:4px}
+.pnav{width:100%;padding:9px;border-radius:11px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.07);color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.pnav:active{background:rgba(0,229,160,.12)}
+
+#pgProfil{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.prof-hero{background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;position:relative;overflow:hidden}
+.prof-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.1) 0%,transparent 70%)}
+.prof-top{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px}
+.prof-avatar{width:80px;height:80px;border-radius:22px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),#00b8ff);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#040a14;box-shadow:0 0 0 3px rgba(0,229,160,.3),0 8px 24px rgba(0,0,0,.4);position:relative;cursor:pointer}
+.avatar-edit{position:absolute;bottom:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#040a14;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg2)}
+.prof-info{flex:1}
+.prof-name{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.prof-handle{font-size:13px;color:var(--dim);margin-top:2px}
+.prof-level{display:inline-flex;align-items:center;gap:5px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);border-radius:50px;padding:4px 11px;font-size:12px;font-weight:600;color:var(--accent);margin-top:8px}
+.prof-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pstat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center}
+.pstat-n{font-size:20px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:3px}
+.pstat-l{font-size:10px;color:var(--dim)}
+.xp-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:16px;margin:12px 16px}
+.xp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.xp-level{font-weight:700;font-size:15px}
+.xp-next{font-size:12px;color:var(--dim)}
+.xp-bar{height:8px;background:var(--surf2);border-radius:50px;overflow:hidden;margin-bottom:6px}
+.xp-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--accent),#00b8ff);transition:width 1s ease;position:relative}
+.xp-fill::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:white;box-shadow:0 0 8px var(--accent)}
+.xp-marks{display:flex;justify-content:space-between;font-size:10px;color:var(--dim)}
+.wallet-card{margin:0 16px 12px;border-radius:20px;padding:20px;background:linear-gradient(135deg,#0e1e3d,#1a2e5a);border:1px solid rgba(0,184,255,.2);position:relative;overflow:hidden}
+.wallet-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,184,255,.12),transparent)}
+.wallet-lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.wallet-amount{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.wallet-amount span{font-size:18px;color:var(--dim)}
+.wallet-btns{display:flex;gap:8px}
+.wbtn{flex:1;padding:10px;border-radius:11px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s;-webkit-user-select:none}
+.wbtn:active{opacity:.75;transform:scale(.96)}
+.wbtn.primary{background:#00b8ff;color:#001820}
+.wbtn.sec{background:var(--surf2);color:var(--text);border:1px solid var(--border)}
+.sec-hd{display:flex;align-items:center;gap:8px;padding:0 16px;margin:16px 0 10px}
+.sec-hd-txt{font-weight:700;font-size:14px}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--border)}
+.ach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px;margin-bottom:4px}
+.ach{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center;position:relative;overflow:hidden}
+.ach.earned{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.04)}
+.ach:not(.earned){opacity:.35}
+.ach-ico{font-size:24px;margin-bottom:6px}
+.ach-name{font-size:10px;font-weight:600;color:var(--text)}
+.ach-glow{position:absolute;top:-15px;right:-15px;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.15),transparent);pointer-events:none}
+.trip-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.trip{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.trip:active{background:var(--surf2)}
+.trip-date{text-align:center;width:40px;flex-shrink:0}
+.trip-day{font-size:20px;font-weight:800;color:var(--accent);line-height:1}
+.trip-mon{font-size:10px;color:var(--dim);text-transform:uppercase}
+.trip-div{width:1px;height:32px;background:var(--border);flex-shrink:0}
+.trip-body{flex:1}
+.trip-route{font-size:13px;font-weight:600;margin-bottom:3px}
+.trip-meta{font-size:11px;color:var(--dim);display:flex;gap:8px}
+.trip-cost{font-size:16px;font-weight:800;color:var(--text)}
+.pay-list2{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.pay-card2{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.pay-card2:active{background:var(--surf2)}
+.pay-card2.active-card{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.04)}
+.pay-ico2{width:44px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--surf2)}
+.pay-body2{flex:1}
+.pay-name2{font-size:13px;font-weight:600}
+.pay-sub2{font-size:11px;color:var(--dim);margin-top:2px}
+.pay-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pay-check.on{background:var(--accent);border-color:var(--accent);color:#040a14;font-size:11px;font-weight:700}
+.add-pay{background:var(--surf);border:1px dashed rgba(0,229,160,.3);border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--accent);font-weight:600;cursor:pointer;margin:0 16px 8px}
+.sett-group{background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:0 16px 12px}
+.sett-row{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--border)}
+.sett-row:last-child{border:none}
+.sett-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--surf2)}
+.sett-body{flex:1}
+.sett-lbl{font-size:14px;font-weight:500}
+.sett-sub{font-size:12px;color:var(--dim);margin-top:1px}
+.tgl{width:46px;height:26px;background:var(--surf2);border-radius:50px;position:relative;cursor:pointer;transition:background .25s;border:1px solid var(--border);flex-shrink:0}
+.tgl.on{background:var(--accent);border-color:var(--accent)}
+.tgl::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tgl.on::after{transform:translateX(20px)}
+.pinp{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:13px;padding:8px 10px;border-radius:9px;outline:none;min-width:0}
+.pinp:focus{border-color:var(--accent)}
+.pinp::placeholder{color:var(--dim)}
+.sbtn2{padding:7px 14px;border-radius:9px;background:var(--accent);color:#040a14;border:none;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
+
+#pgPris{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px 14px 24px}
+.ph{background:linear-gradient(135deg,var(--surf2),var(--surf));border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:16px}
+.ph h1{font-size:20px;font-weight:800;margin-bottom:4px}
+.ph p{font-size:13px;color:var(--dim)}
+.sec{font-weight:700;font-size:14px;margin:16px 0 10px;display:flex;align-items:center;gap:8px}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.calcbox{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:16px}
+.calcbox h2{font-size:13px;font-weight:600;margin-bottom:12px}
+.calclbl{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:6px}
+.calclbl b{color:var(--text);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+/* PATCH: 4 columns for calc grid (Voi/Bolt/Ryde/Dott) */
+.calcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.calccel{background:var(--surf2);border-radius:10px;padding:9px 5px;text-align:center}
+.calccel.win{border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.06)}
+.calccel .num{font-weight:700;font-size:14px}
+.calccel.win .num{color:var(--accent)}
+.calccel .lbl{font-size:9px;color:var(--dim);margin-top:2px}
+.pcard{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px}
+.pcard-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.plogo{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.pname{font-weight:700;font-size:17px}
+.ptagline{font-size:12px;color:var(--dim);margin-top:2px}
+.pbadge{margin-left:auto;padding:4px 10px;border-radius:50px;font-size:11px;font-weight:700;flex-shrink:0}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.pgcell{background:var(--surf2);border-radius:12px;padding:11px;text-align:center}
+.pgcell .pgn{font-weight:800;font-size:19px}
+.pgcell .pgl{font-size:10px;color:var(--dim);margin-top:2px}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.prow:last-child{border:none;padding-bottom:0}
+.prow-n{font-weight:500}
+.prow-s{font-size:12px;color:var(--dim);margin-top:1px}
+.prow-p{font-weight:700;color:var(--accent)}
+.tip{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.15);border-radius:14px;padding:13px;margin-bottom:10px;font-size:13px;line-height:1.6}
+.tip strong{color:var(--accent)}
+.oslo-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--accent);margin-left:6px;vertical-align:middle}
+.city-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--blue)}
+.dott-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,102,204,.1);border:1px solid rgba(0,102,204,.2);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--dott);margin-left:6px;vertical-align:middle}
+
+.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(4,6,14,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:540px;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto}
+.modal-sheet::-webkit-scrollbar{display:none}
+.modal-handle{width:36px;height:4px;border-radius:50px;background:var(--surf2);margin:0 auto 16px}
+.modal-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--dim);margin-bottom:18px}
+.pay-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.pay-opt{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s}
+.pay-opt:active{background:var(--surf2)}
+.pay-opt.selected{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.05)}
+.pay-opt-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:var(--surf2)}
+.pay-opt-name{font-size:14px;font-weight:600}
+.pay-opt-sub{font-size:12px;color:var(--dim);margin-top:2px}
+.form-field{margin-bottom:12px}
+.form-lbl{font-size:12px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.form-inp{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:14px;padding:11px 12px;border-radius:11px;outline:none;transition:border .2s}
+.form-inp:focus{border-color:var(--accent)}
+.form-inp::placeholder{color:var(--dim)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-btn{width:100%;padding:14px;border-radius:13px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.modal-btn:active{opacity:.8}
+.modal-btn.green{background:var(--accent);color:#040a14}
+.modal-btn.gray{background:var(--surf2);color:var(--text);border:1px solid var(--border)}
+.modal-btns{display:flex;gap:8px;margin-top:6px}
+.topup-amounts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.ta{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
+.ta:active{transform:scale(.95)}
+.ta.sel{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.06)}
+.ta-n{font-size:18px;font-weight:800}
+.ta-l{font-size:11px;color:var(--dim);margin-top:2px}
+.avatar-picker{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.av-opt{width:100%;aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:2px solid transparent;background:var(--surf);transition:all .2s}
+.av-opt.sel{border-color:var(--accent);background:rgba(0,229,160,.08)}
+.av-opt:active{transform:scale(.9)}
+
+#qrModal{position:fixed;inset:0;z-index:3000;background:rgba(4,6,14,.98);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px}
+#qrModal.open{display:flex}
+.qrt{font-weight:800;font-size:20px;text-align:center}
+.qrs{font-size:13px;color:var(--dim);text-align:center;max-width:260px;line-height:1.6}
+.qrvp{position:relative;width:min(78vw,300px);height:min(78vw,300px);border-radius:20px;overflow:hidden;background:#000;flex-shrink:0}
+#qrVid{width:100%;height:100%;object-fit:cover;display:block}
+#qrCvs{display:none}
+.qrc{position:absolute;width:28px;height:28px;border-color:var(--accent);border-style:solid}
+.qrc.tl{top:12px;left:12px;border-width:3px 0 0 3px;border-radius:6px 0 0 0}
+.qrc.tr{top:12px;right:12px;border-width:3px 3px 0 0;border-radius:0 6px 0 0}
+.qrc.bl{bottom:12px;left:12px;border-width:0 0 3px 3px;border-radius:0 0 0 6px}
+.qrc.br{bottom:12px;right:12px;border-width:0 3px 3px 0;border-radius:0 0 6px 0}
+.qrsl{position:absolute;left:12px;right:12px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 10px var(--accent);animation:scan 2s ease-in-out infinite}
+@keyframes scan{0%,100%{top:12px;opacity:0}8%{opacity:1}92%{opacity:1}50%{top:calc(100% - 12px)}}
+.qrst{font-size:13px;color:var(--dim);text-align:center}
+.qrst.found{color:var(--accent);font-weight:600}
+.qrst.err{color:var(--red)}
+.qrres{width:100%;max-width:310px;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px;display:none;animation:fup .3s ease}
+.qrres.show{display:block}
+@keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.qrrh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.qrri{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.qrbn{font-weight:700;font-size:16px}
+.qrbid{font-size:11px;color:var(--dim);margin-top:2px;font-family:monospace}
+.qrac{display:flex;flex-direction:column;gap:7px}
+.qrm{width:100%;padding:12px;border-radius:11px;border:none;font-weight:700;font-size:14px;cursor:pointer}
+.qrsb2{width:100%;padding:10px;border-radius:11px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-size:13px;cursor:pointer}
+.qrft{display:flex;gap:9px;width:100%;max-width:310px}
+.qrcb{flex:1;padding:12px;border-radius:50px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-size:14px;cursor:pointer;text-align:center}
+.qrab{flex:1;padding:12px;border-radius:50px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.08);color:var(--accent);font-size:14px;font-weight:600;cursor:pointer;text-align:center}
+
+#setup{position:fixed;inset:0;z-index:4000;background:rgba(5,8,18,.97);display:flex;align-items:flex-end;justify-content:center}
+#setup.hide{display:none}
+.sbox{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:540px;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto}
+.sbox::-webkit-scrollbar{display:none}
+.shdl{width:36px;height:4px;border-radius:50px;background:var(--surf2);margin:0 auto 18px}
+.stit{font-weight:800;font-size:22px;margin-bottom:5px}
+.ssub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:14px}
+.pprow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pp{padding:4px 11px;border-radius:50px;font-size:12px;font-weight:600}
+.sstep{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.sstep h3{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.snn{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#040a14;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ir{display:flex;gap:7px}
+.sinp{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:13px;padding:10px 11px;border-radius:10px;outline:none}
+.sinp:focus{border-color:var(--accent)}
+.sinp::placeholder{color:var(--dim)}
+.bg{padding:10px 16px;border-radius:10px;background:var(--accent);color:#040a14;border:none;font-weight:700;font-size:13px;cursor:pointer}
+.gg{padding:10px 16px;border-radius:10px;background:var(--surf2);color:var(--dim);border:1px solid var(--border);font-size:13px;cursor:pointer}
+.tr{font-size:12px;padding:8px 11px;border-radius:9px;margin-top:7px;display:none;line-height:1.5}
+.tr.ok{display:block;background:rgba(0,229,160,.1);color:var(--accent)}
+.tr.er{display:block;background:rgba(255,77,77,.1);color:var(--red)}
+.sact{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+
+#toast{position:fixed;top:calc(60px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-20px);z-index:5000;background:var(--surf2);border:1px solid var(--border);border-radius:50px;padding:10px 20px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:all .3s;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* PATCH: animated walk route */
+.walk-route{stroke:#00e5a0;stroke-width:4;stroke-dasharray:10,7;stroke-linecap:round;fill:none;animation:dashmove .9s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-17}}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+  <div class="ob-slides" id="obSlides">
+    <div class="ob-slide">
+      <div class="ob-ico">🛴</div>
+      <div class="ob-title">Velkommen til<br><em>SparkNorge</em></div>
+      <!-- PATCH: updated desc mentioning Dott -->
+      <div class="ob-desc">Finn ledige sparkesykler fra Voi, Bolt, Ryde og Dott – live på kartet i alle norske byer</div>
+    </div>
+    <div class="ob-slide">
+      <div class="ob-ico">🚶</div>
+      <div class="ob-title">Gangrute<br><em>til sykkelen</em></div>
+      <div class="ob-desc">Appen henter faktisk gangrute via kart – se nøyaktig vei og gangtid fra der du er</div>
+    </div>
+    <div class="ob-slide">
+      <div class="ob-ico">🗺️</div>
+      <div class="ob-title">Kart som<br><em>fungerer</em></div>
+      <div class="ob-desc">Zoom inn og ut – pins samler seg smart og viser antall. Nærmeste alltid øverst</div>
+    </div>
+    <div class="ob-slide">
+      <div class="ob-ico">💸</div>
+      <div class="ob-title">Oppdaterte<br><em>priser 2025</em></div>
+      <!-- PATCH: mention Dott -->
+      <div class="ob-desc">Trondheim: Dott 12kr+3kr/min · Voi 10kr+3kr/min · Ryde 5kr+2,5kr/min</div>
+    </div>
+  </div>
+  <div class="ob-bottom">
+    <div class="ob-dots">
+      <div class="ob-dot on" id="dot0"></div>
+      <div class="ob-dot" id="dot1"></div>
+      <div class="ob-dot" id="dot2"></div>
+      <div class="ob-dot" id="dot3"></div>
+    </div>
+    <button class="ob-next" id="obNext" onclick="obNextSlide()">Neste →</button>
+    <div class="ob-skip" onclick="finishOnboarding()">Hopp over</div>
+  </div>
+</div>
+
+<!-- ACTIVE RIDE BANNER -->
+<div id="activeRideBanner">
+  <div class="ar-pulse"></div>
+  <div class="ar-info">
+    <div class="ar-timer" id="arTimer">00:00</div>
+    <div class="ar-meta" id="arMeta">Aktiv tur…</div>
+  </div>
+  <div class="ar-cost">
+    <div class="ar-cost-n" id="arCost">0 kr</div>
+    <div class="ar-cost-l">Kostnad</div>
+  </div>
+  <button class="ar-stop" onclick="stopRide()">⬛ Stopp</button>
+</div>
+
+<!-- SETUP -->
+<div id="setup">
+  <div class="sbox">
+    <div class="shdl"></div>
+    <div class="stit">🛴 SparkNorge</div>
+    <div class="ssub">Live sparkesykler · Gangrute · Priser · QR-skanner<br>
+      <!-- PATCH: mention Dott in Trondheim -->
+      <small style="color:var(--dim)">Trondheim: Dott (Tier), Voi, Ryde · Oslo: Voi, Bolt, Ryde</small></div>
+    <div class="pprow">
+      <span class="pp" style="background:rgba(233,30,140,.1);color:var(--voi)">● Voi</span>
+      <span class="pp" style="background:rgba(52,209,107,.1);color:var(--bolt)">● Bolt</span>
+      <span class="pp" style="background:rgba(255,87,34,.1);color:var(--ryde)">● Ryde</span>
+      <!-- PATCH 5: Added Dott badge -->
+      <span class="pp" style="background:rgba(0,102,204,.1);color:var(--dott)">● Dott</span>
+    </div>
+    <div class="sstep">
+      <h3><span class="snn">1</span>Lim inn Cloudflare Worker-URL</h3>
+      <div class="ir">
+        <input class="sinp" id="proxyUrl" type="url" placeholder="https://entur-proxy.navn.workers.dev">
+        <button class="bg" onclick="testProxy()">Test</button>
+      </div>
+      <div class="tr" id="testRes"></div>
+    </div>
+    <div class="sact">
+      <button class="gg" onclick="skipSetup()">Demo-modus</button>
+      <button class="bg" id="connectBtn" onclick="connectProxy()" disabled>🚀 Start</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR MODAL -->
+<div id="qrModal">
+  <div class="qrt">📷 Skann sparkesykkel</div>
+  <div class="qrs">Rett kameraet mot QR-koden</div>
+  <div class="qrvp">
+    <video id="qrVid" autoplay muted playsinline></video>
+    <canvas id="qrCvs"></canvas>
+    <div class="qrc tl"></div><div class="qrc tr"></div>
+    <div class="qrc bl"></div><div class="qrc br"></div>
+    <div class="qrsl"></div>
+  </div>
+  <div class="qrst" id="qrSt">Starter kamera…</div>
+  <div class="qrres" id="qrRes">
+    <div class="qrrh"><div class="qrri" id="qrRi"></div>
+      <div><div class="qrbn" id="qrRn"></div><div class="qrbid" id="qrRid"></div></div></div>
+    <div class="qrac">
+      <button class="qrm" id="qrMb"></button>
+      <button class="qrsb2" id="qrSb2"></button>
+    </div>
+  </div>
+  <div class="qrft">
+    <div class="qrcb" onclick="closeQR()">✕ Lukk</div>
+    <div class="qrab" onclick="resetQR()">↻ Igjen</div>
+  </div>
+</div>
+
+<!-- Add Payment Modal -->
+<div class="modal-overlay" id="addPayModal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">💳 Legg til betaling</div>
+    <div class="modal-sub">Velg betalingsmetode</div>
+    <div class="pay-options">
+      <div class="pay-opt selected" id="payOptVipps" onclick="selectPayOpt('vipps')">
+        <div class="pay-opt-ico">🟠</div>
+        <div><div class="pay-opt-name">Vipps</div><div class="pay-opt-sub">Rask og enkel – Norges favoritt</div></div>
+      </div>
+      <div class="pay-opt" id="payOptCard" onclick="selectPayOpt('card')">
+        <div class="pay-opt-ico">💳</div>
+        <div><div class="pay-opt-name">Betalingskort</div><div class="pay-opt-sub">Visa / Mastercard</div></div>
+      </div>
+    </div>
+    <div id="vippsForm">
+      <div class="form-field"><div class="form-lbl">Mobilnummer</div>
+        <input class="form-inp" id="vippsNum" type="tel" placeholder="400 00 000" maxlength="8"></div>
+    </div>
+    <div id="cardForm" style="display:none">
+      <div class="form-field"><div class="form-lbl">Kortnummer</div>
+        <input class="form-inp" id="cardNum" type="tel" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+      <div class="form-row">
+        <div class="form-field"><div class="form-lbl">Utløp</div>
+          <input class="form-inp" id="cardExp" type="tel" placeholder="MM/ÅÅ" maxlength="5"></div>
+        <div class="form-field"><div class="form-lbl">CVC</div>
+          <input class="form-inp" id="cardCvc" type="tel" placeholder="123" maxlength="3"></div>
+      </div>
+      <div class="form-field"><div class="form-lbl">Navn på kortet</div>
+        <input class="form-inp" id="cardName" type="text" placeholder="OLA NORDMANN"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn gray" style="flex:1" onclick="closeModal('addPayModal')">Avbryt</button>
+      <button class="modal-btn green" style="flex:2" onclick="savePayment()">Legg til</button>
+    </div>
+  </div>
+</div>
+
+<!-- Top-up Modal -->
+<div class="modal-overlay" id="topupModal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">💰 Fyll på saldo</div>
+    <div class="modal-sub">Velg beløp</div>
+    <div class="topup-amounts">
+      <div class="ta" onclick="selectTopup(50,this)"><div class="ta-n">50</div><div class="ta-l">kr</div></div>
+      <div class="ta sel" onclick="selectTopup(100,this)"><div class="ta-n">100</div><div class="ta-l">kr</div></div>
+      <div class="ta" onclick="selectTopup(200,this)"><div class="ta-n">200</div><div class="ta-l">kr</div></div>
+      <div class="ta" onclick="selectTopup(300,this)"><div class="ta-n">300</div><div class="ta-l">kr</div></div>
+      <div class="ta" onclick="selectTopup(500,this)"><div class="ta-n">500</div><div class="ta-l">kr</div></div>
+      <div class="ta" onclick="selectTopup(1000,this)"><div class="ta-n">1000</div><div class="ta-l">kr</div></div>
+    </div>
+    <div id="topupPayMethod" style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px">
+      <span id="topupPayIco" style="font-size:20px">🟠</span>
+      <span id="topupPayName">Vipps</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--dim)">Aktiv betalingsmetode</span>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn gray" style="flex:1" onclick="closeModal('topupModal')">Avbryt</button>
+      <button class="modal-btn green" style="flex:2" id="topupConfirmBtn" onclick="confirmTopup()">Betal 100 kr</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="editProfileModal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✏️ Rediger profil</div>
+    <div class="modal-sub">Velg avatar og navn</div>
+    <div class="avatar-picker" id="avatarPicker"></div>
+    <div class="form-field"><div class="form-lbl">Navn</div>
+      <input class="form-inp" id="editName" type="text" placeholder="Ditt navn"></div>
+    <div class="form-field"><div class="form-lbl">By</div>
+      <input class="form-inp" id="editCity" type="text" placeholder="f.eks. Trondheim"></div>
+    <div class="modal-btns">
+      <button class="modal-btn gray" style="flex:1" onclick="closeModal('editProfileModal')">Avbryt</button>
+      <button class="modal-btn green" style="flex:2" onclick="saveProfile()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- OFFLINE BANNER -->
+<div id="offlineBanner" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:#ff4d4d;color:white;text-align:center;font-size:13px;font-weight:600;padding:8px 16px;display:none;align-items:center;justify-content:center;gap:6px">
+  📵 Ingen internettforbindelse – noen funksjoner er ikke tilgjengelige
+</div>
+<style>#offlineBanner.show{display:flex}</style>
+
+<!-- TOP NAV -->
+<div id="topNav">
+  <div class="inner">
+    <div class="logo">🛴 Spark<em>Norge</em></div>
+    <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
+      <option value="oslo">Oslo</option>
+      <option value="bergen">Bergen</option>
+      <option value="trondheim">Trondheim</option>
+      <option value="stavanger">Stavanger</option>
+      <option value="kristiansand">Kristiansand</option>
+      <option value="lillestrom">Lillestrøm</option>
+      <option value="fredrikstad">Fredrikstad</option>
+      <option value="drammen">Drammen</option>
+    </select>
+    <div class="nav-live"><span class="ldot" id="ldot"></span><span id="ltxt">–</span></div>
+  </div>
+</div>
+
+<!-- KART PAGE -->
+<div id="pgMap" class="page on">
+  <div id="map"></div>
+  <div id="zoomBadge">zoom 14</div>
+  <div class="fab" id="fabGps" onclick="locateMe()">📍</div>
+  <div class="fab" id="fabQr" onclick="openQR()">⬛</div>
+  <div class="fab" id="fabRoute" onclick="clearRoute()">✕ Rute</div>
+  <div id="strip"></div>
+  <div class="sheet peek" id="sheet">
+    <div class="sh" onclick="toggleSheet()">
+      <div class="shb"></div>
+      <div class="shc" id="shc">Laster…</div>
+    </div>
+    <div class="sf" id="fbar"></div>
+    <div class="sort-bar" id="sortBar">
+      <div class="sort-btn on" onclick="setSort('dist',this)">📍 Nærmest</div>
+      <div class="sort-btn" onclick="setSort('battery',this)">🔋 Batteri</div>
+      <div class="sort-btn" onclick="setSort('price',this)">💸 Billigst</div>
+    </div>
+    <div class="sl" id="sbl">
+      <div class="shim"></div><div class="shim"></div><div class="shim"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFIL PAGE -->
+<div id="pgProfil" class="page">
+  <div class="prof-hero">
+    <div class="prof-top">
+      <div class="prof-avatar" id="profAvatar" onclick="openEditProfile()">
+        <span id="profAvatarEmoji">😎</span>
+        <div class="avatar-edit">✏️</div>
+      </div>
+      <div class="prof-info">
+        <div class="prof-name" id="profName">Ole Anders</div>
+        <div class="prof-handle" id="profHandle">@oleanders · Trondheim</div>
+        <div class="prof-level" id="profLevel">⚡ Nivå 3 – Byentusiast</div>
+      </div>
+    </div>
+    <div class="prof-stats">
+      <div class="pstat"><div class="pstat-n" id="statTrips">0</div><div class="pstat-l">Turer</div></div>
+      <div class="pstat"><div class="pstat-n" id="statKm">0</div><div class="pstat-l">km</div></div>
+      <div class="pstat"><div class="pstat-n" id="statCo2">0</div><div class="pstat-l">kg CO₂</div></div>
+      <div class="pstat"><div class="pstat-n" id="statRating">4.9</div><div class="pstat-l">Rating</div></div>
+    </div>
+  </div>
+  <div class="xp-card">
+    <div class="xp-head">
+      <div class="xp-level" id="xpLevel">Nivå 3 – Byentusiast</div>
+      <div class="xp-next" id="xpNext">200 XP til nivå 4</div>
+    </div>
+    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:40%"></div></div>
+    <div class="xp-marks"><span>0</span><span id="xpCurrent">200 XP</span><span>500 XP</span></div>
+  </div>
+  <div class="sec-hd"><span class="sec-hd-txt">💰 Lommebok</span></div>
+  <div class="wallet-card">
+    <div class="wallet-lbl">Tilgjengelig saldo</div>
+    <div class="wallet-amount"><span id="walletAmount">124,50</span><span> kr</span></div>
+    <div class="wallet-btns">
+      <button class="wbtn primary" onclick="openModal('topupModal')">+ Fyll på</button>
+      <button class="wbtn sec" onclick="showTripHistory()">Historikk</button>
+    </div>
+  </div>
+  <div class="sec-hd"><span class="sec-hd-txt">💳 Betalingsmetoder</span></div>
+  <div class="pay-list2" id="payList"></div>
+  <div class="add-pay" onclick="openModal('addPayModal')"><span>+</span> Legg til betalingsmetode</div>
+  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">🏆 Merker</span></div>
+  <div class="ach-grid" id="achGrid"></div>
+  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">🗺 Siste turer</span></div>
+  <div class="trip-list" id="tripList"></div>
+  <div class="sec-hd" style="margin-top:16px"><span class="sec-hd-txt">⚙️ Innstillinger</span></div>
+  <div class="sett-group">
+    <div class="sett-row">
+      <div class="sett-ico">🔗</div>
+      <div class="sett-body"><div class="sett-lbl">Worker-URL</div><div class="sett-sub" id="proxyStatus">Ikke satt</div></div>
+    </div>
+    <div class="sett-row" style="gap:8px">
+      <input class="pinp" id="puSett" type="url" placeholder="https://entur-proxy.navn.workers.dev">
+      <button class="sbtn2" onclick="saveProxySett()">Lagre</button>
+    </div>
+    <div class="sett-row">
+      <div class="sett-ico">🔔</div>
+      <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Lav batteristatus m.m.</div></div>
+      <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="sett-row">
+      <div class="sett-ico">🌙</div>
+      <div class="sett-body" style="flex:1"><div class="sett-lbl">Mørk modus</div><div class="sett-sub">Alltid aktiv</div></div>
+      <div class="tgl on"></div>
+    </div>
+  </div>
+  <div class="sett-group">
+    <div class="sett-row">
+      <div class="sett-ico">📊</div>
+      <div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 · PWA · Entur GBFS · Priser 2025</div></div>
+    </div>
+    <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer">
+      <div class="sett-ico">🔒</div>
+      <div class="sett-body"><div class="sett-lbl">Personvern og vilkår</div><div class="sett-sub">Krav fra Apple og GDPR</div></div>
+      <span style="color:var(--dim);font-size:18px">›</span>
+    </div>
+    <div class="sett-row" onclick="logOut()" style="cursor:pointer">
+      <div class="sett-ico" style="color:var(--red)">🚪</div>
+      <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Logg ut</div></div>
+    </div>
+    <div class="sett-row" onclick="deleteAccount()" style="cursor:pointer">
+      <div class="sett-ico" style="color:var(--red)">🗑️</div>
+      <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all din data</div></div>
+    </div>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- PRISER PAGE -->
+<div id="pgPris" class="page">
+  <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding:16px 14px 24px;background:var(--bg)">
+  <div class="ph">
+    <h1>💸 Prisguide 2025</h1>
+    <!-- PATCH: mention Dott -->
+    <p>Oppdaterte priser · Oslo: Voi, Bolt, Ryde · Trondheim: Dott, Voi, Ryde</p>
+  </div>
+  <div class="calcbox">
+    <h2>🧮 Hva koster turen din?</h2>
+    <div class="calclbl"><span>Minutter</span><b id="cml">10 min</b></div>
+    <input type="range" id="cmin" min="1" max="60" value="10" oninput="updateCalc()">
+    <!-- PATCH: 4-column grid covers all 4 providers -->
+    <div class="calcgrid" id="cgrid"></div>
+  </div>
+
+  <div class="sec">Voi <span class="oslo-badge">✓ Oslo · Bergen +</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(233,30,140,.12);color:var(--voi)">V</div>
+      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline">Størst dekning nasjonalt</div></div>
+      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Populær</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">3 kr/min</div><div class="pgl">Kjøring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">100 min inkl.</div></div><div class="prow-p">69 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Fri oppstart 1 mnd</div><div class="prow-s">Ubegrenset</div></div><div class="prow-p">29 kr/mnd</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">299 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">750 min</div></div><div class="prow-p">699 kr</div></div>
+  </div>
+
+  <div class="sec">Bolt <span class="oslo-badge">✓ Oslo · Drammen +</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div>
+      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline">Lavest pris per minutt · God dekning</div></div>
+      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">Billigst</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">0–5 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">80 min inkl.</div></div><div class="prow-p">69 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min = 1,30 kr/min!</div></div><div class="prow-p">389 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">800 min</div></div><div class="prow-p">699 kr</div></div>
+  </div>
+
+  <div class="sec">Ryde <span class="oslo-badge">✓ Oslo · Fredrikstad +</span><span class="city-badge" style="margin-left:4px">🇳🇴 Norsk</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div>
+      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline">Norsk · God demping · Lojalitetsprogram</div></div>
+      <div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">75 min inkl.</div></div><div class="prow-p">79 kr</div></div>
+    <div class="prow"><div><div class="prow-n">14-dagers pass</div><div class="prow-s">200 min – beste verdi!</div></div><div class="prow-p">249 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">399 kr</div></div>
+  </div>
+
+  <!-- PATCH 7: Dott price card -->
+  <div class="sec">Dott (tidl. TIER) <span class="dott-badge">✓ Trondheim 2025–2026</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(0,102,204,.12);color:var(--dott)">D</div>
+      <div><div class="pname" style="color:var(--dott)">Dott</div><div class="ptagline">Tidligere TIER · Trondheim sesong mar–des</div></div>
+      <div class="pbadge" style="background:rgba(0,102,204,.1);color:var(--dott)">Trondheim</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:var(--dott)">12 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--dott)">3 kr/min</div><div class="pgl">Kjøring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n">Aldersgrense</div><div class="prow-s">Minimum 18 år</div></div><div class="prow-p">18 år</div></div>
+    <div class="prow"><div><div class="prow-n">Sesong</div><div class="prow-s">15. mars – 1. desember</div></div><div class="prow-p">Sesong</div></div>
+    <div class="prow"><div><div class="prow-n">Pakker</div><div class="prow-s">Se Dott-appen for gjeldende tilbud</div></div><div class="prow-p">Dott-app</div></div>
+  </div>
+
+  <!-- PATCH 7: Byregler -->
+  <div class="sec">📋 Byregler</div>
+  <div style="background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.18);border-radius:14px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.9">
+    <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">Oslo · Apr 2025 – Mar 2027</div>
+    <div>✅ Kun <strong>Voi, Bolt og Ryde</strong> er godkjente</div>
+    <div>🔴 Stengt kl. <strong>23:00–05:00</strong> alle dager</div>
+    <div>📊 Maks <strong>8 000 sykler</strong> totalt i Oslo</div>
+  </div>
+  <div style="background:rgba(0,102,204,.06);border:1px solid rgba(0,102,204,.2);border-radius:14px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.9">
+    <div style="font-weight:700;margin-bottom:8px;color:var(--dott)">Trondheim · 2025 og 2026</div>
+    <div>✅ <strong>Tier-Dott, Voi og Ryde</strong> er godkjente</div>
+    <div>📅 Sesong: <strong>15. mars – 1. desember</strong></div>
+    <div>🚴 Aldersgrense: Dott 18 år · Voi/Ryde 16 år</div>
+  </div>
+
+  <div class="sec">💡 Tips</div>
+  <div class="tip"><strong>Kjører du daglig i Oslo?</strong> Bolt månedspass: 389 kr / 300 min = bare 1,30 kr/min!</div>
+  <div class="tip"><strong>Én rask tur?</strong> Bolt billigst ved korte turer (0–5 kr oppstart). 10 min = 25–30 kr.</div>
+  <div class="tip"><strong>Trondheim?</strong> Ryde billigst per minutt (2,5 kr). Dott har bred dekning.</div>
+  <div class="tip"><strong>Dårlig asfalt?</strong> Ryde har størst hjul og best demping – passer norske gater.</div>
+  <div class="tip"><strong>Dagsturist?</strong> Voi dagspass: 100 min for 69 kr – spar 31 kr vs enkeltpris.</div>
+  <div class="tip"><strong>Ca. 1 av 5 nordmenn</strong> i storbyene har leid elsparkesykkel siste 12 mnd (RVU 2025).</div>
+  <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div id="tabBar">
+  <div class="tab on" id="tab-kart" onclick="switchTab('kart')">
+    <div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div>
+  </div>
+  <div class="tab" id="tab-profil" onclick="switchTab('profil')">
+    <div class="tab-ico" id="tabProfilIco">😎</div><div class="tab-lbl">Profil</div>
+  </div>
+  <div class="tab" id="tab-pris" onclick="switchTab('pris')">
+    <div class="tab-ico">💸</div><div class="tab-lbl">Priser</div>
+  </div>
+  <div class="tab" id="tab-qr" onclick="openQR()">
+    <div class="tab-ico">⬛</div><div class="tab-lbl">Skann</div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+// ── iOS / Apple compliance helpers ──────────────────────────────
+// requestPermission wrappers used by Capacitor plugins
+window._requestCamera = async () => {
+  if (window.Capacitor) {
+    const { Camera } = await import('@capacitor/camera');
+    return await Camera.requestPermissions();
+  }
+  // Web fallback
+  try { await navigator.mediaDevices.getUserMedia({video:true}); return 'granted'; }
+  catch(e) { return 'denied'; }
+};
+window._requestLocation = async () => {
+  return new Promise(resolve => {
+    if (!navigator.geolocation) { resolve('denied'); return; }
+    navigator.geolocation.getCurrentPosition(
+      () => resolve('granted'),
+      () => resolve('denied'),
+      {timeout:5000}
+    );
+  });
+};
+// Offline detection banner
+window.addEventListener('online',  () => document.getElementById('offlineBanner')?.classList.remove('show'));
+window.addEventListener('offline', () => document.getElementById('offlineBanner')?.classList.add('show'));
+
+// ════════════════════════════════════════
+// CONFIG — 2025/2026
+// Trondheim: Tier-Dott, Voi, Ryde (kilde: trondheim.kommune.no)
+//            Sesong 15.mars–1.desember. Dott: 12kr+3kr/min (kilde: atb.no)
+// Oslo: Voi, Bolt, Ryde (kilde: oslo.kommune.no apr 2025–mar 2027)
+// ════════════════════════════════════════
+const SYS={
+  oslo:       ['voioslo','boltoslo','rydeoslo'],
+  bergen:     ['voibergen','boltbergen'],
+  // PATCH 2: dotttrondheim added
+  trondheim:  ['voitrondheim','rydetrondheim','dotttrondheim'],
+  stavanger:  ['voistavanger','rydestavanger'],
+  kristiansand:['voikristiansand','boltkristiansand'],
+  lillestrom: ['voilillestrom','boltlillestrom'],
+  fredrikstad:['voifredrikstad','boltfredrikstad','rydefredrikstad'],
+  drammen:    ['boltdrammen']
+};
+
+// PATCH 3: dott added, prices verified 2025
+const P={
+  voi: {label:'Voi',  color:'#e91e8c', tc:'#fff',    start:10, pm:3.00,
+        deeplink:'https://link.voi.com/open',          note:'10 kr oppstart · 3 kr/min'},
+  bolt:{label:'Bolt', color:'#34d16b', tc:'#001408',  start:0,  pm:2.50,
+        deeplink:'https://bolt.eu/en/scooters/',        note:'0–5 kr oppstart · 2,5 kr/min'},
+  ryde:{label:'Ryde', color:'#ff5722', tc:'#fff',     start:5,  pm:2.50,
+        deeplink:'https://app.ryde-technology.com',     note:'5 kr oppstart · 2,5 kr/min'},
+  dott:{label:'Dott', color:'#0066cc', tc:'#fff',     start:12, pm:3.00,
+        deeplink:'https://ridedott.com',                note:'12 kr oppstart · 3 kr/min (Trondheim)'},
+};
+
+const CEN={
+  oslo:[59.9139,10.7522], bergen:[60.3913,5.3221], trondheim:[63.4305,10.3951],
+  stavanger:[58.97,5.7331], kristiansand:[58.1467,7.9956],
+  lillestrom:[59.9535,11.0501], fredrikstad:[59.2112,10.9298], drammen:[59.744,10.2045]
+};
+
+// PATCH 4: dott QR pattern added
+const QRPAT=[
+  {p:'voi', re:/voiscooter|voi\.com|ride\.voi|link\.voi/i, url:'https://voi.com'},
+  {p:'bolt',re:/bolt\.eu|sc\.bolt|account\.bolt/i,         url:'https://account.bolt.eu'},
+  {p:'ryde',re:/ryde|rideto\.me|ryde-technology/i,          url:'https://app.ryde-technology.com'},
+  {p:'dott',re:/ridedott|dott\.to|tier\.app/i,              url:'https://ridedott.com'},
+];
+
+const ACHIEVEMENTS=[
+  {id:'first',ico:'🚀',name:'Første tur', req:t=>t>=1},
+  {id:'five', ico:'⭐',name:'5 turer',   req:t=>t>=5},
+  {id:'ten',  ico:'🔟',name:'10 turer',  req:t=>t>=10},
+  {id:'eco',  ico:'🌿',name:'Grønn',     req:(t,km)=>km*0.21>=10},
+  {id:'dist', ico:'🗺',name:'50 km',     req:(t,km)=>km>=50},
+  {id:'speed',ico:'⚡',name:'Rask',      req:(t,km,lv)=>lv>=5},
+  {id:'night',ico:'🌙',name:'Nattugle',  req:()=>false},
+  {id:'diam', ico:'💎',name:'Diamond',   req:(t,km,lv)=>lv>=10},
+];
+
+const AVATARS=['😎','🧑','👩','🧔','👱','🧕','👨‍💻','🧑‍🎤','🏄','🚴','⚡','🛴'];
+const TRIP_DEMOS=[
+  {day:28,mon:'Mar',route:'Grünerløkka → Jernbanetorget',min:12,km:2.1,cost:46,pv:'voi'},
+  {day:27,mon:'Mar',route:'Majorstuen → St.Hanshaugen',  min:8, km:1.4,cost:25,pv:'bolt'},
+  {day:26,mon:'Mar',route:'Aker Brygge → Tjuvholmen',    min:5, km:0.8,cost:17,pv:'bolt'},
+  {day:24,mon:'Mar',route:'Grønland → Tøyen',            min:15,km:2.8,cost:52,pv:'voi'},
+  {day:22,mon:'Mar',route:'Frogner → Vigelandsparken',   min:18,km:3.2,cost:57,pv:'ryde'},
+];
+
+// ════ STATE ════
+let city='oslo', proxy='', demo=false;
+let scooters=[], markers=[], hidden=new Set();
+let ulat=null, ulng=null, gpsM=null, gpsP=null;
+let sheetOpen=false, leafMap, refreshTimer;
+let qStream=null, qFrame=null, qFound=false;
+let selectedPayOpt='vipps', topupAmount=100;
+let currentSort='dist', selectedScooterId=null;
+let routeLayer=null;
+let rideTimer=null, rideSec=0, rideProvStart=0, rideProvPm=0;
+
+let profile=JSON.parse(localStorage.getItem('sn_profile')||JSON.stringify({
+  name:'Ole Anders', city:'Trondheim', avatar:'😎',
+  wallet:124.5, trips:7, km:19.4, xp:200,
+  payments:[{type:'vipps',label:'Vipps',num:'400 00 000',ico:'🟠',active:true}],
+}));
+
+// ════ INIT ════
+window.addEventListener('DOMContentLoaded',()=>{
+  leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:19}).addTo(leafMap);
+  L.control.zoom({position:'topright'}).addTo(leafMap);
+  leafMap.on('zoomend',()=>{
+    document.getElementById('zoomBadge').textContent='zoom '+leafMap.getZoom();
+    renderMarkers();
+  });
+  document.getElementById('citySel').value='oslo';
+  buildFilters(); updateCalc(); renderProfile(); buildAvatarPicker(); initOnboarding();
+  const saved=localStorage.getItem('sn_proxy');
+  if(saved){proxy=saved;document.getElementById('proxyUrl').value=saved;document.getElementById('puSett').value=saved;document.getElementById('proxyStatus').textContent=saved.replace('https://','');closeSetup();locateMe(true);loadCity('oslo');}
+});
+
+// ════ NAV ════
+function switchTab(t){
+  ['kart','profil','pris'].forEach(x=>{
+    document.getElementById('pg'+x.charAt(0).toUpperCase()+x.slice(1))?.classList.toggle('on',x===t);
+    document.getElementById('tab-'+x)?.classList.toggle('on',x===t);
+  });
+  document.getElementById('tab-qr').classList.remove('on');
+  if(t==='kart') setTimeout(()=>leafMap.invalidateSize(),60);
+  if(t==='profil') renderProfile();
+}
+
+// ════ SETUP ════
+async function testProxy(){
+  const u=document.getElementById('proxyUrl').value.trim(),r=document.getElementById('testRes');
+  r.className='tr';r.textContent='⏳ Tester…';r.style.display='block';document.getElementById('connectBtn').disabled=true;
+  try{const x=await fetch(`${u}/voioslo`,{signal:AbortSignal.timeout(9000)});if(!x.ok)throw new Error(`HTTP ${x.status}`);const j=await x.json(),n=j?.data?.bikes?.length??0;r.className='tr ok';r.textContent=`✅ ${n} Voi i Oslo – fungerer!`;document.getElementById('connectBtn').disabled=false;}
+  catch(e){r.className='tr er';r.textContent=`❌ ${e.message}`;}
+}
+function connectProxy(){const u=document.getElementById('proxyUrl').value.trim();if(!u)return;proxy=u;localStorage.setItem('sn_proxy',u);document.getElementById('puSett').value=u;document.getElementById('proxyStatus').textContent=u.replace('https://','');closeSetup();locateMe(true);loadCity('oslo');}
+function skipSetup(){demo=true;closeSetup();locateMe(true);loadDemo();}
+function closeSetup(){document.getElementById('setup').classList.add('hide');setTimeout(()=>leafMap.invalidateSize(),150);}
+function saveProxySett(){const u=document.getElementById('puSett').value.trim();if(!u)return;proxy=u;localStorage.setItem('sn_proxy',u);document.getElementById('proxyStatus').textContent=u.replace('https://','');demo=false;loadCity(city);showToast('✅ Tilkobling lagret');}
+
+// ════ DISTANCE + WALK ════
+function distTo(s){if(ulat==null||!s.lat)return Infinity;const R=6371000,dLa=(s.lat-ulat)*Math.PI/180,dLo=(s.lng-ulng)*Math.PI/180,a=Math.sin(dLa/2)**2+Math.cos(ulat*Math.PI/180)*Math.cos(s.lat*Math.PI/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function fmtD(m){if(m===Infinity)return '';return m<1000?Math.round(m)+'m':(m/1000).toFixed(1)+'km';}
+function walkMinutes(m){if(m===Infinity||m==null)return null;return Math.max(1,Math.ceil(m/72));}
+function walkLabel(m){const w=walkMinutes(m);if(!w)return null;return w+' min';}
+
+// ════ GPS ════
+function locateMe(silent=false){
+  if(!navigator.geolocation){if(!silent)alert('GPS støttes ikke.');return;}
+  const btn=document.getElementById('fabGps');btn.classList.add('spinning');btn.textContent='↻';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    ulat=pos.coords.latitude;ulng=pos.coords.longitude;
+    btn.classList.remove('spinning');btn.classList.add('on');btn.textContent='📍';
+    if(gpsP)leafMap.removeLayer(gpsP);if(gpsM)leafMap.removeLayer(gpsM);
+    gpsP=L.marker([ulat,ulng],{icon:L.divIcon({className:'',html:'<div class="gp"></div>',iconSize:[50,50],iconAnchor:[25,25]}),zIndexOffset:900}).addTo(leafMap);
+    gpsM=L.marker([ulat,ulng],{icon:L.divIcon({className:'',html:'<div class="gm"></div>',iconSize:[18,18],iconAnchor:[9,9]}),zIndexOffset:1000}).addTo(leafMap);
+    leafMap.flyTo([ulat,ulng],15,{duration:1.2});
+    const cl=Object.entries(CEN).sort((a,b)=>Math.hypot(a[1][0]-ulat,a[1][1]-ulng)-Math.hypot(b[1][0]-ulat,b[1][1]-ulng))[0][0];
+    if(cl!==city){city=cl;document.getElementById('citySel').value=city;demo?loadDemo():loadCity(city);}else renderList();
+  },err=>{
+    btn.classList.remove('spinning');btn.textContent='📍';
+    if(!silent){if(err.code===1)alert('GPS blokkert.\niPhone: Innstillinger → Personvern → Stedstjenester → Safari → "Mens appen brukes"');else alert('Posisjon feil (kode '+err.code+'). Prøv igjen.');}
+  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+
+// ════ MAP DATA ════
+async function loadCity(c){
+  clearTimeout(refreshTimer);document.getElementById('shc').textContent='Henter…';showShimmers();
+  const all=[];
+  for(const sid of SYS[c]||[]){
+    try{const r=await fetch(`${proxy}/${sid}`,{signal:AbortSignal.timeout(10000)});if(!r.ok)continue;const j=await r.json();const bikes=j?.data?.bikes??j?.data?.vehicles??[];const pv=Object.keys(P).find(p=>sid.startsWith(p))||'voi';bikes.filter(b=>b.lat&&b.lon).forEach(b=>all.push({id:b.bike_id||b.vehicle_id||Math.random().toString(36).slice(2),provider:pv,lat:+b.lat,lng:+b.lon,battery:parseBat(b),disabled:!!(b.is_disabled||b.is_reserved),name:`${P[pv].label} #${(b.bike_id||b.vehicle_id||'????').slice(-4).toUpperCase()}`}));}catch(e){console.warn(sid,e.message);}
+  }
+  scooters=all;renderList();renderMarkers();renderStrip();
+  const n=scooters.filter(s=>!s.disabled).length;
+  document.getElementById('ldot').classList.toggle('on',n>0);document.getElementById('ltxt').textContent=n>0?`${n} live`:'Ingen';
+  refreshTimer=setTimeout(()=>loadCity(city),60000);
+}
+function parseBat(b){if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));if(b.vehicle_type_capacity_remaining!=null)return b.vehicle_type_capacity_remaining;if(b.battery_level!=null)return b.battery_level;return null;}
+
+// PATCH 6: city-specific demo providers
+function loadDemo(){
+  const c=CEN[city];
+  const mk=(pv,n)=>Array.from({length:n},(_,i)=>({id:`${pv}-${i}`,provider:pv,lat:c[0]+(Math.random()-.5)*.038,lng:c[1]+(Math.random()-.5)*.06,battery:Math.floor(Math.random()*82)+12,disabled:Math.random()<.06,name:`${P[pv].label} #${1000+i}`}));
+  // City-specific providers
+  const demoPvs=city==='trondheim'?['voi','ryde','dott']:city==='oslo'?['voi','bolt','ryde']:city==='drammen'?['bolt']:['voi','bolt'];
+  const demoCnt={voi:20,bolt:16,ryde:12,dott:10};
+  scooters=demoPvs.flatMap(pv=>mk(pv,demoCnt[pv]||12));
+  renderList();renderMarkers();renderStrip();
+  document.getElementById('ldot').classList.add('on');document.getElementById('ltxt').textContent='Demo';
+}
+
+// ════ SORT / FILTER ════
+function buildFilters(){
+  const bar=document.getElementById('fbar');bar.innerHTML='';
+  Object.entries(P).forEach(([k,p])=>{const d=document.createElement('div');d.className='fb';d.style.cssText=`color:${p.color};border-color:${p.color}44;background:${p.color}10`;d.innerHTML=`<span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>${p.label}`;d.onclick=()=>{hidden.has(k)?hidden.delete(k):hidden.add(k);d.classList.toggle('off');renderList();renderMarkers();renderStrip();};bar.appendChild(d);});
+}
+function setSort(k,el){currentSort=k;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderList();}
+function sortedScooters(list){const c=[...list];if(currentSort==='dist')return c.sort((a,b)=>distTo(a)-distTo(b));if(currentSort==='battery')return c.sort((a,b)=>(b.battery??0)-(a.battery??0));if(currentSort==='price')return c.sort((a,b)=>P[a.provider].pm-P[b.provider].pm);return c;}
+
+// ════ LIST ════
+function renderList(){
+  const list=document.getElementById('sbl');
+  let vis=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));vis=sortedScooters(vis);
+  document.getElementById('shc').textContent=vis.length?`${vis.length} sparkesykler`:'Ingen tilgjengelig';
+  if(!vis.length){list.innerHTML=`<div class="empty">🛴<br>${scooters.length===0?'Ingen data.<br>Sjekk Worker-URL i Profil':'Ingen funnet.'}</div>`;return;}
+  list.innerHTML=vis.slice(0,60).map(s=>{
+    const p=P[s.provider],bt=s.battery,bc=bt==null?'#555':bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
+    const dm=distTo(s),ds=fmtD(dm),wl=walkLabel(dm);
+    return `<div class="card ${selectedScooterId===s.id?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')">
+      <div class="cbar" style="background:${p.color}"></div>
+      <div class="cico" style="background:${p.color}15;color:${p.color}">${p.label[0]}</div>
+      <div class="cbody">
+        <div class="cn">${s.name}</div>
+        <div class="cm">
+          ${bt!=null?`<div class="cb" style="color:${bc}"><div class="bb"><div class="bf" style="width:${bt}%;background:${bc}"></div></div>${bt}%</div>`:''}
+          ${wl?`<div class="walk-badge">🚶 ${wl}</div>`:''}
+          ${ds&&ulat!=null?`<span style="font-size:11px;color:var(--dim)">${ds}</span>`:''}
+          <span style="color:${p.color};font-weight:600;font-size:11px">${p.pm} kr/min</span>
+        </div>
+      </div>
+      <button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">Lei</button>
+    </div>`;
+  }).join('')+(vis.length>60?`<div class="empty">+${vis.length-60} til…</div>`:'');
+}
+function showShimmers(){document.getElementById('sbl').innerHTML=Array(4).fill('<div class="shim"></div>').join('');}
+
+// ════ MARKERS ════
+function renderMarkers(){
+  if(window._clusterGroup)leafMap.removeLayer(window._clusterGroup);
+  const zoom=leafMap.getZoom();
+  window._clusterGroup=L.markerClusterGroup({
+    maxClusterRadius:zoom<12?130:zoom<14?85:zoom<16?52:28,
+    iconCreateFunction(cluster){
+      const n=cluster.getChildCount(),counts={};
+      cluster.getAllChildMarkers().forEach(m=>{if(m._snProvider)counts[m._snProvider]=(counts[m._snProvider]||0)+1;});
+      const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+      const col=top?P[top[0]]?.color:'#00e5a0',sz=n>20?46:n>10?40:34;
+      return L.divIcon({html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${col};opacity:.88;display:flex;align-items:center;justify-content:center;font-size:${n>9?11:13}px;font-weight:800;color:white;box-shadow:0 2px 14px rgba(0,0,0,.5),0 0 0 3px rgba(255,255,255,.15)">${n}</div>`,className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+    },
+    spiderfyOnMaxZoom:true,showCoverageOnHover:false,zoomToBoundsOnClick:true,animate:true,animateAddingMarkers:false,
+  });
+  scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{
+    const p=P[s.provider],bt=s.battery,col=bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
+    const dm=distTo(s),wl=walkLabel(dm),wm=walkMinutes(dm);
+    let pinHtml;
+    if(zoom>=16){pinHtml=`<div class="pin"><div class="pbub" style="background:${col};color:${p.tc};${s.id===selectedScooterId?'outline:2px solid white;outline-offset:2px':''}">${p.label}${bt!=null?' '+bt+'%':''}${wl?' · 🚶'+wl:''}</div><div class="ptail" style="border-top-color:${col}"></div></div>`;}
+    else if(zoom>=14){pinHtml=`<div class="pin"><div class="pbub" style="background:${col};color:${p.tc}">${p.label}${bt!=null?' '+bt+'%':''}</div><div class="ptail" style="border-top-color:${col}"></div></div>`;}
+    else{pinHtml=`<div style="width:12px;height:12px;border-radius:50%;background:${col};border:2px solid rgba(255,255,255,.6);box-shadow:0 2px 6px rgba(0,0,0,.5)"></div>`;}
+    const icon=L.divIcon({className:'',html:pinHtml,iconSize:[0,0],iconAnchor:[zoom>=14?32:6,zoom>=14?28:6]});
+    const m=L.marker([s.lat,s.lng],{icon});m._snProvider=s.provider;
+    m.bindPopup(`<div style="min-width:200px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:38px;height:38px;border-radius:11px;background:${p.color}15;color:${p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">${p.label[0]}</div>
+        <div><div style="font-weight:700;font-size:15px">${s.name}</div><div style="font-size:12px;color:${p.color};font-weight:600">${p.label} · ${p.pm} kr/min</div></div>
+      </div>
+      <div class="pst">
+        <div class="psc"><div class="psn" style="color:${bt!=null?(bt>50?p.color:bt>20?'#ffb800':'#ff4d4d'):'var(--dim)'}">${bt!=null?bt+'%':'–'}</div><div class="psl">Batteri</div></div>
+        <div class="psc"><div class="psn" style="color:var(--blue)">${dm!==Infinity?fmtD(dm):'–'}</div><div class="psl">Avstand</div></div>
+        <div class="psc"><div class="psn" style="color:var(--accent)">${wm!=null?wm+' min':'–'}</div><div class="psl">🚶 Gange</div></div>
+      </div>
+      <button class="pbtn" style="background:${p.color};color:${p.tc}" onclick="openApp('${s.id}')">Lei ${p.label} →</button>
+      ${ulat!=null?`<div class="pnav" onclick="showRoute('${s.id}')">🗺️ Vis gangrute hit</div>`:''}
+    </div>`,{maxWidth:250});
+    m.on('click',()=>selectScooter(s.id));
+    markers.push(m);window._clusterGroup.addLayer(m);
+  });
+  leafMap.addLayer(window._clusterGroup);
+}
+function renderStrip(){
+  const c={};scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{c[s.provider]=(c[s.provider]||0)+1;});
+  const t=Object.values(c).reduce((a,b)=>a+b,0);
+  document.getElementById('strip').innerHTML=Object.entries(c).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<div class="chip"><span class="cdot" style="background:${P[k].color}"></span><b>${P[k].label}</b> ${n}</div>`).join('')+(t?`<div class="chip" style="border-color:rgba(0,229,160,.2)"><b>${t}</b> total</div>`:'');
+}
+
+// PATCH 8: OSRM walking route with straight-line fallback
+async function showRoute(scooterId){
+  const s=scooters.find(x=>x.id===scooterId);
+  if(!s||ulat==null)return;
+  clearRoute();leafMap.closePopup();
+  showToast('🗺️ Henter gangrute…');
+  try{
+    const url=`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`;
+    const resp=await fetch(url,{signal:AbortSignal.timeout(7000)});
+    if(!resp.ok)throw new Error('OSRM feil');
+    const data=await resp.json();
+    const coords=data.routes[0].geometry.coordinates.map(([lng,lat])=>[lat,lng]);
+    const dist=data.routes[0].distance;
+    const durMin=Math.ceil(data.routes[0].duration/60);
+    routeLayer=L.polyline(coords,{color:'#00e5a0',weight:4,opacity:.85,dashArray:'10,7',lineCap:'round',lineJoin:'round',className:'walk-route'}).addTo(leafMap);
+    leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
+    document.getElementById('fabRoute').style.display='flex';
+    showToast(`🚶 ${durMin} min gange · ${fmtD(dist)}`);
+  }catch(e){
+    // Fallback: straight line
+    const dm=distTo(s);
+    routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:3,opacity:.75,dashArray:'8,6'}).addTo(leafMap);
+    leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
+    document.getElementById('fabRoute').style.display='flex';
+    showToast(`🚶 ~${walkMinutes(dm)} min · ${fmtD(dm)}`);
+  }
+}
+function clearRoute(){if(routeLayer){leafMap.removeLayer(routeLayer);routeLayer=null;}document.getElementById('fabRoute').style.display='none';}
+
+function selectScooter(id){
+  selectedScooterId=id;
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+  const card=document.getElementById('card-'+id);
+  if(card){card.classList.add('selected');card.scrollIntoView({block:'nearest',behavior:'smooth'});}
+}
+function flyTo(id){const s=scooters.find(x=>x.id===id);if(!s)return;selectScooter(id);leafMap.flyTo([s.lat,s.lng],17,{duration:.7});sheetOpen=false;document.getElementById('sheet').classList.add('peek');}
+function toggleSheet(){sheetOpen=!sheetOpen;document.getElementById('sheet').classList.toggle('peek',!sheetOpen);}
+
+function openApp(id){
+  const s=scooters.find(x=>x.id===id);if(!s)return;const p=P[s.provider];
+  if(rideTimer){showToast('⚠️ Du har allerede en aktiv tur!');return;}
+  if(confirm(`Lei ${s.name}?\n\n${p.note}\n\nTrykk OK for å starte turen.`)){startRide(s);}
+  else{window.open(p.deeplink||'#','_blank');}
+}
+function changeCity(c){
+  city=c;clearTimeout(refreshTimer);leafMap.flyTo(CEN[c]||CEN.oslo,14,{duration:.85});
+  scooters=[];markers.forEach(m=>leafMap.removeLayer(m));markers=[];
+  if(window._clusterGroup)leafMap.removeLayer(window._clusterGroup);
+  clearRoute();renderList();renderStrip();demo?loadDemo():loadCity(c);
+}
+function updateCalc(){
+  const min=+document.getElementById('cmin').value;document.getElementById('cml').textContent=min+' min';
+  const pr=Object.entries(P).map(([k,p])=>({label:p.label,color:p.color,price:p.start+p.pm*min}));
+  const mn=Math.min(...pr.map(x=>x.price));
+  document.getElementById('cgrid').innerHTML=pr.map(x=>`<div class="calccel ${x.price===mn?'win':''}"><div class="num" style="color:${x.price===mn?'var(--accent)':x.color}">${Math.round(x.price)} kr</div><div class="lbl">${x.label}</div></div>`).join('');
+}
+
+// ════ RIDE ════
+function startRide(s){
+  const p=P[s.provider];rideSec=0;rideProvStart=p.start;rideProvPm=p.pm;
+  document.getElementById('arMeta').textContent=`${s.name} · ${p.label} · ${p.note}`;
+  document.getElementById('activeRideBanner').classList.add('show');document.getElementById('pgMap').classList.add('with-banner');
+  if(rideTimer)clearInterval(rideTimer);
+  rideTimer=setInterval(()=>{rideSec++;const m=Math.floor(rideSec/60),ss=rideSec%60;document.getElementById('arTimer').textContent=String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');const cost=rideProvStart+rideProvPm*(rideSec/60);document.getElementById('arCost').textContent=Math.round(cost)+' kr';document.getElementById('arCost').style.color=cost>50?'#ff4d4d':'var(--text)';},1000);
+  if(navigator.vibrate)navigator.vibrate(50);
+}
+function stopRide(){
+  if(!rideTimer)return;clearInterval(rideTimer);rideTimer=null;
+  const cost=rideProvStart+rideProvPm*(rideSec/60),mins=Math.ceil(rideSec/60);
+  profile.trips++;profile.km+=parseFloat((Math.random()*2+0.5).toFixed(1));
+  profile.wallet=Math.max(0,profile.wallet-cost);profile.xp+=10+mins;
+  saveProfileData();document.getElementById('activeRideBanner').classList.remove('show');document.getElementById('pgMap').classList.remove('with-banner');
+  showToast(`✅ Tur ferdig · ${mins} min · ${Math.round(cost)} kr`);
+  if(navigator.vibrate)navigator.vibrate([50,50,100]);
+}
+
+// ════ PROFILE ════
+function saveProfileData(){localStorage.setItem('sn_profile',JSON.stringify(profile));}
+function renderProfile(){
+  const lv=Math.floor(profile.xp/100)+1,xpIn=profile.xp%100;
+  const names=['','Nybegynner','Byentusiast','Sparkefan','Kjøreekspert','Byekspert','Mester','Legende','Elite','Pro','Diamond'];
+  const nm=names[Math.min(lv,10)]||'Legende';
+  document.getElementById('profAvatarEmoji').textContent=profile.avatar;document.getElementById('tabProfilIco').textContent=profile.avatar;
+  document.getElementById('profName').textContent=profile.name;document.getElementById('profHandle').textContent=`@${profile.name.toLowerCase().replace(/\s/g,'')} · ${profile.city}`;
+  document.getElementById('profLevel').textContent=`⚡ Nivå ${lv} – ${nm}`;document.getElementById('xpLevel').textContent=`Nivå ${lv} – ${nm}`;
+  document.getElementById('xpNext').textContent=`${100-xpIn} XP til nivå ${lv+1}`;document.getElementById('xpFill').style.width=xpIn+'%';document.getElementById('xpCurrent').textContent=`${profile.xp} XP`;
+  document.getElementById('walletAmount').textContent=profile.wallet.toFixed(2).replace('.',',');
+  document.getElementById('statTrips').textContent=profile.trips;document.getElementById('statKm').textContent=Math.round(profile.km);document.getElementById('statCo2').textContent=Math.round(profile.km*0.21);
+  renderPayments2();renderAchievements();renderTrips2();
+}
+function renderPayments2(){
+  document.getElementById('payList').innerHTML=profile.payments.map((pm,i)=>`<div class="pay-card2 ${pm.active?'active-card':''}" onclick="setActivePayment(${i})"><div class="pay-ico2">${pm.ico}</div><div class="pay-body2"><div class="pay-name2">${pm.label}</div><div class="pay-sub2">${pm.num}</div></div><div class="pay-check ${pm.active?'on':''}">${pm.active?'✓':''}</div></div>`).join('');
+  const ap=profile.payments.find(p=>p.active)||profile.payments[0];
+  if(ap){document.getElementById('topupPayIco').textContent=ap.ico;document.getElementById('topupPayName').textContent=ap.label;}
+}
+function setActivePayment(i){profile.payments.forEach((p,j)=>p.active=j===i);saveProfileData();renderPayments2();showToast('✅ Betalingsmetode endret');}
+function renderAchievements(){document.getElementById('achGrid').innerHTML=ACHIEVEMENTS.map(a=>{const ok=a.req(profile.trips,profile.km,Math.floor(profile.xp/100)+1);return`<div class="ach ${ok?'earned':''}">${ok?'<div class="ach-glow"></div>':''}<div class="ach-ico">${a.ico}</div><div class="ach-name">${a.name}</div></div>`;}).join('');}
+function renderTrips2(all=false){document.getElementById('tripList').innerHTML=(all?TRIP_DEMOS:TRIP_DEMOS.slice(0,3)).map(t=>`<div class="trip"><div class="trip-date"><div class="trip-day">${t.day}</div><div class="trip-mon">${t.mon}</div></div><div class="trip-div"></div><div class="trip-body"><div class="trip-route">${t.route}</div><div class="trip-meta"><span>🕐 ${t.min} min</span><span>📍 ${t.km} km</span></div></div><div class="trip-cost">${t.cost} kr</div></div>`).join('');}
+function showTripHistory(){renderTrips2(true);showToast('📋 Viser alle turer');}
+
+// ════ PAYMENT ════
+function selectPayOpt(t){selectedPayOpt=t;document.getElementById('payOptVipps').classList.toggle('selected',t==='vipps');document.getElementById('payOptCard').classList.toggle('selected',t==='card');document.getElementById('vippsForm').style.display=t==='vipps'?'block':'none';document.getElementById('cardForm').style.display=t==='card'?'block':'none';}
+function savePayment(){
+  if(selectedPayOpt==='vipps'){const num=document.getElementById('vippsNum').value.trim();if(!num){showToast('⚠️ Skriv inn mobilnummer');return;}profile.payments.push({type:'vipps',label:'Vipps',num,ico:'🟠',active:false});}
+  else{const num=document.getElementById('cardNum').value.trim();if(num.length<10){showToast('⚠️ Ugyldig kortnummer');return;}const last4=num.replace(/\s/g,'').slice(-4);profile.payments.push({type:'card',label:num.startsWith('4')?'Visa':'Mastercard',num:`•••• ${last4}`,ico:'💳',active:false});}
+  saveProfileData();renderPayments2();closeModal('addPayModal');showToast('✅ Betalingsmetode lagt til');
+}
+function selectTopup(amt,el){topupAmount=amt;document.querySelectorAll('.ta').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');document.getElementById('topupConfirmBtn').textContent=`Betal ${amt} kr`;}
+function confirmTopup(){const ap=profile.payments.find(p=>p.active)||profile.payments[0];if(!ap){showToast('⚠️ Ingen betalingsmetode');return;}profile.wallet+=topupAmount;profile.xp+=10;saveProfileData();closeModal('topupModal');renderProfile();showToast(`✅ ${topupAmount} kr lagt til via ${ap.label}! 🎉`);}
+
+// ════ EDIT PROFILE ════
+function buildAvatarPicker(){document.getElementById('avatarPicker').innerHTML=AVATARS.map(a=>`<div class="av-opt ${a===profile.avatar?'sel':''}" onclick="selectAvatar('${a}',this)">${a}</div>`).join('');}
+function selectAvatar(a,el){document.querySelectorAll('.av-opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+function openEditProfile(){document.getElementById('editName').value=profile.name;document.getElementById('editCity').value=profile.city;buildAvatarPicker();openModal('editProfileModal');}
+function saveProfile(){const name=document.getElementById('editName').value.trim(),city2=document.getElementById('editCity').value.trim(),sel=document.querySelector('.av-opt.sel');if(name)profile.name=name;if(city2)profile.city=city2;if(sel)profile.avatar=sel.textContent;saveProfileData();renderProfile();closeModal('editProfileModal');showToast('✅ Profil oppdatert');}
+function logOut(){if(confirm('Logger ut?')){localStorage.removeItem('sn_profile');showToast('👋 Logget ut');}}
+function deleteAccount(){
+  if(confirm('Slette kontoen din?\n\nAll lokal data slettes. Dette kan ikke angres.')){
+    localStorage.clear();
+    showToast('🗑️ Konto slettet');
+    setTimeout(()=>location.reload(),1500);
+  }
+}
+
+// ════ MODALS ════
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.addEventListener('click',e=>{document.querySelectorAll('.modal-overlay.open').forEach(m=>{if(e.target===m)m.classList.remove('open');});});
+
+// ════ TOAST ════
+let toastTimer=null;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ════ QR ════
+async function openQR(){document.getElementById('qrModal').classList.add('open');document.getElementById('qrRes').classList.remove('show');qFound=false;setQrSt('Starter kamera…','');try{qStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}}});const v=document.getElementById('qrVid');v.srcObject=qStream;v.play();v.addEventListener('loadedmetadata',()=>{setQrSt('Rett mot QR-koden','');scanLoop();},{once:true});}catch(e){setQrSt('Kameratilgang avslått.\niPhone: Innstillinger → Safari → Kamera → Tillat','err');}}
+function scanLoop(){if(qFound)return;const v=document.getElementById('qrVid'),c=document.getElementById('qrCvs');if(v.readyState===v.HAVE_ENOUGH_DATA){c.width=v.videoWidth;c.height=v.videoHeight;const ctx=c.getContext('2d');ctx.drawImage(v,0,0,c.width,c.height);const code=jsQR(ctx.getImageData(0,0,c.width,c.height).data,c.width,c.height,{inversionAttempts:'dontInvert'});if(code){handleQR(code.data);return;}}qFrame=requestAnimationFrame(scanLoop);}
+function handleQR(raw){qFound=true;cancelAnimationFrame(qFrame);stopCam();setQrSt('✅ QR-kode funnet!','found');const m=QRPAT.find(x=>x.re.test(raw));const pv=m?P[m.p]:{label:'Ukjent',color:'#00e5a0',tc:'#040a14'};document.getElementById('qrRi').textContent=pv.label[0];document.getElementById('qrRi').style.cssText=`background:${pv.color}18;color:${pv.color}`;document.getElementById('qrRn').textContent=pv.label+' sparkesykkel';const id=raw.match(/\/([A-Z0-9\-]{4,12})\/?(\?|$)/i);document.getElementById('qrRid').textContent=id?'ID: '+id[1]:raw.slice(0,40)+'…';const mb=document.getElementById('qrMb');mb.textContent=(m?'Åpne i '+pv.label:'Åpne link')+' →';mb.style.cssText=`background:${pv.color};color:${pv.tc}`;mb.onclick=()=>window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');const sb=document.getElementById('qrSb2');if(m){sb.textContent='Åpne '+pv.label+'.com';sb.onclick=()=>window.open(m.url,'_blank');}else{sb.textContent='Kopier link';sb.onclick=()=>{navigator.clipboard?.writeText(raw);sb.textContent='✅ Kopiert!';};}document.getElementById('qrRes').classList.add('show');}
+function resetQR(){qFound=false;document.getElementById('qrRes').classList.remove('show');setQrSt('Starter kamera igjen…','');openQR();}
+function closeQR(){stopCam();document.getElementById('qrModal').classList.remove('open');document.getElementById('qrRes').classList.remove('show');qFound=false;}
+function stopCam(){cancelAnimationFrame(qFrame);if(qStream){qStream.getTracks().forEach(t=>t.stop());qStream=null;}}
+function setQrSt(msg,cls){const e=document.getElementById('qrSt');e.textContent=msg;e.className='qrst '+cls;}
+
+// ════ ONBOARDING ════
+let obCurrent=0;
+function initOnboarding(){if(!localStorage.getItem('sn_onboarded3')){document.getElementById('onboarding').classList.remove('hide');}else{document.getElementById('onboarding').classList.add('hide');}}
+function obNextSlide(){if(obCurrent>=3){finishOnboarding();return;}obCurrent++;document.getElementById('obSlides').style.transform=`translateX(-${obCurrent*100}%)`;for(let i=0;i<4;i++)document.getElementById('dot'+i)?.classList.toggle('on',i===obCurrent);if(obCurrent===3)document.getElementById('obNext').textContent='🚀 Start appen';}
+function finishOnboarding(){localStorage.setItem('sn_onboarded3','1');document.getElementById('onboarding').style.animation='fadeout .4s ease forwards';setTimeout(()=>document.getElementById('onboarding').classList.add('hide'),400);}
+
+document.addEventListener('input',e=>{
+  if(e.target.id==='cardNum'){let v=e.target.value.replace(/\D/g,'').slice(0,16);e.target.value=v.match(/.{1,4}/g)?.join(' ')||v;}
+  if(e.target.id==='cardExp'){let v=e.target.value.replace(/\D/g,'').slice(0,4);if(v.length>=2)v=v.slice(0,2)+'/'+v.slice(2);e.target.value=v;}
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js')
+      .then(reg=>console.log('[SW] registered, scope:', reg.scope))
+      .catch(err=>console.warn('[SW] registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>

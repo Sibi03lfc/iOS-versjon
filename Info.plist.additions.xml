@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Info.plist TILLEGG for SparkNorge iOS-app
+  ==========================================
+  Legg til disse nøklene i ios/App/App/Info.plist etter at du har kjørt:
+    npx cap add ios
+
+  VIKTIG: Alle UsageDescription-tekster SKAL være på appen sitt primærspråk (norsk).
+  Apple avviser apper med tomme eller engelske beskrivelser i norsk app.
+-->
+<plist version="1.0">
+<dict>
+
+  <!-- ── GPS / STEDSDATA ─────────────────────────────────────── -->
+  <!-- Krav: Brukes til å vise sparkesykler i nærheten og gangtid -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>SparkNorge bruker posisjonen din til å finne nærmeste sparkesykler og beregne gangtid. Posisjonen din lagres aldri og deles ikke.</string>
+
+  <!-- Ikke nødvendig for SparkNorge, men inkluder tom for å unngå crash -->
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>SparkNorge trenger posisjonen din kun mens du bruker appen.</string>
+
+  <!-- ── KAMERA ──────────────────────────────────────────────── -->
+  <!-- Krav: QR-skanning av sparkesykler -->
+  <key>NSCameraUsageDescription</key>
+  <string>SparkNorge bruker kameraet til å skanne QR-koden på sparkesykkelen for rask opplåsing. Ingen bilder tas eller lagres.</string>
+
+  <!-- ── PUSH-VARSLER ───────────────────────────────────────── -->
+  <!-- Håndteres automatisk av Capacitor PushNotifications-plugin -->
+  <!-- Ingen egen nøkkel nødvendig – iOS spør automatisk -->
+
+  <!-- ── NETTVERKSSIKKERHET ─────────────────────────────────── -->
+  <!-- Tillat HTTP kun til spesifikke domener (OpenStreetMap bruker HTTPS) -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+    <key>NSExceptionDomains</key>
+    <dict>
+      <!-- Tile-servere: krever HTTP som fallback ved noen klienter -->
+      <key>tile.openstreetmap.org</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <false/>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+      </dict>
+    </dict>
+  </dict>
+
+  <!-- ── APP-BOUND DOMAINS (kreves for Service Worker i WKWebView) ── -->
+  <key>WKAppBoundDomains</key>
+  <array>
+    <string>sparknorge.no</string>
+    <string>www.sparknorge.no</string>
+  </array>
+
+  <!-- ── STØTTEDE ORIENTERINGER ─────────────────────────────── -->
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+  </array>
+  <key>UISupportedInterfaceOrientations~ipad</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
+
+  <!-- ── STATUS BAR ─────────────────────────────────────────── -->
+  <key>UIStatusBarStyle</key>
+  <string>UIStatusBarStyleLightContent</string>
+  <key>UIViewControllerBasedStatusBarAppearance</key>
+  <false/>
+
+  <!-- ── LAUNCH SCREEN ──────────────────────────────────────── -->
+  <key>UILaunchStoryboardName</key>
+  <string>LaunchScreen</string>
+
+  <!-- ── BUNDLE METADATA ─────────────────────────────────────── -->
+  <key>CFBundleDisplayName</key>
+  <string>SparkNorge</string>
+  <key>CFBundleVersion</key>
+  <string>1</string>
+  <key>CFBundleShortVersionString</key>
+  <string>2.1.0</string>
+
+  <!-- ── EXPORT COMPLIANCE ──────────────────────────────────── -->
+  <!-- Appen bruker HTTPS men ingen proprietær kryptering -->
+  <key>ITSAppUsesNonExemptEncryption</key>
+  <false/>
+
+</dict>
+</plist>

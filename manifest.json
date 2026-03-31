@@ -1,0 +1,52 @@
+{
+  "name": "SparkNorge – Elsparkesykkel",
+  "short_name": "SparkNorge",
+  "description": "Finn ledige elsparkesykler fra Voi, Bolt, Ryde og Dott – live kart, gangtid og priser",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c18",
+  "theme_color": "#080c18",
+  "lang": "nb",
+  "categories": ["travel", "navigation", "utilities"],
+  "screenshots": [
+    {
+      "src": "screenshots/screen1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Kart med sparkesykler i nærheten"
+    },
+    {
+      "src": "screenshots/screen2.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Prissammenligning alle leverandører"
+    },
+    {
+      "src": "screenshots/screen3.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Turhistorikk og profil"
+    }
+  ],
+  "icons": [
+    { "src": "icons/icon-72.png",   "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-96.png",   "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-128.png",  "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-144.png",  "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-152.png",  "sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-167.png",  "sizes": "167x167", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-180.png",  "sizes": "180x180", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-192.png",  "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png",  "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "share_target": {
+    "action": "/index.html",
+    "method": "GET",
+    "params": { "title": "title", "url": "url" }
+  }
+}
