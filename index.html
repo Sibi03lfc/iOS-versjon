@@ -1,19 +1,18 @@
 <!DOCTYPE html><html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#080c18">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SparkNorge">
 <title>SparkNorge</title>
-<link rel="stylesheet" href="lib/leaflet.css"/>
-<script src="lib/leaflet.js"></script>
-<script src="lib/jsQR.js"></script>
-<link rel="stylesheet" href="lib/MarkerCluster.css"/>
-<link rel="stylesheet" href="lib/MarkerCluster.Default.css"/>
-<script src="lib/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <style>
 :root {
   --bg:#080c18; --bg2:#0d1224; --surf:#121930; --surf2:#1c2440;
@@ -430,7 +429,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="ob-slide">
       <div class="ob-ico">🛴</div>
       <div class="ob-title">Velkommen til<br><em>SparkNorge</em></div>
-      <div class="ob-desc">Finn ledige sparkesykler fra Voi, Bolt, Ryde og Dott – live på kartet i alle norske byer</div>
+      <div class="ob-desc">Finn ledige sparkesykler fra Voi, Bolt og Ryde – live på kartet i alle norske byer</div>
     </div>
     <div class="ob-slide">
       <div class="ob-ico">🚶</div>
@@ -478,7 +477,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <div id="setup" class="hide">
   <div class="sbox">
     <div class="shdl"></div>
-    <div class="stit">SparkNorge</div>
+    <div class="stit">🛴 SparkNorge</div>
     <div class="ssub">Live sparkesykler · Kart · Priser · QR-skanner<br>
       <small style="color:var(--dim)">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
     <div class="pprow">
@@ -627,7 +626,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <!-- TOP NAV -->
 <div id="topNav">
   <div class="inner">
-    <div class="logo">Spark<em>Norge</em></div>
+    <div class="logo">🛴 Spark<em>Norge</em></div>
     <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
       <option value="oslo">Oslo</option>
       <option value="bergen">Bergen</option>
@@ -670,146 +669,64 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <!-- PROFIL PAGE -->
 <div id="pgProfil" class="page">
   <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding-bottom:20px">
-
-    <!-- HEADER -->
     <div style="background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;border-bottom:1px solid var(--border)">
-      <div style="font-size:20px;font-weight:800;letter-spacing:-.3px">Innstillinger</div>
+      <div style="font-size:20px;font-weight:800">Innstillinger</div>
       <div style="font-size:13px;color:var(--dim);margin-top:2px">SparkNorge v2.1</div>
     </div>
-
-    <!-- BY -->
     <div class="sett-group" style="margin-top:16px">
       <div class="sett-row">
         <div class="sett-ico">&#128205;</div>
-        <div class="sett-body" style="flex:1">
-          <div class="sett-lbl">Velg by</div>
-          <div class="sett-sub">Ellers brukes GPS automatisk</div>
-        </div>
+        <div class="sett-body" style="flex:1"><div class="sett-lbl">Velg by</div><div class="sett-sub">Ellers brukes GPS automatisk</div></div>
         <select class="city-sel" onchange="changeCity(this.value);document.getElementById('citySel').value=this.value">
-          <option value="oslo">Oslo</option>
-          <option value="bergen">Bergen</option>
-          <option value="trondheim">Trondheim</option>
-          <option value="stavanger">Stavanger</option>
-          <option value="kristiansand">Kristiansand</option>
-          <option value="lillestrom">Lillestr&#248;m</option>
-          <option value="fredrikstad">Fredrikstad</option>
-          <option value="drammen">Drammen</option>
+          <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
+          <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
+          <option value="lillestrom">Lillestrom</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
         </select>
       </div>
       <div class="sett-row">
         <div class="sett-ico">&#128205;</div>
-        <div class="sett-body" style="flex:1">
-          <div class="sett-lbl">GPS-posisjon</div>
-          <div class="sett-sub">For gåavstand og nærmeste sykkel</div>
-        </div>
+        <div class="sett-body" style="flex:1"><div class="sett-lbl">GPS-posisjon</div><div class="sett-sub">For gaavstand og naermeste sykkel</div></div>
         <button class="sbtn" onclick="locateMe(false)" style="font-size:12px;padding:7px 12px">Finn meg</button>
       </div>
-    </div>
-
-    <!-- DATAKILDE -->
-    <div class="sett-group">
       <div class="sett-row">
         <div class="sett-ico">&#128279;</div>
-        <div class="sett-body">
-          <div class="sett-lbl">Datakilde</div>
-          <div class="sett-sub">Entur GBFS &#183; api.entur.io &#183; &#197;pne data</div>
-        </div>
+        <div class="sett-body"><div class="sett-lbl">Datakilde</div><div class="sett-sub">Entur GBFS - api.entur.io - Apne data</div></div>
         <span style="color:var(--accent);font-size:12px;font-weight:600">Live &#10003;</span>
       </div>
       <div class="sett-row">
         <div class="sett-ico">&#128276;</div>
-        <div class="sett-body" style="flex:1">
-          <div class="sett-lbl">Push-varsler</div>
-          <div class="sett-sub">Tilbud og nye sykler i nærheten</div>
-        </div>
+        <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Tilbud og nye sykler i naerheten</div></div>
         <div class="tgl on" onclick="this.classList.toggle('on')"></div>
       </div>
     </div>
-
-    <!-- TIPS OG FAKTA -->
-    <div style="padding:16px 16px 8px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px">
-      Tips og fakta
-      <span style="flex:1;height:1px;background:var(--border);display:inline-block"></span>
-    </div>
+    <div style="padding:16px 16px 8px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px">Tips og fakta<span style="flex:1;height:1px;background:var(--border);display:inline-block"></span></div>
     <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
-
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
         <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Hvilken sykkel passer deg?</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          <b style="color:var(--text)">Ryde</b> &#8211; størst hjul, best demping. Bra for norske fortau og brostein.<br>
-          <b style="color:var(--text)">Bolt</b> &#8211; billigst per minutt (2,5 kr). Best for korte turer.<br>
-          <b style="color:var(--text)">Voi</b> &#8211; størst dekning. Alltid noe tilgjengelig.<br>
-          <b style="color:var(--text)">Dott</b> &#8211; kun Trondheim, sesong mars&#8211;desember.
-        </div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7"><b style="color:var(--text)">Ryde</b> - storst hjul, best demping.<br><b style="color:var(--text)">Bolt</b> - billigst per minutt (2,5 kr).<br><b style="color:var(--text)">Voi</b> - storst dekning i Oslo.<br><b style="color:var(--text)">Dott</b> - kun Trondheim, sesong mars-des.</div>
       </div>
-
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
         <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Norske trafikkregler</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          &#183; Maks <b style="color:var(--text)">20 km/t</b> &#8211; samme som sykkel<br>
-          &#183; Ikke lov p&#229; <b style="color:var(--text)">fortau</b> &#8211; bruk sykkelveier og veibane<br>
-          &#183; <b style="color:var(--text)">Promillegrense</b> gjelder &#8211; 0,2 &#8240;<br>
-          &#183; Kun <b style="color:var(--text)">én person</b> per sykkel
-        </div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Maks <b style="color:var(--text)">20 km/t</b><br>- Ikke lov pa <b style="color:var(--text)">fortau</b><br>- Promillegrense <b style="color:var(--text)">0,2 promille</b><br>- Kun <b style="color:var(--text)">en person</b> per sykkel</div>
       </div>
-
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Oslo-regler 2025&#8211;2027</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          &#183; Kun <b style="color:var(--text)">Voi, Bolt og Ryde</b> er godkjente<br>
-          &#183; Stengt <b style="color:var(--text)">kl. 23:00&#8211;05:00</b> alle dager<br>
-          &#183; Maks <b style="color:var(--text)">8 000 sykler</b> totalt i Oslo
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Oslo-regler 2025-2027</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Kun Voi, Bolt og Ryde godkjente<br>- Stengt <b style="color:var(--text)">kl. 23:00-05:00</b><br>- Maks <b style="color:var(--text)">8 000 sykler</b> i Oslo</div>
       </div>
-
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
         <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Spar penger</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          &#183; <b style="color:var(--text)">Bolt m&#229;nedspass</b>: 389 kr / 300 min = 1,30 kr/min<br>
-          &#183; <b style="color:var(--text)">Voi dagspass</b>: 69 kr for 100 min<br>
-          &#183; <b style="color:var(--text)">Ryde 14-dagers</b>: 249 kr for 200 min
-        </div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Bolt manedspass: <b style="color:var(--text)">389 kr/300 min</b><br>- Voi dagspass: <b style="color:var(--text)">69 kr/100 min</b><br>- Ryde 14-dagers: <b style="color:var(--text)">249 kr/200 min</b></div>
       </div>
-
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
         <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Batteri-tips</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          &#183; Under <b style="color:var(--text)">20%</b> &#8211; velg en annen sykkel<br>
-          &#183; <b style="color:var(--text)">50%+</b> rekker typisk 5&#8211;8 km<br>
-          &#183; R&#248;dt = under 20%, gult = 20&#8211;50%, gr&#248;nt = 50%+
-        </div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Under 20% - velg en annen<br>- 50%+ rekker typisk 5-8 km<br>- Rodt under 20%, gult 20-50%, gront 50%+</div>
       </div>
-
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Milj&#248;</div>
-        <div style="font-size:13px;color:var(--dim);line-height:1.7">
-          &#183; Erstatter ca. <b style="color:var(--text)">0,21 kg CO&#8322;</b> per km vs bil<br>
-          &#183; Gjennomsnittlig tur: ca. <b style="color:var(--text)">1 km</b> og <b style="color:var(--text)">10 min</b>
-        </div>
-      </div>
-
     </div>
-
-    <!-- OM OG PERSONVERN -->
     <div class="sett-group" style="margin-top:16px">
-      <div class="sett-row">
-        <div class="sett-ico">&#128202;</div>
-        <div class="sett-body">
-          <div class="sett-lbl">Om SparkNorge</div>
-          <div class="sett-sub">v2.1 &#183; Entur GBFS &#183; Oppdatert mars 2026</div>
-        </div>
-      </div>
-      <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer">
-        <div class="sett-ico">&#128274;</div>
-        <div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">Oppdatert mars 2026 &#183; GDPR</div></div>
-        <span style="color:var(--dim);font-size:18px">&#8250;</span>
-      </div>
-      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer">
-        <div class="sett-ico" style="color:var(--red)">&#128465;</div>
-        <div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div>
-      </div>
+      <div class="sett-row"><div class="sett-ico">&#128202;</div><div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 - Entur GBFS - Mars 2026</div></div></div>
+      <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer"><div class="sett-ico">&#128274;</div><div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">Oppdatert mars 2026 - GDPR</div></div><span style="color:var(--dim);font-size:18px">&#8250;</span></div>
+      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer"><div class="sett-ico" style="color:var(--red)">&#128465;</div><div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div></div>
     </div>
-
     <div style="height:20px"></div>
   </div>
 </div>
@@ -898,20 +815,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <!-- TAB BAR -->
 <div id="tabBar">
   <div class="tab on" id="tab-kart" onclick="switchTab('kart')">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
-    <div class="tab-lbl">Kart</div>
+    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div><div class="tab-lbl">Kart</div>
   </div>
   <div class="tab" id="tab-profil" onclick="switchTab('profil')">
-    <div class="tab-ico" id="tabProfilIco"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-    <div class="tab-lbl">Innstillinger</div>
+    <div class="tab-ico" id="tabProfilIco"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div><div class="tab-lbl">Innstillinger</div>
   </div>
   <div class="tab" id="tab-pris" onclick="switchTab('pris')">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-    <div class="tab-lbl">Priser</div>
+    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="tab-lbl">Priser</div>
   </div>
   <div class="tab" id="tab-qr" onclick="openQR()">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div>
-    <div class="tab-lbl">Skann</div>
+    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div><div class="tab-lbl">Skann</div>
   </div>
 </div>
 
@@ -943,8 +856,6 @@ const P={
         deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
         deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
-  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:12, pm:3.00,
-        deeplink:'https://ridedott.com', note:'12 kr oppstart · 3 kr/min'},
 };
 
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
@@ -1026,8 +937,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   buildFilters(); updateCalc(); renderProfile(); buildAvatarPicker(); initOnboarding();
   document.getElementById('setup').classList.add('hide');
   setTimeout(()=>leafMap.invalidateSize(),100);
+  loadDemo();
   loadCity('oslo');
-  setTimeout(()=>locateMe(false), 1500);
+  setTimeout(()=>locateMe(false),2000);
 });
 
 // ══════════════════════════════════════
@@ -1122,28 +1034,40 @@ async function loadCity(c){
     const pv=Object.keys(P).find(p=>sid.startsWith(p))||'voi';
     for(const ep of ['free_bike_status','vehicle_status']){
       try{
-        const r=await fetch(`${ENTUR}/${sid}/${ep}`,
-          {headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
+        const r=await fetch(`${ENTUR}/${sid}/${ep}`,{headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
         if(!r.ok) continue;
         const j=await r.json();
         const bikes=j?.data?.bikes??j?.data?.vehicles??[];
         if(!bikes.length) continue;
         bikes.filter(b=>b.lat&&b.lon).forEach(b=>all.push({
           id:b.bike_id||b.vehicle_id||Math.random().toString(36).slice(2),
-          provider:pv,lat:+b.lat,lng:+b.lon,
-          battery:pb(b),disabled:!!(b.is_disabled||b.is_reserved),
+          provider:pv,lat:+b.lat,lng:+b.lon,battery:pb(b),
+          disabled:!!(b.is_disabled||b.is_reserved),
           name:`${P[pv].label} #${(b.bike_id||b.vehicle_id||'????').slice(-4).toUpperCase()}`
         }));
         return;
       }catch(e){}
     }
   }));
-  if(!all.length){ loadDemo(); return; }
+  if(!all.length){loadDemo();return;}
   scooters=all;renderList();renderMarkers();renderStrip();
   const n=scooters.filter(s=>!s.disabled).length;
   document.getElementById('ldot').classList.toggle('on',n>0);
   document.getElementById('ltxt').textContent=n>0?`${n} live`:'Ingen';
+  startLastUpdTimer();
   refreshTimer=setTimeout(()=>loadCity(city),60000);
+}
+function manualRefresh(){
+  clearTimeout(refreshTimer);
+  const el=document.getElementById('lastUpd');
+  if(el)el.textContent='';
+  loadCity(city);
+  showToast('↻ Oppdaterer...');
+}
+let _lut=null;
+function startLastUpdTimer(){
+  clearInterval(_lut);let s=0;
+  _lut=setInterval(()=>{s++;const el=document.getElementById('lastUpd');if(el)el.textContent=s<60?s+'s siden':Math.floor(s/60)+'m siden';},1000);
 }
 function pb(b){
   if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));
@@ -1351,26 +1275,23 @@ function renderStrip(){
 async function showRoute(scooterId){
   const s=scooters.find(x=>x.id===scooterId);
   if(!s||ulat==null)return;
-  clearRoute();leafMap.closePopup();
-  showToast('🗺️ Henter gangrute…');
+  clearRoute();leafMap.closePopup();showToast('??️ Henter gangrute…');
   try{
-    const url=`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`;
-    const resp=await fetch(url,{signal:AbortSignal.timeout(7000)});
+    const resp=await fetch(`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`,{signal:AbortSignal.timeout(7000)});
     if(!resp.ok)throw 0;
     const data=await resp.json();
     const coords=data.routes[0].geometry.coordinates.map(([lng,lat])=>[lat,lng]);
     const durMin=Math.ceil(data.routes[0].duration/60);
-    const dist=data.routes[0].distance;
     routeLayer=L.polyline(coords,{color:'#00e5a0',weight:4,opacity:.85,dashArray:'10,7',lineCap:'round'}).addTo(leafMap);
     leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`🚶 ${durMin} min · ${fmtD(dist)}`);
+    showToast(`?? ${durMin} min · ${fmtD(data.routes[0].distance)}`);
   }catch(e){
     const dm=distTo(s);
     routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:3,opacity:.75,dashArray:'8,6'}).addTo(leafMap);
     leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`🚶 ~${walkMinutes(dm)} min · ${fmtD(dm)}`);
+    showToast(`?? ~${walkMinutes(dm)} min · ${fmtD(dm)}`);
   }
 }
 function clearRoute(){
@@ -1450,11 +1371,7 @@ function updateCalc(){
 // ══════════════════════════════════════
 function saveProfileData(){localStorage.setItem('sn_profile',JSON.stringify(profile));}
 
-function renderProfile(){
-  // Innstillinger-siden har ikke profil-elementer lenger
-  const el=id=>document.getElementById(id);
-  if(el('tabProfilIco')) el('tabProfilIco').innerHTML=el('tabProfilIco').innerHTML;
-}
+function renderProfile(){}
 
 function renderPayments2(){
   document.getElementById('payList').innerHTML=profile.payments.map((pm,i)=>`
@@ -1593,31 +1510,26 @@ async function openQR(){
     qStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}}});
     const v=document.getElementById('qrVid');v.srcObject=qStream;v.play();
     v.addEventListener('loadedmetadata',()=>{setQrSt('Rett mot QR-koden','');scanLoop();},{once:true});
-  }catch(e){setQrSt('Kameratilgang avslått. iPhone: Innstillinger → Safari → Kamera → Tillat','err');}
+  }catch(e){setQrSt('Kameratilgang avslatt. Innstillinger - Safari - Kamera - Tillat','err');}
 }
 function scanLoop(){if(qFound)return;const v=document.getElementById('qrVid'),c=document.getElementById('qrCvs');if(v.readyState===v.HAVE_ENOUGH_DATA){c.width=v.videoWidth;c.height=v.videoHeight;const ctx=c.getContext('2d');ctx.drawImage(v,0,0,c.width,c.height);const code=jsQR(ctx.getImageData(0,0,c.width,c.height).data,c.width,c.height,{inversionAttempts:'dontInvert'});if(code){handleQR(code.data);return;}}qFrame=requestAnimationFrame(scanLoop);}
 function handleQR(raw){
   qFound=true;cancelAnimationFrame(qFrame);stopCam();
-  setQrSt('✅ QR-kode funnet!','found');
+  setQrSt('QR-kode funnet!','found');
   const m=QRPAT.find(x=>x.re.test(raw));
   const pv=m?P[m.p]:{label:'Ukjent',color:'#00e5a0',tc:'#040a14'};
   document.getElementById('qrRi').textContent=pv.label[0];
   document.getElementById('qrRi').style.cssText=`background:${pv.color}18;color:${pv.color}`;
   document.getElementById('qrRn').textContent=pv.label+' sparkesykkel';
-  const idMatch=raw.match(/[/]([A-Z0-9-]{4,12})[/]?([?]|$)/i);
-  document.getElementById('qrRid').textContent=idMatch?'ID: '+idMatch[1]:raw.slice(0,40)+'…';
+  const idM=raw.match(/[/]([A-Z0-9-]{4,12})[/]?([?]|$)/i);
+  document.getElementById('qrRid').textContent=idM?'ID: '+idM[1]:raw.slice(0,40)+'...';
   const mb=document.getElementById('qrMb');
-  mb.textContent=(m?'Åpne i '+pv.label:'Åpne link')+' →';
+  mb.textContent=(m?'Apne i '+pv.label:'Apne link')+' ->';
   mb.style.cssText=`background:${pv.color};color:${pv.tc}`;
   mb.onclick=()=>window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');
   const sb=document.getElementById('qrSb2');
-  if(m){
-    sb.textContent='Åpne '+pv.label+'.com';
-    sb.onclick=()=>window.open(m.url,'_blank');
-  }else{
-    sb.textContent='Kopier link';
-    sb.onclick=()=>{navigator.clipboard?.writeText(raw);sb.textContent='✅ Kopiert!';};
-  }
+  if(m){sb.textContent='Apne '+pv.label+'.com';sb.onclick=()=>window.open(m.url,'_blank');}
+  else{sb.textContent='Kopier link';sb.onclick=()=>{navigator.clipboard?.writeText(raw);sb.textContent='Kopiert!';};}
   document.getElementById('qrRes').classList.add('show');
 }
 function resetQR(){qFound=false;document.getElementById('qrRes').classList.remove('show');setQrSt('Starter kamera igjen…','');openQR();}
@@ -1684,7 +1596,7 @@ function obNextSlide(){
 function finishOnboarding(){
   localStorage.setItem('sn_onboarded2','1');
   document.getElementById('onboarding').style.animation='fadeout .4s ease forwards';
-  setTimeout(()=>document.getElementById('onboarding').classList.add('hide'),400);
+  setTimeout(()=>{document.getElementById('onboarding').classList.add('hide');locateMe(false);},400);
 }
 
 // Card number formatting
