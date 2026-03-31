@@ -1,6 +1,6 @@
 {
   "$schema": "https://capacitorjs.com/docs/v7/config",
-  "appId": "com.sibi.sparknorge",
+  "appId": "com.sibi.sparknorge"
   "appName": "SparkNorge",
   "webDir": ".",
   "bundledWebRuntime": false,
