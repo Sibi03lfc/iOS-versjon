@@ -628,6 +628,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   <div class="inner">
     <div class="logo">🛴 Spark<em>Norge</em></div>
     <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
+      <option value="norge">🇳🇴 Hele Norge</option>
       <option value="oslo">Oslo</option>
       <option value="bergen">Bergen</option>
       <option value="trondheim">Trondheim</option>
@@ -678,7 +679,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         <div class="sett-ico">&#128205;</div>
         <div class="sett-body" style="flex:1"><div class="sett-lbl">Velg by</div><div class="sett-sub">Ellers brukes GPS automatisk</div></div>
         <select class="city-sel" onchange="changeCity(this.value);document.getElementById('citySel').value=this.value">
-          <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
+          <option value="norge">🇳🇴 Hele Norge</option>
+      <option value="norge">Hele Norge</option><option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
           <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
           <option value="lillestrom">Lillestrom</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
         </select>
@@ -837,6 +839,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 // Bergen: Voi, Bolt, Bird, TIER pilot
 // Trondheim: Voi, Ryde, Dott
 // ══════════════════════════════════════
+// Henter alle norske systemer dynamisk fra Entur manifest
+// Ingen hardkoding av byer -- alt kommer fra API automatisk
 const SYS={
   oslo:['voioslo','boltoslo','rydeoslo'],
   bergen:['voibergen','boltbergen'],
@@ -847,6 +851,8 @@ const SYS={
   fredrikstad:['voifredrikstad','boltfredrikstad','rydefredrikstad'],
   drammen:['boltdrammen']
 };
+// Alle systemer fra Entur (lastes dynamisk)
+let ALL_SYSTEMS = [];
 
 // Updated 2025 prices (source: Oslo commune, tek.no Jul 2024, Ryde/Bolt/Voi apps)
 const P={
@@ -856,12 +862,15 @@ const P={
         deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
         deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
+  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:12, pm:3.00,
+        deeplink:'https://ridedott.com', note:'12 kr oppstart · 3 kr/min'},
 };
 
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
 const ENTUR_HDR={'ET-Client-Name':'sparknorge-app'};
 
 const CEN={
+  norge:[65.0,15.0],
   oslo:[59.9139,10.7522], bergen:[60.3913,5.3221], trondheim:[63.4305,10.3951],
   stavanger:[58.97,5.7331], kristiansand:[58.1467,7.9956],
   lillestrom:[59.9535,11.0501], fredrikstad:[59.2112,10.9298], drammen:[59.744,10.2045]
@@ -1025,16 +1034,46 @@ function locateMe(silent=false){
 // ══════════════════════════════════════
 // MAP DATA
 // ══════════════════════════════════════
+async function loadAllSystems(){
+  // Hent alle systemer fra Entur manifest
+  try{
+    const r=await fetch('https://api.entur.io/mobility/v2/gbfs/v3/manifest.json',
+      {headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
+    if(!r.ok) return [];
+    const j=await r.json();
+    return (j?.data?.datasets||[]).map(d=>d.system_id).filter(id=>
+      // Kun sparkesykler -- filtrer bort bysykler og biler
+      !id.includes('bysykkel')&&!id.includes('bilkollektiv')&&!id.includes('car')
+    );
+  }catch(e){ return []; }
+}
+
 async function loadCity(c){
   clearTimeout(refreshTimer);
   document.getElementById('shc').textContent='Henter…';
   showShimmers();
   const all=[];
-  await Promise.allSettled((SYS[c]||[]).map(async sid=>{
-    const pv=Object.keys(P).find(p=>sid.startsWith(p))||'voi';
+
+  // Velg hvilke systemer som skal hentes
+  let systems;
+  if(c==='norge'){
+    // Last alle norske sparkesykler
+    if(!ALL_SYSTEMS.length){
+      document.getElementById('shc').textContent='Henter alle norske sykler…';
+      ALL_SYSTEMS=await loadAllSystems();
+    }
+    systems=ALL_SYSTEMS;
+  } else {
+    systems=SYS[c]||[];
+  }
+
+  await Promise.allSettled(systems.map(async sid=>{
+    const pv=Object.keys(P).find(p=>sid.toLowerCase().startsWith(p))||null;
+    if(!pv) return; // Hopp over ukjente leverandører
     for(const ep of ['free_bike_status','vehicle_status']){
       try{
-        const r=await fetch(`${ENTUR}/${sid}/${ep}`,{headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
+        const r=await fetch(`${ENTUR}/${sid}/${ep}`,
+          {headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
         if(!r.ok) continue;
         const j=await r.json();
         const bikes=j?.data?.bikes??j?.data?.vehicles??[];
@@ -1049,6 +1088,7 @@ async function loadCity(c){
       }catch(e){}
     }
   }));
+
   if(!all.length){loadDemo();return;}
   scooters=all;renderList();renderMarkers();renderStrip();
   const n=scooters.filter(s=>!s.disabled).length;
@@ -1056,18 +1096,6 @@ async function loadCity(c){
   document.getElementById('ltxt').textContent=n>0?`${n} live`:'Ingen';
   startLastUpdTimer();
   refreshTimer=setTimeout(()=>loadCity(city),60000);
-}
-function manualRefresh(){
-  clearTimeout(refreshTimer);
-  const el=document.getElementById('lastUpd');
-  if(el)el.textContent='';
-  loadCity(city);
-  showToast('↻ Oppdaterer...');
-}
-let _lut=null;
-function startLastUpdTimer(){
-  clearInterval(_lut);let s=0;
-  _lut=setInterval(()=>{s++;const el=document.getElementById('lastUpd');if(el)el.textContent=s<60?s+'s siden':Math.floor(s/60)+'m siden';},1000);
 }
 function pb(b){
   if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));
@@ -1134,7 +1162,7 @@ function renderList(){
   document.getElementById('shc').textContent=vis.length?`${vis.length} sparkesykler`:'Ingen tilgjengelig';
   if(!vis.length){list.innerHTML=`<div class="empty">🛴<br>${scooters.length===0?'Ingen data.<br>Sjekk Worker-URL i Profil':'Ingen funnet.'}</div>`;return;}
   list.innerHTML=vis.slice(0,60).map(s=>{
-    const p=P[s.provider],bt=s.battery;
+    const p=P[s.provider]||P['voi'],bt=s.battery;
     const bc=bt==null?'#555':bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const dm=distTo(s),ds=fmtD(dm),wl=walkLabel(dm);
     const wm=walkMinutes(dm);
@@ -1192,7 +1220,7 @@ function renderMarkers(){
   });
 
   scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{
-    const p=P[s.provider],bt=s.battery;
+    const p=P[s.provider]||P['voi'],bt=s.battery;
     const col=bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const tc=bt!=null&&bt<=20?'#fff':p.tc;
     const dm=distTo(s);
@@ -1344,7 +1372,8 @@ Trykk OK for å starte turen.`)){
 // ══════════════════════════════════════
 function changeCity(c){
   city=c;clearTimeout(refreshTimer);
-  leafMap.flyTo(CEN[c]||CEN.oslo,14,{duration:.9});
+  const zoom=c==='norge'?5:14;
+  leafMap.flyTo(CEN[c]||CEN.oslo,zoom,{duration:c==='norge'?1.5:.9});
   scooters=[];markers.forEach(m=>leafMap.removeLayer(m));markers=[];
   if(window._clusterGroup)leafMap.removeLayer(window._clusterGroup);
   renderList();renderStrip();clearRoute();
