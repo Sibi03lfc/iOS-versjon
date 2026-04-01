@@ -1,109 +1,61 @@
 <!DOCTYPE html>
-<html lang="nb">
+<html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personvern – SparkNorge</title>
 <style>
-:root{--bg:#080c18;--bg2:#0d1224;--surf:#121930;--border:rgba(255,255,255,.08);--text:#e8edf8;--dim:#5a6a8a;--acc:#00e5a0}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;padding:0 0 40px}
-.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 20px 16px;position:sticky;top:0;display:flex;align-items:center;gap:12px}
-.back{color:var(--acc);font-size:16px;cursor:pointer;padding:4px 8px;border-radius:8px;border:none;background:none;text-decoration:none}
-.header h1{font-size:17px;font-weight:700}
-.content{padding:24px 20px;max-width:640px;margin:0 auto}
-h2{font-size:16px;font-weight:700;color:var(--acc);margin:28px 0 10px}
-h2:first-child{margin-top:0}
-p{font-size:14px;color:var(--dim);margin-bottom:12px}
-ul{font-size:14px;color:var(--dim);padding-left:20px;margin-bottom:12px}
-li{margin-bottom:6px}
-strong{color:var(--text);font-weight:600}
-.badge{display:inline-block;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--acc);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:600;margin-bottom:16px}
-.box{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
-.updated{font-size:12px;color:var(--dim);margin-top:24px;text-align:center}
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; background: #fff; color: #1a1a1a; line-height: 1.7; }
+  h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .date { color: #888; font-size: 14px; margin-bottom: 40px; }
+  h2 { font-size: 18px; font-weight: 700; margin-top: 36px; margin-bottom: 8px; border-left: 4px solid #00e5a0; padding-left: 12px; }
+  p { margin: 8px 0; color: #333; }
+  ul { padding-left: 20px; color: #333; }
+  li { margin: 6px 0; }
+  a { color: #00aa75; }
+  .badge { display: inline-block; background: #f0fdf8; border: 1px solid #00e5a0; border-radius: 6px; padding: 2px 10px; font-size: 13px; color: #00aa75; font-weight: 600; margin-bottom: 20px; }
+  footer { margin-top: 60px; font-size: 13px; color: #aaa; border-top: 1px solid #eee; padding-top: 20px; }
 </style>
 </head>
 <body>
-<div class="header">
-  <a class="back" onclick="history.back()">← Tilbake</a>
-  <h1>Personvern og vilkår</h1>
-</div>
-<div class="content">
-  <div class="badge">Sist oppdatert: mars 2026</div>
+<h1>Personvern</h1>
+<div class="date">Sist oppdatert: april 2026</div>
+<div class="badge">GDPR-kompatibel</div>
 
-  <h2>📋 Om SparkNorge</h2>
-  <p>SparkNorge er en gratis mobilapp som hjelper deg å finne ledige elsparkesykler fra <strong>Voi, Bolt, Ryde og Dott</strong> i norske byer. Appen samler live-data fra offentlige API-er og viser den på kart.</p>
+<p>SparkNorge er en gratis app som viser ledige elsparkesykler fra Voi, Bolt, Ryde og Dott over hele Norge. Vi samler inn så lite data som mulig.</p>
 
-  <h2>📍 Stedsdata (GPS)</h2>
-  <div class="box">
-    <p><strong>Hva vi samler inn:</strong> Din GPS-posisjon</p>
-    <p><strong>Hvorfor:</strong> For å vise sparkesykler i nærheten og beregne gangtid og gangrute til nærmeste sykkel</p>
-    <p><strong>Lagring:</strong> Posisjonen lagres <strong>ikke</strong> på server. Den brukes kun lokalt i appen i sanntid</p>
-    <p><strong>Deling:</strong> Posisjonen deles <strong>aldri</strong> med tredjeparter</p>
-    <p><strong>Kontroll:</strong> Du kan alltid avslå stedsdata – appen fungerer da uten «i nærheten»-funksjonalitet</p>
-  </div>
+<h2>Data vi samler inn</h2>
+<p>Vi samler ikke inn personopplysninger. Appen fungerer uten brukerkonto og uten registrering.</p>
+<ul>
+  <li><strong>GPS-posisjon</strong> – brukes kun lokalt for å vise nærmeste sykler. Sendes aldri til oss.</li>
+  <li><strong>Innstillinger</strong> – lagres lokalt via localStorage. Ingen data sendes til servere.</li>
+</ul>
 
-  <h2>📷 Kamera</h2>
-  <div class="box">
-    <p><strong>Hva vi bruker:</strong> Kameraet brukes utelukkende til å <strong>skanne QR-koder</strong> på sparkesykler</p>
-    <p><strong>Lagring:</strong> Ingen bilder tas, lagres eller sendes – kamerastrømmen analyseres kun lokalt</p>
-    <p><strong>Deling:</strong> Aldri</p>
-  </div>
+<h2>Data vi ikke samler inn</h2>
+<ul>
+  <li>Navn, e-post eller telefonnummer</li>
+  <li>Betalingsinformasjon</li>
+  <li>Brukshistorikk eller sporingsdata</li>
+  <li>Annonse-ID</li>
+</ul>
 
-  <h2>💾 Data som lagres lokalt</h2>
-  <p>SparkNorge lagrer følgende <strong>kun på din enhet</strong> via localStorage:</p>
-  <ul>
-    <li>Profilnavn, avatar og by (du oppgir selv)</li>
-    <li>Betalingsinformasjon (kun siste 4 siffer på kort – ikke fullstendig kortnummer)</li>
-    <li>Worker-URL til din Cloudflare-proxy</li>
-    <li>Turhistorikk (demo-data)</li>
-    <li>App-innstillinger og XP-poeng</li>
-  </ul>
-  <p>Disse dataene sendes <strong>aldri</strong> til noen server. De forsvinner hvis du sletter appen eller bruker «Slett konto»-funksjonen.</p>
+<h2>Tredjepartstjenester</h2>
+<p><strong>Entur</strong> – live sparkesykkeldata fra api.entur.io under NLOD 2.0-lisensen. Norsk statlig selskap. Ingen persondata sendes.</p>
+<p><strong>OpenStreetMap</strong> – kartdata via Leaflet. Se <a href="https://www.openstreetmap.org/copyright">OSM sin personvernpolicy</a>.</p>
+<p><strong>OSRM</strong> – gangrute-beregning. Kun koordinater sendes, ingen persondata.</p>
 
-  <h2>🌐 Nettverkstilkoblinger</h2>
-  <p>Appen kobler seg til følgende tjenester:</p>
-  <ul>
-    <li><strong>Din Cloudflare Worker</strong> – henter live sparkesykkeldata fra Entur GBFS-API</li>
-    <li><strong>router.project-osrm.org</strong> – beregner gangruter (koordinater sendes, ingen persondata)</li>
-    <li><strong>tile.openstreetmap.org</strong> – kartfliser (standard kart-API, ingen persondata)</li>
-    <li><strong>cdn.jsdelivr.net / unpkg.com</strong> – JavaScript-biblioteker (Leaflet, jsQR)</li>
-  </ul>
+<h2>Kamera</h2>
+<p>QR-skanneren bruker kameraet kun når du aktivt åpner skanneren. Bilder lagres ikke.</p>
 
-  <h2>🚫 Ingen annonsering, ingen sporing</h2>
-  <p>SparkNorge:</p>
-  <ul>
-    <li>Samler <strong>ikke</strong> inn brukerdata for annonsering</li>
-    <li>Bruker <strong>ingen</strong> analytics-tjenester (ikke Google Analytics, Mixpanel, o.l.)</li>
-    <li>Selger <strong>ikke</strong> data til tredjeparter</li>
-    <li>Bruker <strong>ikke</strong> fingerprinting-teknikker</li>
-    <li>Har <strong>ikke</strong> brukersporing på tvers av apper</li>
-  </ul>
+<h2>Dine rettigheter (GDPR)</h2>
+<p>Siden vi ikke lagrer personopplysninger er det ingen data å slette. Du kan slette lokale innstillinger via «Slett konto» i Innstillinger-fanen.</p>
 
-  <h2>🗑️ Slette dine data</h2>
-  <p>Du kan slette all data fra appen når som helst:</p>
-  <ul>
-    <li>Gå til <strong>Profil → Innstillinger → Slett konto</strong></li>
-    <li>Eller avinstaller appen – all lokal data slettes automatisk</li>
-  </ul>
-  <p>Vi har ingen server-side data å slette, fordi vi aldri lagrer noe eksternt.</p>
+<h2>Barn</h2>
+<p>Appen er ikke rettet mot barn under 13 år.</p>
 
-  <h2>👶 Barn (under 13 år)</h2>
-  <p>SparkNorge er ikke rettet mot barn under 13 år. Appen krever minimum 16 år for å leie sparkesykler (leverandørkrav). Vi samler ikke bevisst inn data fra barn.</p>
+<h2>Kontakt</h2>
+<p>Spørsmål? E-post: <a href="mailto:personvern@sparknorge.no">personvern@sparknorge.no</a></p>
 
-  <h2>🇳🇴 Norsk lov og GDPR</h2>
-  <p>SparkNorge er utviklet i Norge og følger:</p>
-  <ul>
-    <li>EUs personvernforordning (GDPR)</li>
-    <li>Norsk personopplysningsloven</li>
-    <li>Apple App Store Review Guidelines (Guideline 5.1)</li>
-  </ul>
-
-  <h2>📬 Kontakt</h2>
-  <p>Spørsmål om personvern? Kontakt oss på:<br>
-  <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="79090b100f181a00390a09180b1217160b1e1c571716">[email&#160;protected]</a></strong></p>
-
-  <h2>🔄 Endringer i personvernerklæringen</h2>
-  <p>Vi varsler om vesentlige endringer gjennom app-oppdateringer. Dato øverst på denne siden viser siste revisjon.</p>
-
-  <
+<footer>SparkNorge &copy; 2026 &nbsp;·&nbsp; v2.1 &nbsp;·&nbsp; Entur GBFS &nbsp;·&nbsp; NLOD 2.0</footer>
+</body>
+</html>
