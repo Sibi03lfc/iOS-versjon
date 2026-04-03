@@ -762,7 +762,45 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
     <p style="color:#b0bdd0">Priser hentet direkte fra appene april 2026</p>
   </div>
 
-  <div class="calcbox">
+    <!-- RUTEPLANLEGGER -->
+  <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px">
+    <div style="font-size:16px;font-weight:800;color:#e0e8f0;margin-bottom:4px">&#128506;&#65039; Planlegg turen din</div>
+    <div style="font-size:12px;color:#b0bdd0;margin-bottom:14px">Skriv inn start og slutt &#8212; vi regner ut pris for alle leverand&#248;rer</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <!-- Fra-felt -->
+      <div style="position:relative">
+        <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#00e5a0;z-index:1"></div>
+        <input id="routeFrom" type="text" placeholder="Fra: adresse eller sted..."
+          style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:14px;padding:12px 12px 12px 32px;border-radius:12px;outline:none"
+          oninput="routeSearch(this.value,'from')" autocomplete="off">
+        <div id="fromResults" style="position:absolute;top:100%;left:0;right:0;z-index:100;background:rgba(8,12,24,0.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:180px;overflow-y:auto"></div>
+      </div>
+
+      <!-- Til-felt -->
+      <div style="position:relative">
+        <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#ff4d6a;z-index:1"></div>
+        <input id="routeTo" type="text" placeholder="Til: adresse eller sted..."
+          style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:14px;padding:12px 12px 12px 32px;border-radius:12px;outline:none"
+          oninput="routeSearch(this.value,'to')" autocomplete="off">
+        <div id="toResults" style="position:absolute;top:100%;left:0;right:0;z-index:100;background:rgba(8,12,24,0.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:180px;overflow-y:auto"></div>
+      </div>
+
+      <!-- Beregn-knapp -->
+      <button onclick="calcRoute()" style="background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;width:100%">
+        Beregn pris &#8594;
+      </button>
+    </div>
+
+    <!-- Resultat -->
+    <div id="routeResult" style="display:none;margin-top:16px">
+      <div style="font-size:12px;color:#b0bdd0;margin-bottom:10px" id="routeDistInfo"></div>
+      <div id="routePrices" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div style="font-size:11px;color:#b0bdd0;margin-top:10px;text-align:center">Estimert &#8212; faktisk pris kan variere. Sjekk appen.</div>
+    </div>
+  </div>
+
+<div class="calcbox">
     <h2>&#129518; Hva koster turen din?</h2>
     <div class="calclbl"><span>Minutter</span><b id="cml">10 min</b></div>
     <input type="range" id="cmin" min="1" max="60" value="10" oninput="updateCalc()">
@@ -1230,6 +1268,95 @@ function flyToResult(lat,lon){
 
 // ── STATISTIKK ──
 
+
+// ── RUTEPLANLEGGER ──
+let _routeFromCoord=null, _routeToCoord=null;
+let _rfTimer=null, _rtTimer=null;
+
+function routeSearch(q, field){
+  clearTimeout(field==='from'?_rfTimer:_rtTimer);
+  const resId=field==='from'?'fromResults':'toResults';
+  if(q.length<2){document.getElementById(resId).style.display='none';return;}
+  const timer=setTimeout(async()=>{
+    try{
+      const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+' Norge')}&format=json&limit=4&countrycodes=no`,
+        {headers:{'Accept-Language':'no'}});
+      const res=await r.json();
+      const el=document.getElementById(resId);
+      if(!res.length){el.style.display='none';return;}
+      el.innerHTML=res.map(p=>`
+        <div onclick="selectRouteAddr('${field}',${p.lat},${p.lon},'${p.display_name.split(',').slice(0,2).join(',').replace(/'/g,'')}')"
+          style="padding:10px 12px;cursor:pointer;font-size:13px;color:#e0e8f0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center">
+          <span style="color:${field==='from'?'#00e5a0':'#ff4d6a'}">&#9679;</span>
+          <div>
+            <div style="font-weight:600">${p.display_name.split(',')[0]}</div>
+            <div style="font-size:11px;color:#b0bdd0">${p.display_name.split(',').slice(1,3).join(',')}</div>
+          </div>
+        </div>`).join('');
+      el.style.display='block';
+    }catch(e){}
+  },350);
+  if(field==='from') _rfTimer=timer; else _rtTimer=timer;
+}
+
+function selectRouteAddr(field, lat, lon, name){
+  if(field==='from'){
+    _routeFromCoord={lat:+lat,lon:+lon};
+    document.getElementById('routeFrom').value=name;
+    document.getElementById('fromResults').style.display='none';
+  } else {
+    _routeToCoord={lat:+lat,lon:+lon};
+    document.getElementById('routeTo').value=name;
+    document.getElementById('toResults').style.display='none';
+  }
+}
+
+async function calcRoute(){
+  if(!_routeFromCoord||!_routeToCoord){
+    showToast('Velg både start og slutt');
+    return;
+  }
+  showToast('Beregner rute...');
+  document.getElementById('routeResult').style.display='none';
+
+  try{
+    // Get walking route duration via OSRM
+    const url=`https://router.project-osrm.org/route/v1/foot/${_routeFromCoord.lon},${_routeFromCoord.lat};${_routeToCoord.lon},${_routeToCoord.lat}?overview=false`;
+    const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    const data=await resp.json();
+    const route=data.routes[0];
+    const durationMin=Math.ceil(route.duration/60);
+    const distM=Math.round(route.distance);
+    const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
+
+    // Calculate prices for all providers
+    const prices=Object.entries(P).map(([key,p])=>{
+      const cost=p.start+p.pm*durationMin;
+      return {key,p,cost:Math.round(cost),min:durationMin};
+    }).sort((a,b)=>a.cost-b.cost);
+
+    const cheapest=prices[0];
+
+    document.getElementById('routeDistInfo').innerHTML=
+      `&#128694; ${durationMin} min gange &nbsp;&middot;&nbsp; ${distTxt} &nbsp;&middot;&nbsp; <span style="color:#00e5a0;font-weight:700">Billigst: ${cheapest.p.label} (${cheapest.cost} kr)</span>`;
+
+    document.getElementById('routePrices').innerHTML=prices.map((item,i)=>`
+      <div style="background:${i===0?item.p.color+'18':'rgba(255,255,255,0.04)'};border:1.5px solid ${i===0?item.p.color+'44':'rgba(255,255,255,0.08)'};border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:10px;background:${item.p.color}20;color:${item.p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0">${item.p.label[0]}</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:#e0e8f0">${item.p.label} ${i===0?'<span style="background:#00e5a0;color:#001a0e;font-size:10px;padding:2px 7px;border-radius:20px;margin-left:4px;font-weight:800">BILLIGST</span>':''}</div>
+          <div style="font-size:12px;color:#b0bdd0;margin-top:2px">${item.p.start} kr oppstart + ${item.p.pm} kr/min &times; ${durationMin} min</div>
+        </div>
+        <div style="font-size:20px;font-weight:800;color:${i===0?item.p.color:'#e0e8f0'}">${item.cost} kr</div>
+      </div>`).join('');
+
+    document.getElementById('routeResult').style.display='block';
+    showToast(cheapest.p.label+' billigst: '+cheapest.cost+' kr');
+
+  }catch(e){
+    showToast('Kunne ikke beregne rute');
+  }
+}
 function manualRefresh(){
   clearTimeout(refreshTimer);
   const el=document.getElementById('lastUpd');
