@@ -1,5 +1,4 @@
 <!DOCTYPE html><html lang="no">
-<!DOCTYPE html><html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -425,9 +424,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <body>
 
 <!-- ONBOARDING -->
-<div id="closedBanner" style="display:none;position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:900;background:rgba(255,77,77,0.95);color:white;text-align:center;padding:10px 16px;font-size:13px;font-weight:600;backdrop-filter:blur(10px)">
-  🔴 Oslo: Sparkesykler stengt kl. 23:00–05:00
-</div>
 <div id="onboarding" class="hide">
   <div class="ob-slides" id="obSlides">
     <div class="ob-slide">
@@ -448,7 +444,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="ob-slide">
       <div class="ob-ico">💸</div>
       <div class="ob-title">Oppdaterte<br><em>priser 2025</em></div>
-      <div class="ob-desc">Aktiver posisjon for å se gåavstand til nærmeste sykkel. Vi deler aldri posisjonen din.</div>
+      <div class="ob-desc">Voi 3 kr/min · Bolt 2,5 kr/min · Ryde 2,5 kr/min. Sammenlign og spar</div>
     </div>
   </div>
   <div class="ob-bottom">
@@ -483,7 +479,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="shdl"></div>
     <div class="stit">🛴 SparkNorge</div>
     <div class="ssub">Live sparkesykler · Kart · Priser · QR-skanner<br>
-      <small style="color:#b0bdd0">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
+      <small style="color:var(--dim)">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
     <div class="pprow">
       <span class="pp" style="background:rgba(233,30,140,.1);color:var(--voi)">● Voi</span>
       <span class="pp" style="background:rgba(52,209,107,.1);color:var(--bolt)">● Bolt</span>
@@ -632,7 +628,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   <div class="inner">
     <div class="logo">🛴 Spark<em>Norge</em></div>
     <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
-      <option value="norge">🇳🇴 Hele Norge</option>
       <option value="oslo">Oslo</option>
       <option value="bergen">Bergen</option>
       <option value="trondheim">Trondheim</option>
@@ -642,15 +637,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <option value="fredrikstad">Fredrikstad</option>
       <option value="drammen">Drammen</option>
     </select>
-    <div id="searchBox" style="display:none;position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:950;background:rgba(8,12,24,.97);padding:10px 14px;border-bottom:1px solid var(--border)">
-  <div style="display:flex;gap:8px">
-    <input id="searchInp" type="text" placeholder="Søk sted eller adresse..." style="flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:14px;padding:10px 12px;border-radius:10px;outline:none" oninput="searchPlaces(this.value)">
-    <button onclick="closeSearch()" style="background:var(--surf2);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 14px;font-size:14px;cursor:pointer">✕</button>
-  </div>
-  <div id="searchResults" style="margin-top:8px;display:flex;flex-direction:column;gap:4px"></div>
-</div>
-<button onclick="openSearch()" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:18px;margin-right:4px" title="Søk">🔍</button>
-<div class="nav-live"><span class="ldot" id="ldot"></span><span id="ltxt">–</span></div>
+    <div class="nav-live"><span class="ldot" id="ldot"></span><span id="ltxt">–</span></div>
   </div>
 </div>
 
@@ -688,27 +675,26 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     </div>
     <div class="sett-group" style="margin-top:16px">
       <div class="sett-row">
-        <div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <div class="sett-ico">&#128205;</div>
         <div class="sett-body" style="flex:1"><div class="sett-lbl">Velg by</div><div class="sett-sub">Ellers brukes GPS automatisk</div></div>
         <select class="city-sel" onchange="changeCity(this.value);document.getElementById('citySel').value=this.value">
-          <option value="norge">🇳🇴 Hele Norge</option>
-      <option value="norge">Hele Norge</option><option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
+          <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
           <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
           <option value="lillestrom">Lillestrom</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
         </select>
       </div>
       <div class="sett-row">
-        <div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
+        <div class="sett-ico">&#128205;</div>
         <div class="sett-body" style="flex:1"><div class="sett-lbl">GPS-posisjon</div><div class="sett-sub">For gaavstand og naermeste sykkel</div></div>
         <button class="sbtn" onclick="locateMe(false)" style="font-size:12px;padding:7px 12px">Finn meg</button>
       </div>
       <div class="sett-row">
-        <div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <div class="sett-ico">&#128279;</div>
         <div class="sett-body"><div class="sett-lbl">Datakilde</div><div class="sett-sub">Entur GBFS - api.entur.io - Apne data</div></div>
         <span style="color:var(--accent);font-size:12px;font-weight:600">Live &#10003;</span>
       </div>
       <div class="sett-row">
-        <div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="sett-ico">&#128276;</div>
         <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Tilbud og nye sykler i naerheten</div></div>
         <div class="tgl on" onclick="this.classList.toggle('on')"></div>
       </div>
@@ -716,52 +702,30 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div style="padding:16px 16px 8px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px">Tips og fakta<span style="flex:1;height:1px;background:var(--border);display:inline-block"></span></div>
     <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">Hvilken sykkel passer deg?</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.8">
-          <span style="color:#fff;font-weight:600">Ryde</span> — størst hjul, best demping på norske fortau.<br>
-          <span style="color:#fff;font-weight:600">Bolt</span> — billigst per minutt (2,5 kr). Best for korte turer.<br>
-          <span style="color:#fff;font-weight:600">Voi</span> — størst dekning. Alltid noe tilgjengelig.<br>
-          <span style="color:#fff;font-weight:600">Dott</span> — kun Trondheim, sesong mars–desember.
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Hvilken sykkel passer deg?</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7"><b style="color:var(--text)">Ryde</b> - storst hjul, best demping.<br><b style="color:var(--text)">Bolt</b> - billigst per minutt (2,5 kr).<br><b style="color:var(--text)">Voi</b> - storst dekning i Oslo.<br><b style="color:var(--text)">Dott</b> - kun Trondheim, sesong mars-des.</div>
       </div>
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">Norske trafikkregler</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.8">
-          — Maks <span style="color:#fff;font-weight:600">20 km/t</span> — samme som sykkel<br>
-          — Ikke lov på <span style="color:#fff;font-weight:600">fortau</span> — bruk sykkelvei<br>
-          — Promillegrense <span style="color:#fff;font-weight:600">0,2 ‰</span> gjelder<br>
-          — Kun <span style="color:#fff;font-weight:600">én person</span> per sykkel
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Norske trafikkregler</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Maks <b style="color:var(--text)">20 km/t</b><br>- Ikke lov pa <b style="color:var(--text)">fortau</b><br>- Promillegrense <b style="color:var(--text)">0,2 promille</b><br>- Kun <b style="color:var(--text)">en person</b> per sykkel</div>
       </div>
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">Oslo-regler 2025–2027</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.8">
-          — Kun <span style="color:#fff;font-weight:600">Voi, Bolt og Ryde</span> er godkjente<br>
-          — Stengt <span style="color:#fff;font-weight:600">kl. 23:00–05:00</span> alle dager<br>
-          — Maks <span style="color:#fff;font-weight:600">8 000 sykler</span> totalt i Oslo
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Oslo-regler 2025-2027</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Kun Voi, Bolt og Ryde godkjente<br>- Stengt <b style="color:var(--text)">kl. 23:00-05:00</b><br>- Maks <b style="color:var(--text)">8 000 sykler</b> i Oslo</div>
       </div>
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">Spar penger</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.8">
-          — Bolt månedspass: <span style="color:#fff;font-weight:600">389 kr / 300 min</span> = 1,30 kr/min<br>
-          — Voi dagspass: <span style="color:#fff;font-weight:600">69 kr / 100 min</span><br>
-          — Ryde 14-dagers: <span style="color:#fff;font-weight:600">249 kr / 200 min</span>
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Spar penger</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Bolt manedspass: <b style="color:var(--text)">389 kr/300 min</b><br>- Voi dagspass: <b style="color:var(--text)">69 kr/100 min</b><br>- Ryde 14-dagers: <b style="color:var(--text)">249 kr/200 min</b></div>
       </div>
       <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent)">Batteri-tips</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.8">
-          — Under <span style="color:#ff4d4d;font-weight:600">20%</span> — velg en annen sykkel<br>
-          — <span style="color:#ffb800;font-weight:600">20–50%</span> — rekker typisk 2–5 km<br>
-          — Over <span style="color:#00e5a0;font-weight:600">50%</span> — rekker typisk 5–8 km
-        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Batteri-tips</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.7">- Under 20% - velg en annen<br>- 50%+ rekker typisk 5-8 km<br>- Rodt under 20%, gult 20-50%, gront 50%+</div>
       </div>
     </div>
     <div class="sett-group" style="margin-top:16px">
-      <div class="sett-row"><div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 - Entur GBFS - Mars 2026</div></div></div>
-      <div class="sett-row" onclick="window.open('https://sparknorge.netlify.app','_blank')" style="cursor:pointer"><div class="sett-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">Oppdatert mars 2026 - GDPR</div></div><span style="color:var(--dim);font-size:18px">&#8250;</span></div>
-      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer"><div class="sett-ico" style="color:var(--red)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></div><div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div></div>
+      <div class="sett-row"><div class="sett-ico">&#128202;</div><div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 - Entur GBFS - Mars 2026</div></div></div>
+      <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer"><div class="sett-ico">&#128274;</div><div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">Oppdatert mars 2026 - GDPR</div></div><span style="color:var(--dim);font-size:18px">&#8250;</span></div>
+      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer"><div class="sett-ico" style="color:var(--red)">&#128465;</div><div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div></div>
     </div>
     <div style="height:20px"></div>
   </div>
@@ -769,167 +733,81 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 
 <div id="pgPris" class="page">
   <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding:16px 14px 24px;background:var(--bg)">
-
   <div class="ph">
-    <h1>&#128184; Prisguide 2026</h1>
-    <p style="color:#b0bdd0">Priser hentet direkte fra appene &#183; Sjekk alltid appen for siste pris</p>
+    <h1>💸 Prisguide 2025</h1>
+    <p>Oppdaterte priser · Oslo: kun Voi, Bolt og Ryde har tillatelse (apr 2025–mar 2027)</p>
   </div>
 
   <div class="calcbox">
-    <h2>&#129518; Hva koster turen din?</h2>
+    <h2>🧮 Hva koster turen din?</h2>
     <div class="calclbl"><span>Minutter</span><b id="cml">10 min</b></div>
     <input type="range" id="cmin" min="1" max="60" value="10" oninput="updateCalc()">
     <div class="calcgrid" id="cgrid"></div>
   </div>
 
-  <!-- SAMMENLIGNING TABELL -->
-  <div class="sec">&#128202; Sammenlign pass</div>
-  <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;font-size:12px">
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;background:var(--surf2);padding:10px 12px;font-weight:700;color:var(--dim);font-size:11px">
-      <div>Pass</div>
-      <div style="text-align:center;color:var(--voi)">Voi</div>
-      <div style="text-align:center;color:var(--ryde)">Ryde</div>
-      <div style="text-align:center;color:var(--bolt)">Bolt</div>
-      <div style="text-align:center;color:#0066cc">Dott</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">Standard<br><span style="font-size:10px">per min</span></div>
-      <div style="text-align:center;font-weight:600">10 kr<br><span style="color:var(--voi);font-weight:700">2,50/min</span></div>
-      <div style="text-align:center;font-weight:600">5 kr<br><span style="color:var(--ryde);font-weight:700">2,50/min</span></div>
-      <div style="text-align:center;font-weight:600">9 kr<br><span style="color:var(--bolt);font-weight:700">2,20/min</span></div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">5,90 kr<br><span style="color:#0066cc;font-weight:700">2,50/min</span></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">30 min</span></div>
-      <div style="text-align:center;font-weight:600">49 kr</div>
-      <div style="text-align:center;font-weight:600">39 kr &#9733;</div>
-      <div style="text-align:center;font-weight:600">21 kr*</div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">60 min</span></div>
-      <div style="text-align:center;font-weight:600">89 kr</div>
-      <div style="text-align:center;font-weight:600">59 kr &#9733;</div>
-      <div style="text-align:center;font-weight:600">&#8212;</div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">Ukespass<br><span style="font-size:10px">120 min</span></div>
-      <div style="text-align:center;font-weight:600">139 kr</div>
-      <div style="text-align:center;font-weight:600">119 kr &#9733;</div>
-      <div style="text-align:center;font-weight:600">59 kr<br><span style="font-size:10px;color:var(--dim)">80 min</span></div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">14-dagers<br><span style="font-size:10px">200 min</span></div>
-      <div style="text-align:center;font-weight:600">&#8212;</div>
-      <div style="text-align:center;font-weight:600">219 kr &#9733;</div>
-      <div style="text-align:center;font-weight:600">&#8212;</div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">M&#229;nedspass<br><span style="font-size:10px">240-300 min</span></div>
-      <div style="text-align:center;font-weight:600">299 kr &#9733;<br><span style="font-size:10px;color:var(--dim)">300 min</span></div>
-      <div style="text-align:center;font-weight:600">299 kr &#9733;<br><span style="font-size:10px;color:var(--dim)">300 min</span></div>
-      <div style="text-align:center;font-weight:600">139 kr<br><span style="font-size:10px;color:var(--dim)">240 min</span></div>
-      <div style="text-align:center;font-weight:600;color:#0066cc">&#128241;</div>
-    </div>
-    <div style="padding:8px 12px;font-size:11px;color:var(--dim);border-top:1px solid var(--border)">&#9733; = beste verdi &#183; *Kampanjepris, kan variere</div>
-  </div>
-
-  <!-- VOI -->
-  <div class="sec">Voi <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="sec">Voi <span class="oslo-badge">✓ Oslo</span></div>
   <div class="pcard">
     <div class="pcard-h">
       <div class="plogo" style="background:rgba(233,30,140,.12);color:var(--voi)">V</div>
-      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline">St&#248;rst dekning i Oslo</div></div>
-      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Popul&#230;r</div>
+      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline">Størst dekning i Oslo · Bred infrastruktur</div></div>
+      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Populær</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">3 kr/min</div><div class="pgl">Kjøring</div></div>
     </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Frie oppl&#229;sninger</div><div class="prow-s" style="color:#8fa0b8">Spar startavgift &#183; 30 dager</div></div><div class="prow-p">0 kr*</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">30 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 1 dag &#183; Spar 54%</div></div><div class="prow-p">49 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">60 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 3 dager &#183; Spar 58%</div></div><div class="prow-p">89 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">120 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 7 dager &#183; Spar 67%</div></div><div class="prow-p">139 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">300 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager &#183; Spar 72%</div></div><div class="prow-p">299 kr</div></div>
-    <div class="prow"><div><div class="prow-s" style="font-size:11px">*Kampanjepris &#8212; sjekk Voi-appen for n&#229;v&#230;rende pris</div></div><div></div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">100 min inkl.</div></div><div class="prow-p">69 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Fri oppstart 1 mnd</div><div class="prow-s">Ubegrensede starter</div></div><div class="prow-p">29 kr/mnd</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">299 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">750 min</div></div><div class="prow-p">699 kr</div></div>
   </div>
 
-  <!-- RYDE -->
-  <div class="sec">Ryde <span class="oslo-badge">&#10003; Oslo</span><span class="city-badge" style="margin-left:4px">&#127475;&#127476; Norsk</span></div>
-  <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div>
-      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline">Norsk &#183; St&#248;rst hjul &#183; Best demping</div></div>
-      <div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 24 timer</div></div><div class="prow-p">39 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 60 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 24 timer</div></div><div class="prow-p">59 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 120 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 7 dager</div></div><div class="prow-p">119 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">14-dagers 200 min</div><div class="prow-s" style="color:#8fa0b8">Beste verdi per minutt!</div></div><div class="prow-p">219 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 300 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager</div></div><div class="prow-p">299 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 750 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager</div></div><div class="prow-p">649 kr</div></div>
-  </div>
-
-  <!-- BOLT -->
-  <div class="sec">Bolt <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="sec">Bolt <span class="oslo-badge">✓ Oslo</span></div>
   <div class="pcard">
     <div class="pcard-h">
       <div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div>
-      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline">Lavest minuttpris &#183; God dekning</div></div>
-      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">2,20 kr/min</div>
+      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline">Lavest per-minutt-pris · God dekning</div></div>
+      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">Billigst/min</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">9 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,20 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">0–5 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
     </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 24 timer</div></div><div class="prow-p">21 kr*</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 80 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 7 dager</div></div><div class="prow-p">59 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Gratis oppl&#229;sning/mnd</div><div class="prow-s" style="color:#8fa0b8">Betal per minutt &#183; 30 dager</div></div><div class="prow-p">9 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 240 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 30 dager</div></div><div class="prow-p">139 kr</div></div>
-    <div class="prow"><div><div class="prow-s" style="font-size:11px">*Kampanjepris &#8212; sjekk Bolt-appen for n&#229;v&#230;rende pris</div></div><div></div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">80 min inkl.</div></div><div class="prow-p">69 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min = 1,30 kr/min!</div></div><div class="prow-p">389 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">800 min</div></div><div class="prow-p">699 kr</div></div>
   </div>
 
-  <!-- DOTT -->
-  <div class="sec">Dott <span class="city-badge">Trondheim</span></div>
+  <div class="sec">Ryde <span class="oslo-badge">✓ Oslo</span><span class="city-badge" style="margin-left:4px">🇳🇴 Norsk</span></div>
   <div class="pcard">
     <div class="pcard-h">
-      <div class="plogo" style="background:rgba(0,102,204,.12);color:#0066cc">D</div>
-      <div><div class="pname" style="color:#0066cc">Dott</div><div class="ptagline">Kun Trondheim &#183; Sesong 15. mars&#8211;1. des</div></div>
-      <div class="pbadge" style="background:rgba(0,102,204,.1);color:#0066cc">Trondheim</div>
+      <div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div>
+      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline">Norsk selskap · God demping · Robust sykkel</div></div>
+      <div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:#0066cc">5,90 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:#0066cc">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
     </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Spar opptil 70%</div><div class="prow-s" style="color:#8fa0b8">Pass tilgjengelig i Dott-appen</div></div><div class="prow-p">&#128241;</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Reserver gratis</div><div class="prow-s" style="color:#8fa0b8">Gratis reservasjon inntil avgang</div></div><div class="prow-p">0 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Aldersgrense</div><div class="prow-s" style="color:#8fa0b8">18 &#229;r</div></div><div class="prow-p">&#8212;</div></div>
+    <div class="prow"><div><div class="prow-n">14-dagers pass</div><div class="prow-s">200 min – beste verdi!</div></div><div class="prow-p">249 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">399 kr</div></div>
   </div>
 
-  <!-- TIPS -->
-  <div class="sec">&#128161; Tips</div>
-  <div class="tip" style="color:#b0bdd0"><strong>Daglig bruker?</strong> Bolt m&#229;nedspass: 139 kr / 240 min = 0,58 kr/min &#8212; billigst!</div>
-  <div class="tip" style="color:#b0bdd0"><strong>Kort tur?</strong> Bolt billigst med 2,20 kr/min og lavest oppstart (9 kr).</div>
-  <div class="tip" style="color:#b0bdd0"><strong>D&#229;rlig asfalt?</strong> Ryde har st&#248;rst hjul og best demping for norske fortau.</div>
-  <div class="tip" style="color:#b0bdd0"><strong>Ukestur?</strong> Ryde ukespass: 119 kr / 120 min &#8212; best verdi per minutt.</div>
-
-  <!-- OSLO REGLER -->
-  <div class="sec">Oslo-regler 2025&#8211;2027</div>
-  <div style="background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.18);border-radius:14px;padding:13px;margin-bottom:16px;font-size:13px;line-height:1.8">
-    <div style="font-weight:700;margin-bottom:6px;color:var(--accent)">&#128203; Tillatelsesperiode: 1. apr 2025 &#8211; 31. mar 2027</div>
-    <div>&#128308; Stengt kl. <strong>23:00&#8211;05:00</strong> alle dager</div>
-    <div>&#128202; Maks <strong>8 000 sykler</strong> totalt i Oslo</div>
-    <div>&#128683; TIER/Zvipp har <strong>ikke</strong> tillatelse i Oslo</div>
-    <div>&#128690; Kun Voi, Bolt og Ryde er godkjente</div>
+  <div class="sec">Oslo-regler 2025</div>
+  <div style="background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.18);border-radius:14px;padding:13px;margin-bottom:10px;font-size:13px;line-height:1.8">
+    <div style="font-weight:700;margin-bottom:6px;color:var(--accent)">📋 Tillatelsesperiode: 1. apr 2025 – 31. mar 2027</div>
+    <div>🔴 Stengt kl. <strong>23:00–05:00</strong> alle dager</div>
+    <div>📊 Maks <strong>8 000 sykler</strong> totalt i Oslo</div>
+    <div>🚫 TIER og Zvipp har <strong>ikke</strong> tillatelse i Oslo</div>
+    <div>🚴 Kun Voi, Bolt og Ryde er godkjente</div>
   </div>
 
+  <div class="sec">💡 Tips</div>
+  <div class="tip"><strong>Kjører du daglig?</strong> Bolt månedspass: 389 kr / 300 min = bare 1,30 kr/min!</div>
+  <div class="tip"><strong>Én rask tur?</strong> Bolt billigst ved korte turer (ingen oppstart). 10 min = 25 kr.</div>
+  <div class="tip"><strong>Dårlig asfalt?</strong> Ryde har størst hjul og best demping.</div>
+  <div class="tip"><strong>Dagsturist?</strong> Voi dagspass: 100 min for 69 kr – spar 31 kr vs vanlig pris.</div>
+  <div class="tip"><strong>Ca. 1 av 5 nordmenn</strong> i storbyene har leid elsparkesykkel siste 12 mnd (RVU 2025).</div>
   <div style="height:16px"></div>
   </div>
 </div>
@@ -937,16 +815,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <!-- TAB BAR -->
 <div id="tabBar">
   <div class="tab on" id="tab-kart" onclick="switchTab('kart')">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div><div class="tab-lbl">Kart</div>
+    <div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div>
   </div>
   <div class="tab" id="tab-profil" onclick="switchTab('profil')">
-    <div class="tab-ico" id="tabProfilIco"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div><div class="tab-lbl">Innstillinger</div>
+    <div class="tab-ico" id="tabProfilIco">😎</div><div class="tab-lbl">Innstillinger</div>
   </div>
   <div class="tab" id="tab-pris" onclick="switchTab('pris')">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="tab-lbl">Priser</div>
+    <div class="tab-ico">💸</div><div class="tab-lbl">Priser</div>
   </div>
   <div class="tab" id="tab-qr" onclick="openQR()">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div><div class="tab-lbl">Skann</div>
+    <div class="tab-ico">⬛</div><div class="tab-lbl">Skann</div>
   </div>
 </div>
 
@@ -955,12 +833,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <script>
 // ══════════════════════════════════════
 // CONFIG — REAL 2025/2026 DATA
-// Oslo: kun Voi, Bolt, Ryde godkjent april 2026–mar 2027
+// Oslo: kun Voi, Bolt, Ryde godkjent apr 2025–mar 2027
 // Bergen: Voi, Bolt, Bird, TIER pilot
 // Trondheim: Voi, Ryde, Dott
 // ══════════════════════════════════════
-// Henter alle norske systemer dynamisk fra Entur manifest
-// Ingen hardkoding av byer -- alt kommer fra API automatisk
 const SYS={
   oslo:['voioslo','boltoslo','rydeoslo'],
   bergen:['voibergen','boltbergen'],
@@ -971,26 +847,21 @@ const SYS={
   fredrikstad:['voifredrikstad','boltfredrikstad','rydefredrikstad'],
   drammen:['boltdrammen']
 };
-// Alle systemer fra Entur (lastes dynamisk)
-let ALL_SYSTEMS = [];
 
 // Updated 2025 prices (source: Oslo commune, tek.no Jul 2024, Ryde/Bolt/Voi apps)
 const P={
   voi: {label:'Voi',  color:'#e91e8c', tc:'#fff', start:10, pm:3.00,
-        deeplink:'https://link.voi.com/open', note:'3 kr/min, oppstart 10 kr'},
+        deeplink:'https://link.voi.com/open', note:'3 kr/min · Oppstart 10 kr'},
   bolt:{label:'Bolt', color:'#34d16b', tc:'#001408', start:0, pm:2.50,
-        deeplink:'https://bolt.eu/en/scooters/', note:'11,88 kr/km, ingen oppstart'},
+        deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
-        deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min, oppstart 5 kr'},
-  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:5.90, pm:2.50,
-        deeplink:'https://ridedott.com', note:'5,90 kr oppstart, 2,50 kr/min'},
+        deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
 };
 
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
 const ENTUR_HDR={'ET-Client-Name':'sparknorge-app'};
 
 const CEN={
-  norge:[65.0,15.0],
   oslo:[59.9139,10.7522], bergen:[60.3913,5.3221], trondheim:[63.4305,10.3951],
   stavanger:[58.97,5.7331], kristiansand:[58.1467,7.9956],
   lillestrom:[59.9535,11.0501], fredrikstad:[59.2112,10.9298], drammen:[59.744,10.2045]
@@ -1037,7 +908,7 @@ let selectedScooterId=null;
 let routeLayer=null;
 
 let profile = JSON.parse(localStorage.getItem('sn_profile')||JSON.stringify({
-  name:'', city:'', avatar:'😎',
+  name:'Ole Anders', city:'Oslo', avatar:'😎',
   wallet:124.5, trips:7, km:19.4, xp:200,
   payments:[{type:'vipps',label:'Vipps',num:'400 00 000',ico:'🟠',active:true}],
 }));
@@ -1047,7 +918,7 @@ let profile = JSON.parse(localStorage.getItem('sn_profile')||JSON.stringify({
 // ══════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
   leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:19}).addTo(leafMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM',maxZoom:19}).addTo(leafMap);
 
   // Zoom controls top-right
   L.control.zoom({position:'topright'}).addTo(leafMap);
@@ -1061,26 +932,14 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
 
   // City sel default
-  const savedCity=localStorage.getItem('sn_city')||'oslo';
-  city=savedCity;
-  document.getElementById('citySel').value=savedCity;
+  document.getElementById('citySel').value='oslo';
 
   buildFilters(); updateCalc(); renderProfile(); buildAvatarPicker(); initOnboarding();
   document.getElementById('setup').classList.add('hide');
   setTimeout(()=>leafMap.invalidateSize(),100);
   loadDemo();
-  loadCity(savedCity);
-  leafMap.setView(CEN[savedCity]||CEN.oslo, savedCity==='norge'?5:14);
+  loadCity('oslo');
   setTimeout(()=>locateMe(false),2000);
-
-  // Be om App Store-anmeldelse etter 3. aapning
-  try{
-    const opens=(+localStorage.getItem('sn_opens')||0)+1;
-    localStorage.setItem('sn_opens',opens);
-    if(opens===3&&window.webkit?.messageHandlers?.reviewRequest){
-      setTimeout(()=>window.webkit.messageHandlers.reviewRequest.postMessage(''),3000);
-    }
-  }catch(e){}
 });
 
 // ══════════════════════════════════════
@@ -1166,54 +1025,16 @@ function locateMe(silent=false){
 // ══════════════════════════════════════
 // MAP DATA
 // ══════════════════════════════════════
-async function loadAllSystems(){
-  // Hent alle systemer fra Entur manifest
-  try{
-    const r=await fetch('https://api.entur.io/mobility/v2/gbfs/v3/manifest.json',
-      {headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
-    if(!r.ok) return [];
-    const j=await r.json();
-    return (j?.data?.datasets||[]).map(d=>d.system_id).filter(id=>
-      // Kun sparkesykler -- filtrer bort bysykler og biler
-      !id.includes('bysykkel')&&!id.includes('bilkollektiv')&&!id.includes('car')
-    );
-  }catch(e){ return []; }
-}
-
-function checkOsloClosed(){
-  if(city!=='oslo'&&city!=='norge') return;
-  const h=new Date().getHours();
-  const closed=h>=23||h<5;
-  const b=document.getElementById('closedBanner');
-  if(b) b.style.display=closed?'block':'none';
-}
-
 async function loadCity(c){
   clearTimeout(refreshTimer);
   document.getElementById('shc').textContent='Henter…';
   showShimmers();
   const all=[];
-
-  // Velg hvilke systemer som skal hentes
-  let systems;
-  if(c==='norge'){
-    // Last alle norske sparkesykler
-    if(!ALL_SYSTEMS.length){
-      document.getElementById('shc').textContent='Henter alle norske sykler…';
-      ALL_SYSTEMS=await loadAllSystems();
-    }
-    systems=ALL_SYSTEMS;
-  } else {
-    systems=SYS[c]||[];
-  }
-
-  await Promise.allSettled(systems.map(async sid=>{
-    const pv=Object.keys(P).find(p=>sid.toLowerCase().startsWith(p))||null;
-    if(!pv) return; // Hopp over ukjente leverandører
+  await Promise.allSettled((SYS[c]||[]).map(async sid=>{
+    const pv=Object.keys(P).find(p=>sid.startsWith(p))||'voi';
     for(const ep of ['free_bike_status','vehicle_status']){
       try{
-        const r=await fetch(`${ENTUR}/${sid}/${ep}`,
-          {headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
+        const r=await fetch(`${ENTUR}/${sid}/${ep}`,{headers:ENTUR_HDR,signal:AbortSignal.timeout(10000)});
         if(!r.ok) continue;
         const j=await r.json();
         const bikes=j?.data?.bikes??j?.data?.vehicles??[];
@@ -1228,15 +1049,32 @@ async function loadCity(c){
       }catch(e){}
     }
   }));
-
   if(!all.length){loadDemo();return;}
   scooters=all;renderList();renderMarkers();renderStrip();
   const n=scooters.filter(s=>!s.disabled).length;
   document.getElementById('ldot').classList.toggle('on',n>0);
   document.getElementById('ltxt').textContent=n>0?`${n} live`:'Ingen';
   startLastUpdTimer();
-  checkOsloClosed();
   refreshTimer=setTimeout(()=>loadCity(city),60000);
+}
+function navigateToScooter(lat,lng){
+  leafMap.closePopup();
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(isIOS){window.location.href='maps://maps.apple.com/?daddr='+lat+','+lng+'&dirflg=w';}
+  else{window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng+'&travelmode=walking','_blank');}
+  showToast('Apner Apple Maps...');
+}
+function manualRefresh(){
+  clearTimeout(refreshTimer);
+  const el=document.getElementById('lastUpd');
+  if(el)el.textContent='';
+  loadCity(city);
+  showToast('↻ Oppdaterer...');
+}
+let _lut=null;
+function startLastUpdTimer(){
+  clearInterval(_lut);let s=0;
+  _lut=setInterval(()=>{s++;const el=document.getElementById('lastUpd');if(el)el.textContent=s<60?s+'s siden':Math.floor(s/60)+'m siden';},1000);
 }
 function pb(b){
   if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));
@@ -1303,7 +1141,7 @@ function renderList(){
   document.getElementById('shc').textContent=vis.length?`${vis.length} sparkesykler`:'Ingen tilgjengelig';
   if(!vis.length){list.innerHTML=`<div class="empty">🛴<br>${scooters.length===0?'Ingen data.<br>Sjekk Worker-URL i Profil':'Ingen funnet.'}</div>`;return;}
   list.innerHTML=vis.slice(0,60).map(s=>{
-    const p=P[s.provider]||P['voi'],bt=s.battery;
+    const p=P[s.provider],bt=s.battery;
     const bc=bt==null?'#555':bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const dm=distTo(s),ds=fmtD(dm),wl=walkLabel(dm);
     const wm=walkMinutes(dm);
@@ -1361,7 +1199,7 @@ function renderMarkers(){
   });
 
   scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{
-    const p=P[s.provider]||P['voi'],bt=s.battery;
+    const p=P[s.provider],bt=s.battery;
     const col=bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const tc=bt!=null&&bt<=20?'#fff':p.tc;
     const dm=distTo(s);
@@ -1512,9 +1350,8 @@ Trykk OK for å starte turen.`)){
 // CITY CHANGE
 // ══════════════════════════════════════
 function changeCity(c){
-  city=c;localStorage.setItem('sn_city',c);clearTimeout(refreshTimer);
-  const zoom=c==='norge'?5:14;
-  leafMap.flyTo(CEN[c]||CEN.oslo,zoom,{duration:c==='norge'?1.5:.9});
+  city=c;clearTimeout(refreshTimer);
+  leafMap.flyTo(CEN[c]||CEN.oslo,14,{duration:.9});
   scooters=[];markers.forEach(m=>leafMap.removeLayer(m));markers=[];
   if(window._clusterGroup)leafMap.removeLayer(window._clusterGroup);
   renderList();renderStrip();clearRoute();
@@ -1689,17 +1526,17 @@ function handleQR(raw){
   const m=QRPAT.find(x=>x.re.test(raw));
   const pv=m?P[m.p]:{label:'Ukjent',color:'#00e5a0',tc:'#040a14'};
   document.getElementById('qrRi').textContent=pv.label[0];
-  document.getElementById('qrRi').style.cssText=`background:${pv.color}18;color:${pv.color}`;
+  document.getElementById('qrRi').style.cssText='background:'+pv.color+'18;color:'+pv.color;
   document.getElementById('qrRn').textContent=pv.label+' sparkesykkel';
   const idM=raw.match(/[/]([A-Z0-9-]{4,12})[/]?([?]|$)/i);
   document.getElementById('qrRid').textContent=idM?'ID: '+idM[1]:raw.slice(0,40)+'...';
   const mb=document.getElementById('qrMb');
   mb.textContent=(m?'Apne i '+pv.label:'Apne link')+' ->';
-  mb.style.cssText=`background:${pv.color};color:${pv.tc}`;
-  mb.onclick=()=>window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');
+  mb.style.cssText='background:'+pv.color+';color:'+pv.tc;
+  mb.onclick=function(){window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');};
   const sb=document.getElementById('qrSb2');
-  if(m){sb.textContent='Apne '+pv.label+'.com';sb.onclick=()=>window.open(m.url,'_blank');}
-  else{sb.textContent='Kopier link';sb.onclick=()=>{navigator.clipboard?.writeText(raw);sb.textContent='Kopiert!';};}
+  if(m){sb.textContent='Apne '+pv.label+'.com';sb.onclick=function(){window.open(m.url,'_blank');};}
+  else{sb.textContent='Kopier link';sb.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(raw);sb.textContent='Kopiert!';};}
   document.getElementById('qrRes').classList.add('show');
 }
 function resetQR(){qFound=false;document.getElementById('qrRes').classList.remove('show');setQrSt('Starter kamera igjen…','');openQR();}
@@ -1766,7 +1603,7 @@ function obNextSlide(){
 function finishOnboarding(){
   localStorage.setItem('sn_onboarded2','1');
   document.getElementById('onboarding').style.animation='fadeout .4s ease forwards';
-  setTimeout(()=>{document.getElementById('onboarding').classList.add('hide');locateMe(false);},400);
+  setTimeout(()=>document.getElementById('onboarding').classList.add('hide'),400);
 }
 
 // Card number formatting
