@@ -1362,96 +1362,122 @@ async function showRoute(scooterId){
   if(ulat==null){showToast('Slå på GPS først');locateMe(false);return;}
   clearRoute();
   leafMap.closePopup();
-  showToast('Beregner beste rute...');
+  showToast('Beregner gangrute...');
 
+  let coords=null, durMin=null, distM=null;
+
+  // Valhalla pedestrian routing - best for walking paths
   try{
-    const url=`https://graphhopper.com/api/1/route?point=${ulat},${ulng}&point=${s.lat},${s.lng}&vehicle=foot&locale=no&calc_points=true&instructions=false&key=LijBPDQGfu7Iiq80ebFCtWMuznIhvqB6T0fNhMfHSo0`;
-    const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
-    if(!resp.ok) throw 0;
-    const data=await resp.json();
-    if(!data.paths||!data.paths[0]) throw 0;
-    const path=data.paths[0];
-    // GraphHopper uses encoded polyline or points array
-    const pts=path.points.coordinates;
-    const coords=pts.map(([lng,lat])=>[lat,lng]);
-    const durMin=Math.ceil(path.time/1000/60);
-    const distM=Math.round(path.distance);
+    const body={
+      locations:[
+        {lon:ulng, lat:ulat},
+        {lon:s.lng, lat:s.lat}
+      ],
+      costing:'pedestrian',
+      costing_options:{pedestrian:{use_ferry:0,use_living_streets:1,use_tracks:1,use_hills:0.5}},
+      directions_options:{units:'kilometers'},
+      shape_match:'map_snap'
+    };
+    const resp=await fetch('https://valhalla1.openstreetmap.de/route',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body),
+      signal:AbortSignal.timeout(8000)
+    });
+    if(resp.ok){
+      const data=await resp.json();
+      if(data.trip&&data.trip.legs&&data.trip.legs[0]){
+        const leg=data.trip.legs[0];
+        // Decode polyline6
+        coords=decodePolyline6(leg.shape);
+        durMin=Math.ceil(data.trip.summary.time/60);
+        distM=Math.round(data.trip.summary.length*1000);
+      }
+    }
+  }catch(e){}
+
+  // Fallback: OSRM foot
+  if(!coords||coords.length<2){
+    try{
+      const resp=await fetch(
+        `https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`,
+        {signal:AbortSignal.timeout(6000)}
+      );
+      if(resp.ok){
+        const data=await resp.json();
+        if(data.routes&&data.routes[0]){
+          const route=data.routes[0];
+          coords=route.geometry.coordinates.map(([ln,la])=>[la,ln]);
+          durMin=Math.ceil(route.duration/60);
+          distM=Math.round(route.distance);
+        }
+      }
+    }catch(e){}
+  }
+
+  window._routeLayers=[];
+
+  if(coords&&coords.length>1){
     const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
-
-    window._routeLayers=[];
-
-    // 1. Glow layer (bred, blass)
-    const glow=L.polyline(coords,{color:'#00e5a0',weight:16,opacity:0.12,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
-    window._routeLayers.push(glow);
-
-    // 2. Shadow layer
-    const shadow=L.polyline(coords,{color:'#001a0e',weight:8,opacity:0.35,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
-    window._routeLayers.push(shadow);
-
-    // 3. Hoved-linje (solid grønn)
+    const glow=L.polyline(coords,{color:'#00e5a0',weight:18,opacity:0.08,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
+    const shadow=L.polyline(coords,{color:'#001a0e',weight:9,opacity:0.3,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
     routeLayer=L.polyline(coords,{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
-    window._routeLayers.push(routeLayer);
-
-    // 4. Animerte hvite prikker
     const anim=L.polyline(coords,{color:'#fff',weight:2.5,opacity:0.7,lineCap:'round',dashArray:'8,16',dashOffset:'0'}).addTo(leafMap);
-    window._routeLayers.push(anim);
+    window._routeLayers.push(glow,shadow,routeLayer,anim);
 
-    // 5. Start-markør (din posisjon)
-    const startM=L.marker([ulat,ulng],{
-      icon:L.divIcon({
-        html:`<div style="width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #00e5a0;box-shadow:0 0 0 4px rgba(0,229,160,0.25),0 2px 8px rgba(0,0,0,0.4)"></div>`,
-        iconSize:[18,18],iconAnchor:[9,9],className:''
-      }),zIndexOffset:2000
-    }).addTo(leafMap);
-    window._routeLayers.push(startM);
+    const startM=L.marker([ulat,ulng],{icon:L.divIcon({
+      html:`<div style="width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #00e5a0;box-shadow:0 0 0 4px rgba(0,229,160,0.25),0 2px 8px rgba(0,0,0,0.4)"></div>`,
+      iconSize:[16,16],iconAnchor:[8,8],className:''
+    }),zIndexOffset:2000}).addTo(leafMap);
 
-    // 6. Slutt-markør (sykkel)
     const p=P[s.provider]||P.voi;
-    const bt=s.battery!=null?s.battery+'%':'';
-    const endM=L.marker([s.lat,s.lng],{
-      icon:L.divIcon({
-        html:`<div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 3px 14px rgba(0,0,0,0.5),0 0 0 3px rgba(255,255,255,0.2)">${p.label} ${bt}</div>`,
-        iconSize:[80,30],iconAnchor:[40,15],className:''
-      }),zIndexOffset:2000
-    }).addTo(leafMap);
-    window._routeLayers.push(endM);
+    const bt=s.battery!=null?' '+s.battery+'%':'';
+    const endM=L.marker([s.lat,s.lng],{icon:L.divIcon({
+      html:`<div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 3px 14px rgba(0,0,0,0.5)">${p.label}${bt}</div>`,
+      iconSize:[90,30],iconAnchor:[45,15],className:''
+    }),zIndexOffset:2000}).addTo(leafMap);
 
-    // 7. Info-boble midt på ruten
     const mid=coords[Math.floor(coords.length/2)];
-    const infoM=L.marker(mid,{
-      icon:L.divIcon({
-        html:`<div style="background:rgba(8,12,24,0.92);color:#00e5a0;border:1.5px solid #00e5a0;border-radius:14px;padding:5px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,0.5)">${durMin} min · ${distTxt}</div>`,
-        iconSize:[100,28],iconAnchor:[50,14],className:''
-      }),zIndexOffset:1500
-    }).addTo(leafMap);
-    window._routeLayers.push(infoM);
+    const infoM=L.marker(mid,{icon:L.divIcon({
+      html:`<div style="background:rgba(8,12,24,0.92);color:#00e5a0;border:1.5px solid #00e5a0;border-radius:14px;padding:5px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,0.5)">${durMin} min · ${distTxt}</div>`,
+      iconSize:[110,28],iconAnchor:[55,14],className:''
+    }),zIndexOffset:1500}).addTo(leafMap);
 
-    // Fit kart
-    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,130]});
+    window._routeLayers.push(startM,endM,infoM);
+    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,140]});
     document.getElementById('fabRoute').style.display='flex';
 
-    // Animer prikker
     let off=0;
-    window._routeAnim=setInterval(()=>{
-      off=(off-1+24)%24;
-      anim.setStyle({dashOffset:String(off)});
-    },40);
-
+    window._routeAnim=setInterval(()=>{off=(off-1+24)%24;anim.setStyle({dashOffset:String(off)});},40);
     showToast(durMin+' min gange · '+distTxt);
 
-  }catch(e){
-    // Fallback rett linje
+  } else {
+    // Rett linje fallback
     const dm=distTo(s);
-    window._routeLayers=[];
-    const g2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:14,opacity:0.1,lineCap:'round'}).addTo(leafMap);
-    const s2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#001a0e',weight:7,opacity:0.3,lineCap:'round'}).addTo(leafMap);
-    routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',dashArray:'10,8'}).addTo(leafMap);
-    window._routeLayers.push(g2,s2,routeLayer);
-    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,130]});
-    document.getElementById('fabRoute').style.display='flex';
     const distTxt=dm<1000?Math.round(dm)+'m':(dm/1000).toFixed(1)+'km';
+    const g2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:16,opacity:0.1,lineCap:'round'}).addTo(leafMap);
+    routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',dashArray:'10,8'}).addTo(leafMap);
+    window._routeLayers.push(g2,routeLayer);
+    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,140]});
+    document.getElementById('fabRoute').style.display='flex';
     showToast('~'+walkMinutes(dm)+' min · '+distTxt);
   }
+}
+
+function decodePolyline6(str){
+  // Decode Valhalla polyline6 encoding
+  let index=0,lat=0,lng=0;
+  const coords=[];
+  while(index<str.length){
+    let b,shift=0,result=0;
+    do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);
+    lat+=(result&1)?~(result>>1):(result>>1);
+    shift=0;result=0;
+    do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);
+    lng+=(result&1)?~(result>>1):(result>>1);
+    coords.push([lat/1e6,lng/1e6]);
+  }
+  return coords;
 }
 function clearRoute(){
   if(window._routeAnim){clearInterval(window._routeAnim);window._routeAnim=null;}
