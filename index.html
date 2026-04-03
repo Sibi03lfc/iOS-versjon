@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="no">
+<!DOCTYPE html><html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -482,7 +483,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="shdl"></div>
     <div class="stit">🛴 SparkNorge</div>
     <div class="ssub">Live sparkesykler · Kart · Priser · QR-skanner<br>
-      <small style="color:var(--dim)">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
+      <small style="color:#b0bdd0">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
     <div class="pprow">
       <span class="pp" style="background:rgba(233,30,140,.1);color:var(--voi)">● Voi</span>
       <span class="pp" style="background:rgba(52,209,107,.1);color:var(--bolt)">● Bolt</span>
@@ -768,81 +769,167 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 
 <div id="pgPris" class="page">
   <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding:16px 14px 24px;background:var(--bg)">
+
   <div class="ph">
-    <h1>💸 Prisguide 2026</h1>
-    <p>Oppdaterte priser · Oslo: kun Voi, Bolt og Ryde har tillatelse (april 2026–mar 2027)</p>
+    <h1>&#128184; Prisguide 2026</h1>
+    <p style="color:#b0bdd0">Priser hentet direkte fra appene &#183; Sjekk alltid appen for siste pris</p>
   </div>
 
   <div class="calcbox">
-    <h2>🧮 Hva koster turen din?</h2>
+    <h2>&#129518; Hva koster turen din?</h2>
     <div class="calclbl"><span>Minutter</span><b id="cml">10 min</b></div>
     <input type="range" id="cmin" min="1" max="60" value="10" oninput="updateCalc()">
     <div class="calcgrid" id="cgrid"></div>
   </div>
 
-  <div class="sec">Voi <span class="oslo-badge">✓ Oslo</span></div>
+  <!-- SAMMENLIGNING TABELL -->
+  <div class="sec">&#128202; Sammenlign pass</div>
+  <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;font-size:12px">
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;background:var(--surf2);padding:10px 12px;font-weight:700;color:var(--dim);font-size:11px">
+      <div>Pass</div>
+      <div style="text-align:center;color:var(--voi)">Voi</div>
+      <div style="text-align:center;color:var(--ryde)">Ryde</div>
+      <div style="text-align:center;color:var(--bolt)">Bolt</div>
+      <div style="text-align:center;color:#0066cc">Dott</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
+      <div style="color:#b0bdd0">Standard<br><span style="font-size:10px">per min</span></div>
+      <div style="text-align:center;font-weight:600">10 kr<br><span style="color:var(--voi);font-weight:700">2,50/min</span></div>
+      <div style="text-align:center;font-weight:600">5 kr<br><span style="color:var(--ryde);font-weight:700">2,50/min</span></div>
+      <div style="text-align:center;font-weight:600">9 kr<br><span style="color:var(--bolt);font-weight:700">2,20/min</span></div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">5,90 kr<br><span style="color:#0066cc;font-weight:700">2,50/min</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
+      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">30 min</span></div>
+      <div style="text-align:center;font-weight:600">49 kr</div>
+      <div style="text-align:center;font-weight:600">39 kr &#9733;</div>
+      <div style="text-align:center;font-weight:600">21 kr*</div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
+      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">60 min</span></div>
+      <div style="text-align:center;font-weight:600">89 kr</div>
+      <div style="text-align:center;font-weight:600">59 kr &#9733;</div>
+      <div style="text-align:center;font-weight:600">&#8212;</div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
+      <div style="color:#b0bdd0">Ukespass<br><span style="font-size:10px">120 min</span></div>
+      <div style="text-align:center;font-weight:600">139 kr</div>
+      <div style="text-align:center;font-weight:600">119 kr &#9733;</div>
+      <div style="text-align:center;font-weight:600">59 kr<br><span style="font-size:10px;color:var(--dim)">80 min</span></div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center">
+      <div style="color:#b0bdd0">14-dagers<br><span style="font-size:10px">200 min</span></div>
+      <div style="text-align:center;font-weight:600">&#8212;</div>
+      <div style="text-align:center;font-weight:600">219 kr &#9733;</div>
+      <div style="text-align:center;font-weight:600">&#8212;</div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">&#8212;</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr 0.8fr;padding:9px 12px;font-size:11px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
+      <div style="color:#b0bdd0">M&#229;nedspass<br><span style="font-size:10px">240-300 min</span></div>
+      <div style="text-align:center;font-weight:600">299 kr &#9733;<br><span style="font-size:10px;color:var(--dim)">300 min</span></div>
+      <div style="text-align:center;font-weight:600">299 kr &#9733;<br><span style="font-size:10px;color:var(--dim)">300 min</span></div>
+      <div style="text-align:center;font-weight:600">139 kr<br><span style="font-size:10px;color:var(--dim)">240 min</span></div>
+      <div style="text-align:center;font-weight:600;color:#0066cc">&#128241;</div>
+    </div>
+    <div style="padding:8px 12px;font-size:11px;color:var(--dim);border-top:1px solid var(--border)">&#9733; = beste verdi &#183; *Kampanjepris, kan variere</div>
+  </div>
+
+  <!-- VOI -->
+  <div class="sec">Voi <span class="oslo-badge">&#10003; Oslo</span></div>
   <div class="pcard">
     <div class="pcard-h">
       <div class="plogo" style="background:rgba(233,30,140,.12);color:var(--voi)">V</div>
-      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline">Størst dekning i Oslo · Bred infrastruktur</div></div>
-      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Populær</div>
+      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline">St&#248;rst dekning i Oslo</div></div>
+      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Popul&#230;r</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">3 kr/min</div><div class="pgl">Kjøring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--voi)">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
     </div>
-    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">100 min inkl.</div></div><div class="prow-p">99 kr</div></div>
-    <div class="prow"><div><div class="prow-n">Fri oppstart 1 mnd</div><div class="prow-s">Ubegrensede starter</div></div><div class="prow-p">29 kr/mnd</div></div>
-    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">299 kr</div></div>
-    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">750 min</div></div><div class="prow-p">699 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Frie oppl&#229;sninger</div><div class="prow-s" style="color:#8fa0b8">Spar startavgift &#183; 30 dager</div></div><div class="prow-p">0 kr*</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">30 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 1 dag &#183; Spar 54%</div></div><div class="prow-p">49 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">60 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 3 dager &#183; Spar 58%</div></div><div class="prow-p">89 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">120 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 7 dager &#183; Spar 67%</div></div><div class="prow-p">139 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">300 min pass</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager &#183; Spar 72%</div></div><div class="prow-p">299 kr</div></div>
+    <div class="prow"><div><div class="prow-s" style="font-size:11px">*Kampanjepris &#8212; sjekk Voi-appen for n&#229;v&#230;rende pris</div></div><div></div></div>
   </div>
 
-  <div class="sec">Bolt <span class="oslo-badge">✓ Oslo</span></div>
-  <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div>
-      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline">Avstandsbasert pris · God dekning i Oslo</div></div>
-      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">Per km</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">0–5 kr</div><div class="pgl">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">80 min inkl.</div></div><div class="prow-p">69 kr</div></div>
-    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min = 1,30 kr/min!</div></div><div class="prow-p">389 kr</div></div>
-    <div class="prow"><div><div class="prow-n">Månedspass+</div><div class="prow-s">800 min</div></div><div class="prow-p">699 kr</div></div>
-  </div>
-
-  <div class="sec">Ryde <span class="oslo-badge">✓ Oslo</span><span class="city-badge" style="margin-left:4px">🇳🇴 Norsk</span></div>
+  <!-- RYDE -->
+  <div class="sec">Ryde <span class="oslo-badge">&#10003; Oslo</span><span class="city-badge" style="margin-left:4px">&#127475;&#127476; Norsk</span></div>
   <div class="pcard">
     <div class="pcard-h">
       <div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div>
-      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline">Norsk selskap · God demping · Robust sykkel</div></div>
+      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline">Norsk &#183; St&#248;rst hjul &#183; Best demping</div></div>
       <div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,5 kr/min</div><div class="pgl">Kjøring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
     </div>
-    <div class="prow"><div><div class="prow-n">14-dagers pass</div><div class="prow-s">200 min – beste verdi!</div></div><div class="prow-p">249 kr</div></div>
-    <div class="prow"><div><div class="prow-n">Månedspass</div><div class="prow-s">300 min</div></div><div class="prow-p">399 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 24 timer</div></div><div class="prow-p">39 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 60 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 24 timer</div></div><div class="prow-p">59 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 120 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 7 dager</div></div><div class="prow-p">119 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">14-dagers 200 min</div><div class="prow-s" style="color:#8fa0b8">Beste verdi per minutt!</div></div><div class="prow-p">219 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 300 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager</div></div><div class="prow-p">299 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 750 min</div><div class="prow-s" style="color:#8fa0b8">Gjelder 30 dager</div></div><div class="prow-p">649 kr</div></div>
   </div>
 
-  <div class="sec">Oslo-regler 2025</div>
-  <div style="background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.18);border-radius:14px;padding:13px;margin-bottom:10px;font-size:13px;line-height:1.8">
-    <div style="font-weight:700;margin-bottom:6px;color:var(--accent)">📋 Tillatelsesperiode: 1. april 2026 – 31. mar 2027</div>
-    <div>🔴 Stengt kl. <strong>23:00–05:00</strong> alle dager</div>
-    <div>📊 Maks <strong>8 000 sykler</strong> totalt i Oslo</div>
-    <div>🚫 TIER og Zvipp har <strong>ikke</strong> tillatelse i Oslo</div>
-    <div>🚴 Kun Voi, Bolt og Ryde er godkjente</div>
+  <!-- BOLT -->
+  <div class="sec">Bolt <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div>
+      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline">Lavest minuttpris &#183; God dekning</div></div>
+      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">2,20 kr/min</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">9 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,20 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 24 timer</div></div><div class="prow-p">21 kr*</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 80 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 7 dager</div></div><div class="prow-p">59 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Gratis oppl&#229;sning/mnd</div><div class="prow-s" style="color:#8fa0b8">Betal per minutt &#183; 30 dager</div></div><div class="prow-p">9 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 240 min</div><div class="prow-s" style="color:#8fa0b8">Ubegrenset oppl&#229;sninger &#183; 30 dager</div></div><div class="prow-p">139 kr</div></div>
+    <div class="prow"><div><div class="prow-s" style="font-size:11px">*Kampanjepris &#8212; sjekk Bolt-appen for n&#229;v&#230;rende pris</div></div><div></div></div>
   </div>
 
-  <div class="sec">💡 Tips</div>
-  <div class="tip"><strong>Kjører du daglig?</strong> Bolt månedspass: 389 kr / 300 min = bare 1,30 kr/min!</div>
-  <div class="tip"><strong>Én rask tur?</strong> Bolt billigst ved korte turer (ingen oppstart). 10 min = 25 kr.</div>
-  <div class="tip"><strong>Dårlig asfalt?</strong> Ryde har størst hjul og best demping.</div>
-  <div class="tip"><strong>Dagsturist?</strong> Voi dagspass: 100 min for 69 kr – spar 31 kr vs vanlig pris.</div>
-  <div class="tip"><strong>Ca. 1 av 5 nordmenn</strong> i storbyene har leid elsparkesykkel siste 12 mnd (RVU 2025).</div>
+  <!-- DOTT -->
+  <div class="sec">Dott <span class="city-badge">Trondheim</span></div>
+  <div class="pcard">
+    <div class="pcard-h">
+      <div class="plogo" style="background:rgba(0,102,204,.12);color:#0066cc">D</div>
+      <div><div class="pname" style="color:#0066cc">Dott</div><div class="ptagline">Kun Trondheim &#183; Sesong 15. mars&#8211;1. des</div></div>
+      <div class="pbadge" style="background:rgba(0,102,204,.1);color:#0066cc">Trondheim</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgcell"><div class="pgn" style="color:#0066cc">5,90 kr</div><div class="pgl" style="color:#8fa0b8">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:#0066cc">2,50 kr/min</div><div class="pgl" style="color:#8fa0b8">Kj&#248;ring</div></div>
+    </div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Spar opptil 70%</div><div class="prow-s" style="color:#8fa0b8">Pass tilgjengelig i Dott-appen</div></div><div class="prow-p">&#128241;</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Reserver gratis</div><div class="prow-s" style="color:#8fa0b8">Gratis reservasjon inntil avgang</div></div><div class="prow-p">0 kr</div></div>
+    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Aldersgrense</div><div class="prow-s" style="color:#8fa0b8">18 &#229;r</div></div><div class="prow-p">&#8212;</div></div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="sec">&#128161; Tips</div>
+  <div class="tip" style="color:#b0bdd0"><strong>Daglig bruker?</strong> Bolt m&#229;nedspass: 139 kr / 240 min = 0,58 kr/min &#8212; billigst!</div>
+  <div class="tip" style="color:#b0bdd0"><strong>Kort tur?</strong> Bolt billigst med 2,20 kr/min og lavest oppstart (9 kr).</div>
+  <div class="tip" style="color:#b0bdd0"><strong>D&#229;rlig asfalt?</strong> Ryde har st&#248;rst hjul og best demping for norske fortau.</div>
+  <div class="tip" style="color:#b0bdd0"><strong>Ukestur?</strong> Ryde ukespass: 119 kr / 120 min &#8212; best verdi per minutt.</div>
+
+  <!-- OSLO REGLER -->
+  <div class="sec">Oslo-regler 2025&#8211;2027</div>
+  <div style="background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.18);border-radius:14px;padding:13px;margin-bottom:16px;font-size:13px;line-height:1.8">
+    <div style="font-weight:700;margin-bottom:6px;color:var(--accent)">&#128203; Tillatelsesperiode: 1. apr 2025 &#8211; 31. mar 2027</div>
+    <div>&#128308; Stengt kl. <strong>23:00&#8211;05:00</strong> alle dager</div>
+    <div>&#128202; Maks <strong>8 000 sykler</strong> totalt i Oslo</div>
+    <div>&#128683; TIER/Zvipp har <strong>ikke</strong> tillatelse i Oslo</div>
+    <div>&#128690; Kun Voi, Bolt og Ryde er godkjente</div>
+  </div>
+
   <div style="height:16px"></div>
   </div>
 </div>
@@ -895,8 +982,8 @@ const P={
         deeplink:'https://bolt.eu/en/scooters/', note:'11,88 kr/km, ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
         deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min, oppstart 5 kr'},
-  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:12, pm:3.00,
-        deeplink:'https://ridedott.com', note:'12 kr oppstart, 3 kr/min'},
+  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:5.90, pm:2.50,
+        deeplink:'https://ridedott.com', note:'5,90 kr oppstart, 2,50 kr/min'},
 };
 
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
