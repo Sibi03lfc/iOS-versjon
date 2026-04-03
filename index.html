@@ -1365,14 +1365,17 @@ async function showRoute(scooterId){
   showToast('Beregner beste rute...');
 
   try{
-    const url=`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full&continue_straight=false`;
+    const url=`https://graphhopper.com/api/1/route?point=${ulat},${ulng}&point=${s.lat},${s.lng}&vehicle=foot&locale=no&calc_points=true&instructions=false&key=LijBPDQGfu7Iiq80ebFCtWMuznIhvqB6T0fNhMfHSo0`;
     const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
     if(!resp.ok) throw 0;
     const data=await resp.json();
-    const route=data.routes[0];
-    const coords=route.geometry.coordinates.map(([lng,lat])=>[lat,lng]);
-    const durMin=Math.ceil(route.duration/60);
-    const distM=Math.round(route.distance);
+    if(!data.paths||!data.paths[0]) throw 0;
+    const path=data.paths[0];
+    // GraphHopper uses encoded polyline or points array
+    const pts=path.points.coordinates;
+    const coords=pts.map(([lng,lat])=>[lat,lng]);
+    const durMin=Math.ceil(path.time/1000/60);
+    const distM=Math.round(path.distance);
     const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
 
     window._routeLayers=[];
