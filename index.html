@@ -931,6 +931,8 @@ const P={
         deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
         deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
+  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:5.9, pm:2.50,
+        deeplink:'https://ridedott.com', note:'5,90 kr oppstart, 2,50 kr/min'},
 };
 
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
@@ -1330,7 +1332,7 @@ function renderMarkers(){
         </div>
       </div>
       <button class="pbtn" style="background:${p.color};color:${p.tc}" onclick="openApp('${s.id}')">Åpne ${p.label}-appen →</button>
-      ${ulat!=null?`<div class="pnav" onclick="showRoute('${s.id}')">🗺️ Vis gangvei hit</div>`:''}
+      ${ulat!=null?`<div class="pnav" style="background:#00e5a018;color:#00e5a0;font-weight:700;border:1px solid #00e5a033;padding:10px;border-radius:10px;text-align:center;margin-top:8px;font-size:14px" onclick="showRoute('${s.id}')">Vis gangvei hit</div>`:''}
     </div>`;
 
     m.bindPopup(popupHtml,{maxWidth:240});
@@ -1367,13 +1369,13 @@ async function showRoute(scooterId){
     routeLayer=L.polyline(coords,{color:'#00e5a0',weight:4,opacity:.85,dashArray:'10,7',lineCap:'round'}).addTo(leafMap);
     leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`?? ${durMin} min · ${fmtD(data.routes[0].distance)}`);
+    showToast(`Gangrute: ${durMin} min`);
   }catch(e){
     const dm=distTo(s);
     routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:3,opacity:.75,dashArray:'8,6'}).addTo(leafMap);
     leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`?? ~${walkMinutes(dm)} min · ${fmtD(dm)}`);
+    showToast(`Gangrute: ~${walkMinutes(dm)} min`);
   }
 }
 function clearRoute(){
