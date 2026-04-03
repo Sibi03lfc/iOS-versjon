@@ -761,7 +761,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <div style="text-align:center;font-weight:600">10kr+<br><span style="color:var(--voi)">2,50</span></div>
       <div style="text-align:center;font-weight:600">5kr+<br><span style="color:var(--ryde)">2,50</span></div>
       <div style="text-align:center;font-weight:600">9kr+<br><span style="color:var(--bolt)">2,20</span></div>
-      <div style="text-align:center;font-weight:600">5,90kr+<br><span style="color:#0066cc">2,50</span></div>
+      <div style="text-align:center;font-weight:600">5,90kr+<br><span style="color:#00aaff">2,50</span></div>
     </div>
     <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
       <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">30 min</span></div>
@@ -864,12 +864,12 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   <div class="pcard">
     <div class="pcard-h">
       <div class="plogo" style="background:rgba(0,102,204,.12);color:#0066cc">D</div>
-      <div><div class="pname" style="color:#0066cc">Dott</div><div class="ptagline" style="color:#b0bdd0">Kun Trondheim &#183; Sesong 15. mars&#8211;1. des</div></div>
+      <div><div class="pname" style="color:#00aaff">Dott</div><div class="ptagline" style="color:#b0bdd0">Kun Trondheim &#183; Sesong 15. mars&#8211;1. des</div></div>
       <div class="pbadge" style="background:rgba(0,102,204,.1);color:#0066cc">Trondheim</div>
     </div>
     <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:#0066cc">5,90 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:#0066cc">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
+      <div class="pgcell"><div class="pgn" style="color:#00aaff">5,90 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
+      <div class="pgcell"><div class="pgn" style="color:#00aaff">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
     </div>
     <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Spar opptil 70%</div><div class="prow-s" style="color:#b0bdd0">Pass tilgjengelig i Dott-appen</div></div><div class="prow-p">&#128241;</div></div>
     <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Reserver gratis</div><div class="prow-s" style="color:#b0bdd0">Gratis reservasjon</div></div><div class="prow-p">0 kr</div></div>
@@ -931,7 +931,7 @@ const P={
         deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
   ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
         deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
-  dott:{label:'Dott', color:'#0066cc', tc:'#fff', start:5.9, pm:2.50,
+  dott:{label:'Dott', color:'#00aaff', tc:'#fff', start:5.9, pm:2.50,
         deeplink:'https://ridedott.com', note:'5,90 kr oppstart, 2,50 kr/min'},
 };
 
@@ -1216,28 +1216,28 @@ function renderList(){
   let vis=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));
   vis=sortedScooters(vis);
   document.getElementById('shc').textContent=vis.length?`${vis.length} sparkesykler`:'Ingen tilgjengelig';
-  if(!vis.length){list.innerHTML=`<div class="empty">🛴<br>${scooters.length===0?'Ingen data.<br>Sjekk Worker-URL i Profil':'Ingen funnet.'}</div>`;return;}
+  if(!vis.length){list.innerHTML=`<div class="empty">Ingen tilgjengelig</div>`;return;}
   list.innerHTML=vis.slice(0,60).map(s=>{
-    const p=P[s.provider],bt=s.battery;
+    const p=P[s.provider]||P.voi,bt=s.battery;
     const bc=bt==null?'#555':bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const dm=distTo(s),ds=fmtD(dm),wl=walkLabel(dm);
-    const wm=walkMinutes(dm);
     const isSelected=s.id===selectedScooterId;
     return `<div class="card ${isSelected?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')">
       <div class="cbar" style="background:${p.color}"></div>
       <div class="cico" style="background:${p.color}15;color:${p.color}">${p.label[0]}</div>
       <div class="cbody">
-        <div class="cn">${s.name}</div>
+        <div class="cn" style="color:#e0e8f0;font-weight:700">${s.name}</div>
         <div class="cm">
           ${bt!=null?`<div class="cb" style="color:${bc}"><div class="bb"><div class="bf" style="width:${bt}%;background:${bc}"></div></div>${bt}%</div>`:''}
-          ${wl?`<div class="walk-badge">🚶 ${wl}</div>`:''}
-          ${ds&&ulat!=null?`<span style="font-size:11px;color:var(--dim)">${ds}</span>`:''}
-          <span style="color:${p.color};font-weight:600;font-size:11px;">${p.pm} kr/min</span>
+          ${wl?`<div class="walk-badge" style="color:#fff;font-weight:600">${wl}</div>`:''}
+          ${ds&&ulat!=null?`<span style="font-size:12px;color:#b0bdd0;font-weight:600">${ds}</span>`:''}
+          <span style="color:${p.color};font-weight:700;font-size:12px">${p.pm} kr/min</span>
         </div>
+        ${ulat!=null?`<button onclick="event.stopPropagation();showRoute('${s.id}')" style="margin-top:6px;background:#00e5a018;color:#00e5a0;border:1px solid #00e5a044;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;width:100%">Vis gangvei hit</button>`:''}
       </div>
       <button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">Lei</button>
     </div>`;
-  }).join('')+(vis.length>60?`<div class="empty">+${vis.length-60} til…</div>`:'');
+  }).join('')+(vis.length>60?`<div class="empty">+${vis.length-60} til</div>`:'');
 }
 
 function showShimmers(){document.getElementById('sbl').innerHTML=Array(4).fill('<div class="shim"></div>').join('');}
@@ -1336,7 +1336,7 @@ function renderMarkers(){
     </div>`;
 
     m.bindPopup(popupHtml,{maxWidth:240});
-    m.on('click',()=>selectScooter(s.id));
+    m.on('click',()=>{m.openPopup();selectScooter(s.id);});
     markers.push(m);
     window._clusterGroup.addLayer(m);
   });
@@ -1358,28 +1358,102 @@ function renderStrip(){
 // ══════════════════════════════════════
 async function showRoute(scooterId){
   const s=scooters.find(x=>x.id===scooterId);
-  if(!s||ulat==null)return;
-  clearRoute();leafMap.closePopup();showToast('??️ Henter gangrute…');
+  if(!s){showToast('Finner ikke sykkelen');return;}
+  if(ulat==null){showToast('Slå på GPS først');locateMe(false);return;}
+  clearRoute();
+  leafMap.closePopup();
+  showToast('Beregner beste rute...');
+
   try{
-    const resp=await fetch(`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`,{signal:AbortSignal.timeout(7000)});
-    if(!resp.ok)throw 0;
+    const url=`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`;
+    const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    if(!resp.ok) throw 0;
     const data=await resp.json();
-    const coords=data.routes[0].geometry.coordinates.map(([lng,lat])=>[lat,lng]);
-    const durMin=Math.ceil(data.routes[0].duration/60);
-    routeLayer=L.polyline(coords,{color:'#00e5a0',weight:4,opacity:.85,dashArray:'10,7',lineCap:'round'}).addTo(leafMap);
-    leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
+    const route=data.routes[0];
+    const coords=route.geometry.coordinates.map(([lng,lat])=>[lat,lng]);
+    const durMin=Math.ceil(route.duration/60);
+    const distM=Math.round(route.distance);
+    const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
+
+    window._routeLayers=[];
+
+    // 1. Glow layer (bred, blass)
+    const glow=L.polyline(coords,{color:'#00e5a0',weight:16,opacity:0.12,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
+    window._routeLayers.push(glow);
+
+    // 2. Shadow layer
+    const shadow=L.polyline(coords,{color:'#001a0e',weight:8,opacity:0.35,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
+    window._routeLayers.push(shadow);
+
+    // 3. Hoved-linje (solid grønn)
+    routeLayer=L.polyline(coords,{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
+    window._routeLayers.push(routeLayer);
+
+    // 4. Animerte hvite prikker
+    const anim=L.polyline(coords,{color:'#fff',weight:2.5,opacity:0.7,lineCap:'round',dashArray:'8,16',dashOffset:'0'}).addTo(leafMap);
+    window._routeLayers.push(anim);
+
+    // 5. Start-markør (din posisjon)
+    const startM=L.marker([ulat,ulng],{
+      icon:L.divIcon({
+        html:`<div style="width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #00e5a0;box-shadow:0 0 0 4px rgba(0,229,160,0.25),0 2px 8px rgba(0,0,0,0.4)"></div>`,
+        iconSize:[18,18],iconAnchor:[9,9],className:''
+      }),zIndexOffset:2000
+    }).addTo(leafMap);
+    window._routeLayers.push(startM);
+
+    // 6. Slutt-markør (sykkel)
+    const p=P[s.provider]||P.voi;
+    const bt=s.battery!=null?s.battery+'%':'';
+    const endM=L.marker([s.lat,s.lng],{
+      icon:L.divIcon({
+        html:`<div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 3px 14px rgba(0,0,0,0.5),0 0 0 3px rgba(255,255,255,0.2)">${p.label} ${bt}</div>`,
+        iconSize:[80,30],iconAnchor:[40,15],className:''
+      }),zIndexOffset:2000
+    }).addTo(leafMap);
+    window._routeLayers.push(endM);
+
+    // 7. Info-boble midt på ruten
+    const mid=coords[Math.floor(coords.length/2)];
+    const infoM=L.marker(mid,{
+      icon:L.divIcon({
+        html:`<div style="background:rgba(8,12,24,0.92);color:#00e5a0;border:1.5px solid #00e5a0;border-radius:14px;padding:5px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,0.5)">${durMin} min · ${distTxt}</div>`,
+        iconSize:[100,28],iconAnchor:[50,14],className:''
+      }),zIndexOffset:1500
+    }).addTo(leafMap);
+    window._routeLayers.push(infoM);
+
+    // Fit kart
+    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,130]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`Gangrute: ${durMin} min`);
+
+    // Animer prikker
+    let off=0;
+    window._routeAnim=setInterval(()=>{
+      off=(off-1+24)%24;
+      anim.setStyle({dashOffset:String(off)});
+    },40);
+
+    showToast(durMin+' min gange · '+distTxt);
+
   }catch(e){
+    // Fallback rett linje
     const dm=distTo(s);
-    routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:3,opacity:.75,dashArray:'8,6'}).addTo(leafMap);
-    leafMap.fitBounds(routeLayer.getBounds(),{padding:[60,60]});
+    window._routeLayers=[];
+    const g2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:14,opacity:0.1,lineCap:'round'}).addTo(leafMap);
+    const s2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#001a0e',weight:7,opacity:0.3,lineCap:'round'}).addTo(leafMap);
+    routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',dashArray:'10,8'}).addTo(leafMap);
+    window._routeLayers.push(g2,s2,routeLayer);
+    leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,130]});
     document.getElementById('fabRoute').style.display='flex';
-    showToast(`Gangrute: ~${walkMinutes(dm)} min`);
+    const distTxt=dm<1000?Math.round(dm)+'m':(dm/1000).toFixed(1)+'km';
+    showToast('~'+walkMinutes(dm)+' min · '+distTxt);
   }
 }
 function clearRoute(){
-  if(routeLayer){leafMap.removeLayer(routeLayer);routeLayer=null;}
+  if(window._routeAnim){clearInterval(window._routeAnim);window._routeAnim=null;}
+  if(window._routeLayers){window._routeLayers.forEach(l=>{try{leafMap.removeLayer(l);}catch(e){}});window._routeLayers=null;}
+  if(routeLayer){try{leafMap.removeLayer(routeLayer);}catch(e){} routeLayer=null;}
   document.getElementById('fabRoute').style.display='none';
 }
 
