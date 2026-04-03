@@ -419,6 +419,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 /* Route line */
 .route-line{stroke:var(--accent);stroke-width:3;stroke-dasharray:8,5;animation:dashmove 0.6s linear infinite;fill:none}
 @keyframes dashmove{to{stroke-dashoffset:-13}}
+.qbtn{background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);color:#b0bdd0;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;transition:all .2s}
+.qbtn.sel{background:#00e5a018;border-color:#00e5a0;color:#00e5a0;font-weight:700}
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VET3DT44G5"></script>
@@ -800,13 +802,46 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
     </div>
   </div>
 
-<div class="calcbox">
-    <h2>&#129518; Hva koster turen din?</h2>
-    <div class="calclbl"><span>Minutter</span><b id="cml">10 min</b></div>
-    <input type="range" id="cmin" min="1" max="60" value="10" oninput="updateCalc()">
-    <div class="calcgrid" id="cgrid"></div>
+  <!-- HVA LØNNER SEG FOR DEG? -->
+  <div style="background:linear-gradient(135deg,rgba(0,229,160,0.08),rgba(0,229,160,0.03));border:1.5px solid rgba(0,229,160,0.25);border-radius:16px;padding:16px;margin-bottom:16px">
+    <div style="font-size:16px;font-weight:800;color:#e0e8f0;margin-bottom:4px">🎯 Hva lønner seg for deg?</div>
+    <div style="font-size:12px;color:#b0bdd0;margin-bottom:16px">Svar på 3 spørsmål — vi finner ditt beste abonnement</div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvor mange turer per uke?</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="qbtn" onclick="setQ(1,1,this)">1–2</button>
+          <button class="qbtn" onclick="setQ(1,3,this)">3–4</button>
+          <button class="qbtn" onclick="setQ(1,5,this)">5–7</button>
+          <button class="qbtn" onclick="setQ(1,10,this)">Daglig+</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Minutter per tur i snitt?</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="qbtn" onclick="setQ(2,5,this)">Under 5</button>
+          <button class="qbtn" onclick="setQ(2,10,this)">5–10</button>
+          <button class="qbtn" onclick="setQ(2,15,this)">10–20</button>
+          <button class="qbtn" onclick="setQ(2,25,this)">20+</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvilken by?</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="qbtn" onclick="setQ(3,'oslo',this)">Oslo</button>
+          <button class="qbtn" onclick="setQ(3,'trondheim',this)">Trondheim</button>
+          <button class="qbtn" onclick="setQ(3,'bergen',this)">Bergen/annet</button>
+        </div>
+      </div>
+      <button onclick="calcBestPlan()" style="background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;width:100%">
+        Finn mitt beste abonnement →
+      </button>
+    </div>
+    <div id="bestPlanResult" style="display:none;margin-top:16px"></div>
   </div>
 
+  <!-- SAMMENLIGN ABONNEMENT -->
   <!-- SAMMENLIGNING -->
   <div class="sec">&#128202; Sammenlign pass</div>
   <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;font-size:12px">
@@ -1357,6 +1392,81 @@ async function calcRoute(){
     showToast('Kunne ikke beregne rute');
   }
 }
+
+// ── HVA LØNNER SEG ──
+const qAnswers={1:null,2:null,3:null};
+function setQ(q,val,btn){
+  qAnswers[q]=val;
+  // Highlight selected
+  btn.parentElement.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function calcBestPlan(){
+  const tripsPerWeek=qAnswers[1], minsPerTrip=qAnswers[2], city=qAnswers[3];
+  if(!tripsPerWeek||!minsPerTrip||!city){showToast('Svar på alle 3 spørsmål');return;}
+
+  const monthlyTrips=tripsPerWeek*4.3;
+  const monthlyMins=Math.round(monthlyTrips*minsPerTrip);
+
+  // Available providers per city
+  const cityProviders={oslo:['voi','bolt','ryde'],trondheim:['voi','ryde','dott'],bergen:['voi','bolt']};
+  const providers=cityProviders[city]||['voi','bolt','ryde'];
+
+  // Calculate options: pay-as-you-go vs passes
+  const passes={
+    voi:[
+      {name:'Betal per tur',cost:monthlyTrips*(P.voi.start)+monthlyMins*P.voi.pm},
+      {name:'Frie opplåsninger (0 kr/mnd)',cost:0+monthlyMins*P.voi.pm},
+      {name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.voi.pm},
+    ],
+    ryde:[
+      {name:'Betal per tur',cost:monthlyTrips*(P.ryde.start)+monthlyMins*P.ryde.pm},
+      {name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.ryde.pm},
+      {name:'750 min pass (649 kr)',cost:649+Math.max(0,monthlyMins-750)*P.ryde.pm},
+    ],
+    bolt:[
+      {name:'Betal per tur',cost:monthlyTrips*(P.bolt.start)+monthlyMins*P.bolt.pm},
+      {name:'Gratis opplåsning (9 kr/mnd)',cost:9+monthlyMins*P.bolt.pm},
+      {name:'240 min pass (139 kr)',cost:139+Math.max(0,monthlyMins-240)*P.bolt.pm},
+    ],
+    dott:[
+      {name:'Betal per tur',cost:monthlyTrips*(P.dott.start)+monthlyMins*P.dott.pm},
+    ]
+  };
+
+  // Find best overall
+  let best=null, bestCost=Infinity;
+  const allOptions=[];
+  providers.forEach(pv=>{
+    (passes[pv]||[]).forEach(opt=>{
+      const cost=Math.round(opt.cost);
+      allOptions.push({pv,name:opt.name,cost});
+      if(cost<bestCost){bestCost=cost;best={pv,name:opt.name,cost};}
+    });
+  });
+
+  allOptions.sort((a,b)=>a.cost-b.cost);
+  const top3=allOptions.slice(0,3);
+
+  document.getElementById('bestPlanResult').style.display='block';
+  document.getElementById('bestPlanResult').innerHTML=`
+    <div style="background:${P[best.pv].color}15;border:1.5px solid ${P[best.pv].color}44;border-radius:14px;padding:14px;margin-bottom:12px">
+      <div style="font-size:12px;color:#b0bdd0;margin-bottom:4px">&#11088; Anbefalt for deg (${monthlyMins} min/mnd)</div>
+      <div style="font-size:18px;font-weight:800;color:${P[best.pv].color}">${P[best.pv].label} — ${best.name}</div>
+      <div style="font-size:24px;font-weight:800;color:#e0e8f0;margin-top:4px">~${best.cost} kr/mnd</div>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:#b0bdd0;margin-bottom:8px">Alle alternativer:</div>
+    ${top3.map((o,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:10px;margin-bottom:6px">
+        <div style="width:28px;height:28px;border-radius:8px;background:${P[o.pv].color}18;color:${P[o.pv].color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${P[o.pv].label[0]}</div>
+        <div style="flex:1;font-size:13px;color:#e0e8f0">${P[o.pv].label} — ${o.name}</div>
+        <div style="font-weight:700;color:${i===0?P[o.pv].color:'#e0e8f0'}">${o.cost} kr</div>
+      </div>`).join('')}
+    <div style="font-size:11px;color:#b0bdd0;margin-top:8px;text-align:center">Basert p&#229; ${Math.round(monthlyTrips)} turer &#215; ${minsPerTrip} min/mnd</div>`;
+}
+
+
 function manualRefresh(){
   clearTimeout(refreshTimer);
   const el=document.getElementById('lastUpd');
@@ -1761,16 +1871,17 @@ function changeCity(c){
 // PRICE CALC — updated 2025 prices
 // ══════════════════════════════════════
 function updateCalc(){
-  const min=+document.getElementById('cmin').value;
-  document.getElementById('cml').textContent=min+' min';
-  const pr=Object.entries(P).map(([k,p])=>({label:p.label,color:p.color,price:p.start+p.pm*min}));
-  const mn=Math.min(...pr.map(x=>x.price));
-  document.getElementById('cgrid').innerHTML=pr.map(x=>`
-    <div class="calccel ${x.price===mn?'win':''}">
-      <div class="num" style="color:${x.price===mn?'var(--accent)':x.color}">${x.price.toFixed(0)} kr</div>
-      <div class="lbl">${x.label}</div>
-    </div>`).join('');
+  const cmin=document.getElementById('cmin');
+  if(!cmin) return;
+  const min=+cmin.value;
+  const cml=document.getElementById('cml');
+  if(cml) cml.textContent=min+' min';
+  const cgrid=document.getElementById('cgrid');
+  if(!cgrid) return;
+  const pr=Object.entries(P).map(([k,p])=>({label:p.label,color:p.color,cost:Math.round(p.start+p.pm*min)}));
+  cgrid.innerHTML=pr.map(x=>`<div class="calc-cell"><div class="calc-n" style="color:${x.color}">${x.cost} kr</div><div class="calc-l">${x.label}</div></div>`).join('');
 }
+
 
 // ══════════════════════════════════════
 // PROFILE
