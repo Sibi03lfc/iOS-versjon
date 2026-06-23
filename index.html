@@ -605,6 +605,30 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
     <div class="prow"><div><div class="prow-n">Spar opptil 70%</div><div class="prow-s">Pass i Dott-appen</div></div><div class="prow-p">📱</div></div>
   </div>
 
+  <!-- BYSYKLER -->
+  <div class="sec">🚲 Bysykler per kommune</div>
+  <div class="pcard">
+    <div class="pcard-h"><div class="plogo" style="background:rgba(226,35,26,.12);color:#e2231a">🚲</div><div><div class="pname" style="color:#e2231a">Oslo Bysykkel</div><div class="ptagline" style="color:#b0bdd0">Stasjonsbasert · sesong apr–des</div></div></div>
+    <div class="prow"><div><div class="prow-n">Sesongkort</div><div class="prow-s">Hele sesongen, 45 min per tur</div></div><div class="prow-p">399 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">24 timer, 60 min per tur</div></div><div class="prow-p">59 kr</div></div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-h"><div class="plogo" style="background:rgba(26,125,60,.12);color:#1a7d3c">🚲</div><div><div class="pname" style="color:#1a7d3c">Trondheim Bysykkel</div><div class="ptagline" style="color:#b0bdd0">Stasjonsbasert · sesong apr–nov</div></div></div>
+    <div class="prow"><div><div class="prow-n">Sesongkort</div><div class="prow-s">Hele sesongen, 60 min per tur</div></div><div class="prow-p">399 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">24 timer</div></div><div class="prow-p">69 kr</div></div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-h"><div class="plogo" style="background:rgba(10,108,181,.12);color:#0a6cb5">🚲</div><div><div class="pname" style="color:#0a6cb5">Bergen Bysykkel</div><div class="ptagline" style="color:#b0bdd0">Stasjonsbasert · året rundt</div></div></div>
+    <div class="prow"><div><div class="prow-n">Årskort</div><div class="prow-s">12 mnd, 60 min per tur</div></div><div class="prow-p">399 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass</div><div class="prow-s">24 timer</div></div><div class="prow-p">59 kr</div></div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-h"><div class="plogo" style="background:rgba(232,168,0,.12);color:#e8a800">🚲</div><div><div class="pname" style="color:#e8a800">Kolumbus Bysykkel</div><div class="ptagline" style="color:#b0bdd0">Stavanger-regionen · inkl. el-sykler</div></div></div>
+    <div class="prow"><div><div class="prow-n">Kolumbus Billett</div><div class="prow-s">Inngår i kollektivbillett, 60 min</div></div><div class="prow-p">📱 App</div></div>
+    <div class="prow"><div><div class="prow-n">Enkelttur</div><div class="prow-s">Per tur uten abonnement</div></div><div class="prow-p">~25 kr</div></div>
+  </div>
+  <div class="tip" style="font-size:11px;color:#8a96ac">Bysykkelpriser er veiledende og kan variere per sesong. Sjekk operatørens app for oppdaterte priser.</div>
+
   <div class="sec">💡 Tips</div>
   <div class="tip"><strong>Kort tur?</strong> Bolt billigst med 2,50 kr/min og ingen oppstart.</div>
   <div class="tip"><strong>Dårlig asfalt?</strong> Ryde har størst hjul og best demping.</div>
@@ -615,8 +639,8 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <!-- TAB BAR -->
 <div id="tabBar">
   <div class="tab on" id="tab-kart" onclick="switchTab('kart')"><div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div></div>
-  <div class="tab" id="tab-profil" onclick="switchTab('profil')"><div class="tab-ico">⚙️</div><div class="tab-lbl">Innstillinger</div></div>
   <div class="tab" id="tab-pris" onclick="switchTab('pris')"><div class="tab-ico">💸</div><div class="tab-lbl">Priser</div></div>
+  <div class="tab" id="tab-profil" onclick="switchTab('profil')"><div class="tab-ico">⚙️</div><div class="tab-lbl">Innstillinger</div></div>
   <div class="tab" id="tab-qr" onclick="openQR()"><div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div><div class="tab-lbl">Skann</div></div>
 </div>
 
@@ -1323,10 +1347,14 @@ function recommendScooters(rideMin,cheapest){
   // Billigst: bare blant prissatte sparkesykler; ellers nærmest
   const priced=withWalk.filter(s=>!s.station&&P[s.provider].pm!=null);
   const cheapestSc =(priced.length?priced:withWalk).sort((a,b)=>(P[a.provider].pm??999)-(P[b.provider].pm??999) || a.walkM-b.walkM)[0];
-  const mostBattery=[...withWalk].sort((a,b)=>(b.battery??0)-(a.battery??0) || a.walkM-b.walkM)[0];
+  const mostBattery=[...withWalk].filter(s=>!s.station).sort((a,b)=>(b.battery??0)-(a.battery??0) || a.walkM-b.walkM)[0];
+  // Bysykkel: nærmeste stasjon med ledige sykler
+  const bikeStations=withWalk.filter(s=>s.station&&(s.available??0)>0);
+  const nearestBike=bikeStations.sort((a,b)=>a.walkM-b.walkM)[0];
 
   const winners=[
     {s:nearest,     label:'📍 Nærmest',   color:'#00e5a0', bg:'rgba(0,229,160,.15)'},
+    {s:nearestBike, label:'🚲 Bysykkel',  color:'#e2231a', bg:'rgba(226,35,26,.15)'},
     {s:cheapestSc,  label:'💸 Billigst',   color:'#ffb800', bg:'rgba(255,184,0,.15)'},
     {s:mostBattery, label:'🔋 Mest strøm', color:'#00b8ff', bg:'rgba(0,184,255,.15)'},
   ];
@@ -1340,7 +1368,7 @@ function recommendScooters(rideMin,cheapest){
     // Detalj-tekst: stasjon viser ledige sykler, sparkesykkel viser batteri + pris
     let detail, metricVal=totalMin, metricLbl='min totalt';
     if(s.station){
-      detail=`🚶 ${walkTxt} til stasjon · 🚲 ${s.available??0} ledige`;
+      detail=`🚶 ${walkTxt} til stasjon · 🚲 ${s.available??0} ledige · Fast pris (sesongkort)`;
     } else {
       const bt=s.battery!=null?s.battery+'%':'–';
       const rm=s.rideMinSc||rideMin;
