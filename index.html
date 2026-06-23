@@ -23,13 +23,9 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-
-/* ── CLUSTER ── */
 .marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(0,229,160,.15)!important}
 .marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:rgba(0,229,160,.55)!important;color:#040a14!important;font-weight:800!important;font-size:13px!important}
 .marker-cluster{border-radius:50%!important}
-
-/* ── ONBOARDING ── */
 #onboarding{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 #onboarding.hide{display:none}
 .ob-slides{display:flex;transition:transform .4s cubic-bezier(.32,.72,0,1);height:100%}
@@ -46,16 +42,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .ob-next{width:100%;max-width:320px;padding:16px;border-radius:16px;border:none;background:var(--accent);color:#040a14;font-size:16px;font-weight:800;cursor:pointer}
 .ob-next:active{opacity:.8;transform:scale(.97)}
 .ob-skip{font-size:13px;color:var(--dim);cursor:pointer;padding:4px}
-
-/* ── ACTIVE RIDE BANNER ── */
-#activeRideBanner{
-  position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:800;
-  background:linear-gradient(135deg,rgba(0,20,10,.97),rgba(0,30,20,.97));
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(0,229,160,.3);padding:12px 16px;
-  display:none;align-items:center;gap:12px;
-  transform:translateY(-100%);transition:transform .4s cubic-bezier(.32,.72,0,1)
-}
+#activeRideBanner{position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:800;background:linear-gradient(135deg,rgba(0,20,10,.97),rgba(0,30,20,.97));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,160,.3);padding:12px 16px;display:none;align-items:center;gap:12px;transform:translateY(-100%);transition:transform .4s cubic-bezier(.32,.72,0,1)}
 #activeRideBanner.show{display:flex;transform:translateY(0)}
 #pgMap.with-banner{top:calc(108px + env(safe-area-inset-top))!important}
 .ar-pulse{width:10px;height:10px;border-radius:50%;background:var(--accent);position:relative;flex-shrink:0}
@@ -70,14 +57,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .ar-cost-l{font-size:10px;color:var(--dim)}
 .ar-stop{padding:8px 14px;border-radius:10px;border:none;background:var(--red);color:white;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
 .ar-stop:active{opacity:.8;transform:scale(.95)}
-
-/* ── TOP NAV ── */
-#topNav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  height:calc(52px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);
-  background:rgba(8,12,24,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);display:flex;align-items:flex-end
-}
+#topNav{position:fixed;top:0;left:0;right:0;z-index:1000;height:calc(52px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);background:rgba(8,12,24,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:flex-end}
 #topNav .inner{width:100%;height:52px;display:flex;align-items:center;padding:0 14px;gap:10px}
 .logo{font-weight:800;font-size:17px;display:flex;align-items:center;gap:6px}
 .logo em{color:var(--accent);font-style:normal}
@@ -87,43 +67,34 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .ldot{width:7px;height:7px;border-radius:50%;background:var(--red)}
 .ldot.on{background:var(--accent);animation:pulse 2s ease infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* ── TAB BAR ── */
-#tabBar{
-  position:fixed;bottom:0;left:0;right:0;z-index:1000;
-  height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
-  background:rgba(8,12,24,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid var(--border);display:flex;align-items:flex-start
-}
+#tabBar{position:fixed;bottom:0;left:0;right:0;z-index:1000;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(8,12,24,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start}
 .tab{flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:3px;color:var(--dim);transition:color .2s;-webkit-user-select:none}
 .tab:active{transform:scale(.88)}
 .tab.on{color:var(--accent)}
 .tab-ico{font-size:22px;line-height:1}
 .tab-lbl{font-size:10px;font-weight:600}
-
-/* ── PAGES ── */
 .page{display:none;position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));background:var(--bg);z-index:100}
 .page.on{display:block}
-
-/* ══ MAP PAGE ══ */
 #pgMap{overflow:hidden}
-#map{position:absolute;inset:0;z-index:1}
+#map{position:absolute;left:0;right:0;bottom:0;top:var(--planner-h,56px);z-index:1;transition:top .25s cubic-bezier(.32,.72,0,1)}
 .leaflet-tile-pane{filter:brightness(.52) saturate(.3) hue-rotate(200deg)}
 .leaflet-control-attribution{font-size:9px!important;opacity:.2}
 
-/* ── ZOOM LEVEL INDICATOR ── */
-#zoomBadge{
-  position:absolute;right:14px;bottom:86px;z-index:500;
-  background:rgba(8,12,24,.9);border:1px solid var(--border);
-  border-radius:8px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--dim);
-  pointer-events:none;transition:opacity .3s
-}
+/* ── REISEPLANLEGGER-BAR (øverst på kart) ── */
+#plannerBar{position:absolute;top:0;left:0;right:0;z-index:700;background:rgba(13,18,36,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,.4);max-height:78%;overflow-y:auto;overscroll-behavior:contain}
+#plannerBar::-webkit-scrollbar{display:none}
+.planner-collapsed{display:flex;align-items:center;gap:10px;padding:16px 14px;cursor:pointer;-webkit-user-select:none}
+.planner-collapsed.hide{display:none}
+.planner-pin{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.planner-collapsed-txt{flex:1;font-size:14px;color:#b0bdd0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.planner-collapsed-chev{color:#5a6a8a;font-size:14px;flex-shrink:0}
+.planner-expanded{display:none;padding:12px 14px 14px}
+.planner-expanded.show{display:block}
+.planner-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.planner-min{width:30px;height:30px;border-radius:9px;background:var(--surf2);border:1px solid var(--border);color:#b0bdd0;font-size:14px;cursor:pointer;flex-shrink:0}
+.planner-min:active{opacity:.7}
 
-/* ── ROUTE LINE ── */
-.route-popup .leaflet-popup-content-wrapper{
-  background:rgba(0,229,160,.08)!important;border-color:rgba(0,229,160,.25)!important
-}
-
+#zoomBadge{position:absolute;right:14px;bottom:86px;z-index:500;background:rgba(8,12,24,.9);border:1px solid var(--border);border-radius:8px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--dim);pointer-events:none;transition:opacity .3s}
 .fab{position:absolute;z-index:500;width:50px;height:50px;border-radius:14px;background:var(--bg2);border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;-webkit-user-select:none}
 .fab:active{transform:scale(.88)}
 .fab.on{border-color:var(--accent);background:rgba(0,229,160,.1)}
@@ -132,23 +103,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 #fabRoute{right:14px;bottom:22px;font-size:16px;font-weight:700;color:var(--accent);border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.06);display:none}
 .fab.spinning{animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 #strip{position:absolute;bottom:22px;left:72px;right:70px;z-index:400;display:flex;gap:5px;overflow:hidden;pointer-events:none}
 .chip{background:rgba(8,12,24,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:50px;padding:5px 11px;font-size:11px;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
 .chip b{font-weight:700}
 .cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-
-/* GPS dot */
 .gm{width:18px;height:18px;border-radius:50%;background:#4a90f0;border:3px solid white;box-shadow:0 0 0 4px rgba(74,144,240,.25),0 2px 8px rgba(0,0,0,.4)}
 .gp{width:50px;height:50px;border-radius:50%;background:rgba(74,144,240,.15);border:1px solid rgba(74,144,240,.3);animation:gpa 2s ease infinite}
 @keyframes gpa{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.4);opacity:0}}
-
-/* Pin markers */
 .pin{display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .pbub{padding:4px 9px;border-radius:50px;font-size:11px;font-weight:700;box-shadow:0 3px 14px rgba(0,0,0,.5);white-space:nowrap}
 .ptail{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid}
-
-/* ── BOTTOM SHEET ── */
 .sheet{position:absolute;bottom:0;left:0;right:0;height:72%;background:var(--bg2);border-top:1px solid var(--border);border-radius:20px 20px 0 0;z-index:600;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.32,.72,0,1)}
 .sheet.peek{transform:translateY(calc(100% - 72px))}
 .sh{display:flex;flex-direction:column;align-items:center;padding:9px 0 4px;cursor:pointer;flex-shrink:0;gap:3px;-webkit-user-select:none}
@@ -159,13 +123,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .fb.off{opacity:.2}
 .sl{flex:1;overflow-y:auto;padding:0 10px 10px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .sl::-webkit-scrollbar{display:none}
-
-/* ── SORT BAR ── */
 .sort-bar{display:flex;gap:6px;padding:0 12px 8px;flex-shrink:0}
 .sort-btn{padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600;border:1px solid var(--border);background:var(--surf2);color:var(--dim);cursor:pointer;white-space:nowrap;transition:all .15s}
 .sort-btn.on{background:rgba(0,229,160,.12);border-color:rgba(0,229,160,.3);color:var(--accent)}
-
-/* ── CARD ── */
 .card{display:flex;align-items:center;gap:9px;background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:11px 12px;margin-bottom:7px;cursor:pointer;position:relative;overflow:hidden;-webkit-user-select:none;transition:all .15s}
 .card:active{transform:scale(.97);background:var(--surf2)}
 .card.selected{border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.04)}
@@ -177,17 +137,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .cb{display:flex;align-items:center;gap:3px;font-weight:600}
 .bb{width:26px;height:8px;border-radius:3px;background:var(--surf2);overflow:hidden;border:1px solid rgba(255,255,255,.07)}
 .bf{height:100%;border-radius:2px}
-
-/* Walk time badge */
 .walk-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2);border-radius:50px;padding:2px 7px;font-size:11px;font-weight:600;color:var(--blue)}
-
 .lei{padding:6px 13px;border-radius:9px;border:none;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
 .lei:active{opacity:.7;transform:scale(.93)}
 .shim{height:62px;border-radius:14px;margin-bottom:7px;background:linear-gradient(90deg,var(--surf) 25%,var(--surf2) 50%,var(--surf) 75%);background-size:200% 100%;animation:shim 1.2s infinite}
 @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .empty{text-align:center;padding:30px 14px;color:var(--dim);font-size:13px;line-height:1.8}
-
-/* Popup */
 .leaflet-popup-content-wrapper{background:var(--bg2)!important;color:var(--text)!important;border:1px solid var(--border)!important;border-radius:16px!important;box-shadow:0 12px 40px rgba(0,0,0,.7)!important;padding:0!important}
 .leaflet-popup-content{margin:14px 15px!important}
 .leaflet-popup-tip{background:var(--bg2)!important}
@@ -198,72 +153,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .psl{font-size:10px;color:var(--dim);margin-top:2px}
 .pbtn{width:100%;padding:11px;border-radius:11px;border:none;font-weight:700;font-size:14px;cursor:pointer;margin-top:4px}
 .pnav{width:100%;padding:9px;border-radius:11px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.07);color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
-
-/* ══ PROFIL PAGE ══ */
 #pgProfil{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.prof-hero{background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;position:relative;overflow:hidden}
-.prof-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.1) 0%,transparent 70%)}
-.prof-top{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px}
-.prof-avatar{width:80px;height:80px;border-radius:22px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),#00b8ff);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#040a14;box-shadow:0 0 0 3px rgba(0,229,160,.3),0 8px 24px rgba(0,0,0,.4);position:relative;cursor:pointer}
-.avatar-edit{position:absolute;bottom:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#040a14;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg2)}
-.prof-info{flex:1}
-.prof-name{font-size:22px;font-weight:800;letter-spacing:-.3px}
-.prof-handle{font-size:13px;color:var(--dim);margin-top:2px}
-.prof-level{display:inline-flex;align-items:center;gap:5px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);border-radius:50px;padding:4px 11px;font-size:12px;font-weight:600;color:var(--accent);margin-top:8px}
-.prof-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.pstat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center}
-.pstat-n{font-size:20px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:3px}
-.pstat-l{font-size:10px;color:var(--dim)}
-.xp-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:16px;margin:12px 16px}
-.xp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.xp-level{font-weight:700;font-size:15px}
-.xp-next{font-size:12px;color:var(--dim)}
-.xp-bar{height:8px;background:var(--surf2);border-radius:50px;overflow:hidden;margin-bottom:6px}
-.xp-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--accent),#00b8ff);transition:width 1s ease;position:relative}
-.xp-fill::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:white;box-shadow:0 0 8px var(--accent)}
-.xp-marks{display:flex;justify-content:space-between;font-size:10px;color:var(--dim)}
-.wallet-card{margin:0 16px 12px;border-radius:20px;padding:20px;background:linear-gradient(135deg,#0e1e3d,#1a2e5a);border:1px solid rgba(0,184,255,.2);position:relative;overflow:hidden}
-.wallet-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,184,255,.12),transparent)}
-.wallet-lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
-.wallet-amount{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
-.wallet-amount span{font-size:18px;color:var(--dim)}
-.wallet-btns{display:flex;gap:8px}
-.wbtn{flex:1;padding:10px;border-radius:11px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s;-webkit-user-select:none}
-.wbtn:active{opacity:.75;transform:scale(.96)}
-.wbtn.primary{background:#00b8ff;color:#001820}
-.wbtn.sec{background:var(--surf2);color:var(--text);border:1px solid var(--border)}
-.sec-hd{display:flex;align-items:center;gap:8px;padding:0 16px;margin:16px 0 10px}
-.sec-hd-txt{font-weight:700;font-size:14px}
-.sec-hd::after{content:'';flex:1;height:1px;background:var(--border)}
-.ach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px;margin-bottom:4px}
-.ach{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center;position:relative;overflow:hidden}
-.ach.earned{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.04)}
-.ach:not(.earned){opacity:.35}
-.ach-ico{font-size:24px;margin-bottom:6px}
-.ach-name{font-size:10px;font-weight:600;color:var(--text)}
-.ach-glow{position:absolute;top:-15px;right:-15px;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.15),transparent);pointer-events:none}
-.trip-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.trip{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.trip:active{background:var(--surf2)}
-.trip-date{text-align:center;width:40px;flex-shrink:0}
-.trip-day{font-size:20px;font-weight:800;color:var(--accent);line-height:1}
-.trip-mon{font-size:10px;color:var(--dim);text-transform:uppercase}
-.trip-div{width:1px;height:32px;background:var(--border);flex-shrink:0}
-.trip-body{flex:1}
-.trip-route{font-size:13px;font-weight:600;margin-bottom:3px}
-.trip-meta{font-size:11px;color:var(--dim);display:flex;gap:8px}
-.trip-cost{font-size:16px;font-weight:800;color:var(--text)}
-.pay-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.pay-card2{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.pay-card2:active{background:var(--surf2)}
-.pay-card2.active-card{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.04)}
-.pay-ico2{width:44px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--surf2)}
-.pay-body2{flex:1}
-.pay-name2{font-size:13px;font-weight:600}
-.pay-sub2{font-size:11px;color:var(--dim);margin-top:2px}
-.pay-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.pay-check.on{background:var(--accent);border-color:var(--accent);color:#040a14;font-size:11px;font-weight:700}
-.add-pay{background:var(--surf);border:1px dashed rgba(0,229,160,.3);border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--accent);font-weight:600;cursor:pointer}
 .sett-group{background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:0 16px 12px}
 .sett-row{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--border)}
 .sett-row:last-child{border:none}
@@ -275,29 +165,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .tgl.on{background:var(--accent);border-color:var(--accent)}
 .tgl::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .tgl.on::after{transform:translateX(20px)}
-.pinp{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:13px;padding:8px 10px;border-radius:9px;outline:none;min-width:0}
-.pinp:focus{border-color:var(--accent)}
-.pinp::placeholder{color:var(--dim)}
 .sbtn{padding:7px 14px;border-radius:9px;background:var(--accent);color:#040a14;border:none;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
-
-/* ══ PRISER PAGE ══ */
-#pgPris{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px 14px 24px}
+#pgPris{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .ph{background:linear-gradient(135deg,var(--surf2),var(--surf));border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:16px}
 .ph h1{font-size:20px;font-weight:800;margin-bottom:4px}
 .ph p{font-size:13px;color:var(--dim)}
 .sec{font-weight:700;font-size:14px;margin:16px 0 10px;display:flex;align-items:center;gap:8px}
 .sec::after{content:'';flex:1;height:1px;background:var(--border)}
-.calcbox{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:16px}
-.calcbox h2{font-size:13px;font-weight:600;margin-bottom:12px}
-.calclbl{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:6px}
-.calclbl b{color:var(--text);font-weight:600}
-input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
-.calcgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
-.calccel{background:var(--surf2);border-radius:10px;padding:9px 5px;text-align:center}
-.calccel.win{border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.06)}
-.calccel .num{font-weight:700;font-size:15px}
-.calccel.win .num{color:var(--accent)}
-.calccel .lbl{font-size:9px;color:var(--dim);margin-top:2px}
 .pcard{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px}
 .pcard-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .plogo{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
@@ -315,49 +189,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .prow-p{font-weight:700;color:var(--accent)}
 .tip{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.15);border-radius:14px;padding:13px;margin-bottom:10px;font-size:13px;line-height:1.6}
 .tip strong{color:var(--accent)}
-
-/* Oslo-only badge */
 .oslo-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--accent);margin-left:6px;vertical-align:middle}
 .city-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--blue)}
-
-/* ══ MODALS ══ */
-.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(4,6,14,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal-sheet{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:540px;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto}
-.modal-sheet::-webkit-scrollbar{display:none}
-.modal-handle{width:36px;height:4px;border-radius:50px;background:var(--surf2);margin:0 auto 16px}
-.modal-title{font-size:20px;font-weight:800;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--dim);margin-bottom:18px}
-.pay-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.pay-opt{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s}
-.pay-opt:active{background:var(--surf2)}
-.pay-opt.selected{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.05)}
-.pay-opt-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:var(--surf2)}
-.pay-opt-name{font-size:14px;font-weight:600}
-.pay-opt-sub{font-size:12px;color:var(--dim);margin-top:2px}
-.form-field{margin-bottom:12px}
-.form-lbl{font-size:12px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.form-inp{width:100%;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:14px;padding:11px 12px;border-radius:11px;outline:none;transition:border .2s}
-.form-inp:focus{border-color:var(--accent)}
-.form-inp::placeholder{color:var(--dim)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-btn{width:100%;padding:14px;border-radius:13px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s}
-.modal-btn:active{opacity:.8}
-.modal-btn.green{background:var(--accent);color:#040a14}
-.modal-btn.gray{background:var(--surf2);color:var(--text);border:1px solid var(--border)}
-.modal-btns{display:flex;gap:8px;margin-top:6px}
-.topup-amounts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.ta{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
-.ta:active{transform:scale(.95)}
-.ta.sel{border-color:rgba(0,229,160,.4);background:rgba(0,229,160,.06)}
-.ta-n{font-size:18px;font-weight:800}
-.ta-l{font-size:11px;color:var(--dim);margin-top:2px}
-.avatar-picker{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
-.av-opt{width:100%;aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:2px solid transparent;background:var(--surf);transition:all .2s}
-.av-opt.sel{border-color:var(--accent);background:rgba(0,229,160,.08)}
-.av-opt:active{transform:scale(.9)}
-
-/* ── QR MODAL ── */
 #qrModal{position:fixed;inset:0;z-index:3000;background:rgba(4,6,14,.98);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px}
 #qrModal.open{display:flex}
 .qrt{font-weight:800;font-size:20px;text-align:center}
@@ -388,8 +221,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .qrft{display:flex;gap:9px;width:100%;max-width:310px}
 .qrcb{flex:1;padding:12px;border-radius:50px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-size:14px;cursor:pointer;text-align:center}
 .qrab{flex:1;padding:12px;border-radius:50px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.08);color:var(--accent);font-size:14px;font-weight:600;cursor:pointer;text-align:center}
-
-/* ── SETUP ── */
 #setup{position:fixed;inset:0;z-index:4000;background:rgba(5,8,18,.97);display:flex;align-items:flex-end;justify-content:center}
 #setup.hide{display:none}
 .sbox{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:540px;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto}
@@ -398,31 +229,110 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .ssub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:14px}
 .pprow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
 .pp{padding:4px 11px;border-radius:50px;font-size:12px;font-weight:600}
-.sstep{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
-.sstep h3{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.snn{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#040a14;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ir{display:flex;gap:7px}
-.sinp{flex:1;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:13px;padding:10px 11px;border-radius:10px;outline:none}
-.sinp:focus{border-color:var(--accent)}
-.sinp::placeholder{color:var(--dim)}
-.bg{padding:10px 16px;border-radius:10px;background:var(--accent);color:#040a14;border:none;font-weight:700;font-size:13px;cursor:pointer}
 .gg{padding:10px 16px;border-radius:10px;background:var(--surf2);color:var(--dim);border:1px solid var(--border);font-size:13px;cursor:pointer}
-.tr{font-size:12px;padding:8px 11px;border-radius:9px;margin-top:7px;display:none;line-height:1.5}
-.tr.ok{display:block;background:rgba(0,229,160,.1);color:var(--accent)}
-.tr.er{display:block;background:rgba(255,77,77,.1);color:var(--red)}
 .sact{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
-
-/* Toast */
 #toast{position:fixed;top:calc(60px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-20px);z-index:5000;background:var(--surf2);border:1px solid var(--border);border-radius:50px;padding:10px 20px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:all .3s;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* Route line */
-.route-line{stroke:var(--accent);stroke-width:3;stroke-dasharray:8,5;animation:dashmove 0.6s linear infinite;fill:none}
-@keyframes dashmove{to{stroke-dashoffset:-13}}
 .qbtn{background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);color:#b0bdd0;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;transition:all .2s}
 .qbtn.sel{background:#00e5a018;border-color:#00e5a0;color:#00e5a0;font-weight:700}
+.route-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px}
+.route-card-title{font-size:16px;font-weight:800;color:#e0e8f0;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.route-card-sub{font-size:12px;color:#b0bdd0;margin-bottom:14px}
+.route-input-wrap{position:relative;margin-bottom:10px}
+.route-dot{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;z-index:1}
+.route-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.10);color:#fff;font-size:14px;padding:13px 92px 13px 32px;border-radius:12px;outline:none;transition:border .2s}
+.route-input:focus{border-color:rgba(0,229,160,.4)}
+.route-input::placeholder{color:#5a6a8a}
+.route-gps-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:#00e5a018;border:1px solid #00e5a044;color:#00e5a0;border-radius:8px;padding:5px 11px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+.route-clear-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:var(--surf2);border:1px solid var(--border);color:#b0bdd0;font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0}
+.route-clear-btn.show{display:flex}
+/* Swap-knapp mellom Fra og Til */
+.route-swap-wrap{position:relative;height:0}
+.route-swap-btn{position:absolute;right:14px;top:-26px;z-index:5;width:36px;height:36px;border-radius:50%;background:var(--surf2);border:1.5px solid var(--border);color:#00e5a0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.4);transition:transform .25s}
+.route-swap-btn:active{transform:rotate(180deg) scale(.9)}
+/* Nylige destinasjoner */
+.recent-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.recent-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:50px;padding:6px 12px;font-size:12px;color:#e0e8f0;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.recent-chip:active{transform:scale(.94);background:rgba(0,229,160,.1)}
+.recent-chip-ico{font-size:13px}
+.recent-label{font-size:11px;color:#5a6a8a;font-weight:600;margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em}
+.route-calc-btn{width:100%;background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:14px;cursor:pointer;margin-top:4px;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.route-calc-btn:active{opacity:.85}
+.route-calc-btn:disabled{opacity:.6;cursor:wait}
+.btn-spinner{width:16px;height:16px;border:2px solid rgba(0,26,14,.3);border-top-color:#001a0e;border-radius:50%;animation:btnspin .7s linear infinite;display:inline-block}
+@keyframes btnspin{to{transform:rotate(360deg)}}
+/* Batteri-filter toggle */
+.battery-filter{display:flex;align-items:center;gap:8px;padding:0 12px 8px;flex-shrink:0}
+.battery-filter-toggle{display:flex;align-items:center;gap:7px;font-size:12px;color:#b0bdd0;cursor:pointer;-webkit-user-select:none}
+.bf-tgl{width:38px;height:22px;background:var(--surf2);border-radius:50px;position:relative;transition:background .25s;border:1px solid var(--border);flex-shrink:0}
+.bf-tgl.on{background:var(--accent);border-color:var(--accent)}
+.bf-tgl::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:white;transition:transform .25s}
+.bf-tgl.on::after{transform:translateX(16px)}
+/* Rikere tom-tilstand */
+.empty-rich{text-align:center;padding:36px 20px;color:var(--dim)}
+.empty-rich-ico{font-size:48px;margin-bottom:12px;opacity:.6}
+.empty-rich-title{font-size:15px;font-weight:700;color:#e0e8f0;margin-bottom:5px}
+.empty-rich-sub{font-size:13px;color:#b0bdd0;line-height:1.6;margin-bottom:16px}
+.empty-rich-btn{background:var(--accent);color:#001a0e;border:none;border-radius:11px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer}
+/* Sist oppdatert badge på kart */
+#lastUpdBadge{position:absolute;left:14px;top:calc(var(--planner-h,56px) + 12px);z-index:500;background:rgba(8,12,24,.9);border:1px solid var(--border);border-radius:50px;padding:5px 11px;font-size:11px;font-weight:600;color:var(--dim);display:flex;align-items:center;gap:6px;transition:top .25s,opacity .3s;pointer-events:none}
+#lastUpdBadge .lu-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
+.route-results{display:none;margin-top:16px}
+.route-summary{font-size:12px;color:#b0bdd0;margin-bottom:12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.route-summary-badge{background:rgba(0,229,160,.12);border:1px solid rgba(0,229,160,.25);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:700;color:#00e5a0}
+.route-provider-row{display:flex;align-items:center;gap:12px;border-radius:13px;padding:13px 14px;margin-bottom:8px;border:1.5px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);transition:all .2s}
+.route-provider-row.winner{border-color:rgba(0,229,160,.35);background:rgba(0,229,160,.06)}
+.route-provider-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+.route-provider-name{font-size:14px;font-weight:700;color:#e0e8f0}
+.route-provider-detail{font-size:12px;color:#b0bdd0;margin-top:2px}
+.route-provider-price{font-size:22px;font-weight:800;margin-left:auto}
+.route-winner-badge{background:#00e5a0;color:#001a0e;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:6px;font-weight:800;vertical-align:middle}
+.route-map-cta{width:100%;margin-top:10px;padding:12px;border-radius:12px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.07);color:#00e5a0;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.route-map-cta:active{opacity:.8}
+.route-disclaimer{font-size:11px;color:#5a6a8a;text-align:center;margin-top:10px}
+.route-autocomplete{position:absolute;top:100%;left:0;right:0;z-index:200;background:rgba(8,12,24,.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.route-autocomplete-item{padding:11px 14px;cursor:pointer;font-size:13px;color:#e0e8f0;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.route-autocomplete-item:last-child{border:none}
+.route-autocomplete-item:active{background:rgba(255,255,255,.05)}
+.route-autocomplete-name{font-weight:600}
+.route-autocomplete-sub{font-size:11px;color:#5a6a8a;margin-top:1px}
+.best-scooters-panel{background:linear-gradient(135deg,rgba(0,229,160,.10),rgba(0,229,160,.03));border:1.5px solid rgba(0,229,160,.30);border-radius:18px;padding:18px;margin-top:16px;margin-bottom:14px;display:none}
+.best-scooters-title{font-size:17px;font-weight:800;color:#00e5a0;margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.best-scooters-hint{font-size:12px;color:#b0bdd0;margin-bottom:14px}
+.best-scooter-row{display:flex;align-items:center;gap:13px;padding:14px;border-radius:14px;margin-bottom:9px;cursor:pointer;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.07);transition:all .15s}
+.best-scooter-row:last-child{margin-bottom:0}
+.best-scooter-row:active{transform:scale(.98);background:rgba(255,255,255,0.07)}
+.best-scooter-ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;flex-shrink:0}
+.best-scooter-badge{font-size:12px;font-weight:800;padding:4px 11px;border-radius:20px;display:inline-block;margin-bottom:5px}
+.best-scooter-info{flex:1;min-width:0}
+.best-scooter-name{font-size:16px;font-weight:800;color:#e0e8f0}
+.best-scooter-detail{font-size:12px;color:#b0bdd0;margin-top:2px}
+.best-scooter-metric{text-align:right;flex-shrink:0}
+.best-scooter-metric-val{font-size:20px;font-weight:800}
+.best-scooter-metric-lbl{font-size:10px;color:#b0bdd0;margin-top:1px}
+.best-scooter-go{display:flex;align-items:center;gap:5px;margin-top:8px;font-size:12px;font-weight:700;color:#00e5a0}
+.price-compare-head{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;color:#b0bdd0;cursor:pointer;margin-bottom:8px;-webkit-user-select:none}
+.price-compare-head:active{opacity:.75}
+#routePrices{display:none}
+#routePrices.open{display:block}
+/* Google-Maps-style route info bar (compact, top of map) */
+#mapRouteBar{position:absolute;top:12px;left:12px;right:12px;z-index:560;background:rgba(13,18,36,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(0,229,160,.25);border-radius:14px;padding:11px 14px;box-shadow:0 8px 28px rgba(0,0,0,.5);display:none;animation:mrbIn .3s cubic-bezier(.32,.72,0,1)}
+#mapRouteBar.show{display:block}
+@keyframes mrbIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.mrb-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mrb-total{display:flex;align-items:baseline;gap:6px}
+.mrb-total-min{font-size:22px;font-weight:800;color:#00e5a0;line-height:1}
+.mrb-total-lbl{font-size:12px;color:#b0bdd0}
+.mrb-close{width:26px;height:26px;border-radius:50%;background:var(--surf2);border:1px solid var(--border);color:#b0bdd0;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mrb-legs{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.mrb-leg{display:flex;align-items:center;gap:5px;font-size:12px;color:#e0e8f0;font-weight:600}
+.mrb-leg-ico{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.mrb-arrow{color:#5a6a8a;font-size:11px}
+/* Open-app button — bottom of map */
+#mapOpenApp{position:absolute;bottom:22px;left:72px;right:72px;z-index:560;padding:14px;border-radius:14px;border:none;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,.5);display:none;animation:mrbIn .3s cubic-bezier(.32,.72,0,1)}
+#mapOpenApp.show{display:block}
+#mapOpenApp:active{opacity:.85;transform:scale(.98)}
 </style>
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VET3DT44G5"></script>
 <script>
 window.dataLayer=window.dataLayer||[];
@@ -438,34 +348,14 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <!-- ONBOARDING -->
 <div id="onboarding" class="hide">
   <div class="ob-slides" id="obSlides">
-    <div class="ob-slide">
-      <div class="ob-ico">🛴</div>
-      <div class="ob-title">Velkommen til<br><em>SparkNorge</em></div>
-      <div class="ob-desc">Finn ledige sparkesykler fra Voi, Bolt og Ryde – live på kartet i alle norske byer</div>
-    </div>
-    <div class="ob-slide">
-      <div class="ob-ico">🚶</div>
-      <div class="ob-title">Se gangtid<br><em>til sykkelen</em></div>
-      <div class="ob-desc">Alle sykler viser nøyaktig gåavstand og minutter fra din posisjon</div>
-    </div>
-    <div class="ob-slide">
-      <div class="ob-ico">🗺️</div>
-      <div class="ob-title">Kart som<br><em>fungerer</em></div>
-      <div class="ob-desc">Zoom inn og ut – pins samler seg smart og viser antall. Nærmeste alltid øverst</div>
-    </div>
-    <div class="ob-slide">
-      <div class="ob-ico">💸</div>
-      <div class="ob-title">Oppdaterte<br><em>priser 2025</em></div>
-      <div class="ob-desc">Voi 3 kr/min · Bolt 2,5 kr/min · Ryde 2,5 kr/min. Sammenlign og spar</div>
-    </div>
+    <div class="ob-slide"><div class="ob-ico">🛴</div><div class="ob-title">Velkommen til<br><em>SparkNorge</em></div><div class="ob-desc">Finn ledige sparkesykler fra Voi, Bolt og Ryde – live på kartet i alle norske byer</div></div>
+    <div class="ob-slide"><div class="ob-ico">🚶</div><div class="ob-title">Se gangtid<br><em>til sykkelen</em></div><div class="ob-desc">Alle sykler viser nøyaktig gåavstand og minutter fra din posisjon</div></div>
+    <div class="ob-slide"><div class="ob-ico">🗺️</div><div class="ob-title">Planlegg turen<br><em>rett på kartet</em></div><div class="ob-desc">Trykk planleggeren øverst, skriv inn hvor du skal – så finner vi nærmeste sykkel og tegner hele ruten med estimert tid</div></div>
+    <div class="ob-slide"><div class="ob-ico">⚡</div><div class="ob-title">Smarte<br><em>anbefalinger</em></div><div class="ob-desc">Vi viser deg nærmeste, billigste og sykkelen med mest strøm – så du slipper å lete</div></div>
+    <div class="ob-slide"><div class="ob-ico">💸</div><div class="ob-title">Oppdaterte<br><em>priser 2026</em></div><div class="ob-desc">Sammenlign Voi, Bolt, Ryde og Dott. Finn billigste tur hver gang</div></div>
   </div>
   <div class="ob-bottom">
-    <div class="ob-dots">
-      <div class="ob-dot on" id="dot0"></div>
-      <div class="ob-dot" id="dot1"></div>
-      <div class="ob-dot" id="dot2"></div>
-      <div class="ob-dot" id="dot3"></div>
-    </div>
+    <div class="ob-dots"><div class="ob-dot on" id="dot0"></div><div class="ob-dot" id="dot1"></div><div class="ob-dot" id="dot2"></div><div class="ob-dot" id="dot3"></div><div class="ob-dot" id="dot4"></div></div>
     <button class="ob-next" id="obNext" onclick="obNextSlide()">Neste →</button>
     <div class="ob-skip" onclick="finishOnboarding()">Hopp over</div>
   </div>
@@ -474,14 +364,8 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <!-- ACTIVE RIDE BANNER -->
 <div id="activeRideBanner">
   <div class="ar-pulse"></div>
-  <div class="ar-info">
-    <div class="ar-timer" id="arTimer">00:00</div>
-    <div class="ar-meta" id="arMeta">Aktiv tur…</div>
-  </div>
-  <div class="ar-cost">
-    <div class="ar-cost-n" id="arCost">0 kr</div>
-    <div class="ar-cost-l">Kostnad</div>
-  </div>
+  <div class="ar-info"><div class="ar-timer" id="arTimer">00:00</div><div class="ar-meta" id="arMeta">Aktiv tur…</div></div>
+  <div class="ar-cost"><div class="ar-cost-n" id="arCost">0 kr</div><div class="ar-cost-l">Kostnad</div></div>
   <button class="ar-stop" onclick="stopRide()">⬛ Stopp</button>
 </div>
 
@@ -490,25 +374,13 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
   <div class="sbox">
     <div class="shdl"></div>
     <div class="stit">🛴 SparkNorge</div>
-    <div class="ssub">Live sparkesykler · Kart · Priser · QR-skanner<br>
-      <small style="color:var(--dim)">Oppdatert med korrekte 2025-priser og gåavstand</small></div>
+    <div class="ssub">Live sparkesykler · Kart · Priser · QR-skanner</div>
     <div class="pprow">
       <span class="pp" style="background:rgba(233,30,140,.1);color:var(--voi)">● Voi</span>
       <span class="pp" style="background:rgba(52,209,107,.1);color:var(--bolt)">● Bolt</span>
       <span class="pp" style="background:rgba(255,87,34,.1);color:var(--ryde)">● Ryde</span>
     </div>
-    <div class="sstep">
-      <h3><span class="snn">1</span>Lim inn Cloudflare Worker-URL</h3>
-      <div class="ir">
-        <input class="sinp" id="proxyUrl" type="url" placeholder="https://entur-proxy.navn.workers.dev">
-        <button class="bg" onclick="testProxy()">Test</button>
-      </div>
-      <div class="tr" id="testRes"></div>
-    </div>
-    <div class="sact">
-      <button class="gg" onclick="skipSetup()">Demo-modus</button>
-      <button class="bg" id="connectBtn" onclick="connectProxy()" disabled>🚀 Start</button>
-    </div>
+    <div class="sact"><button class="gg" onclick="skipSetup()">Start app</button></div>
   </div>
 </div>
 
@@ -516,123 +388,13 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <div id="qrModal">
   <div class="qrt">📷 Skann sparkesykkel</div>
   <div class="qrs">Rett kameraet mot QR-koden</div>
-  <div class="qrvp">
-    <video id="qrVid" autoplay muted playsinline></video>
-    <canvas id="qrCvs"></canvas>
-    <div class="qrc tl"></div><div class="qrc tr"></div>
-    <div class="qrc bl"></div><div class="qrc br"></div>
-    <div class="qrsl"></div>
-  </div>
+  <div class="qrvp"><video id="qrVid" autoplay muted playsinline></video><canvas id="qrCvs"></canvas><div class="qrc tl"></div><div class="qrc tr"></div><div class="qrc bl"></div><div class="qrc br"></div><div class="qrsl"></div></div>
   <div class="qrst" id="qrSt">Starter kamera…</div>
   <div class="qrres" id="qrRes">
-    <div class="qrrh"><div class="qrri" id="qrRi"></div>
-      <div><div class="qrbn" id="qrRn"></div><div class="qrbid" id="qrRid"></div></div></div>
-    <div class="qrac">
-      <button class="qrm" id="qrMb"></button>
-      <button class="qrsb2" id="qrSb2"></button>
-    </div>
+    <div class="qrrh"><div class="qrri" id="qrRi"></div><div><div class="qrbn" id="qrRn"></div><div class="qrbid" id="qrRid"></div></div></div>
+    <div class="qrac"><button class="qrm" id="qrMb"></button><button class="qrsb2" id="qrSb2"></button></div>
   </div>
-  <div class="qrft">
-    <div class="qrcb" onclick="closeQR()">✕ Lukk</div>
-    <div class="qrab" onclick="resetQR()">↻ Igjen</div>
-  </div>
-</div>
-
-<!-- Add Payment Modal -->
-<div class="modal-overlay" id="addPayModal">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">💳 Legg til betaling</div>
-    <div class="modal-sub">Velg betalingsmetode</div>
-    <div class="pay-options">
-      <div class="pay-opt selected" id="payOptVipps" onclick="selectPayOpt('vipps')">
-        <div class="pay-opt-ico">🟠</div>
-        <div><div class="pay-opt-name">Vipps</div><div class="pay-opt-sub">Rask og enkel – norges favoritt</div></div>
-      </div>
-      <div class="pay-opt" id="payOptCard" onclick="selectPayOpt('card')">
-        <div class="pay-opt-ico">💳</div>
-        <div><div class="pay-opt-name">Betalingskort</div><div class="pay-opt-sub">Visa / Mastercard</div></div>
-      </div>
-    </div>
-    <div id="vippsForm">
-      <div class="form-field">
-        <div class="form-lbl">Mobilnummer</div>
-        <input class="form-inp" id="vippsNum" type="tel" placeholder="400 00 000" maxlength="8">
-      </div>
-    </div>
-    <div id="cardForm" style="display:none">
-      <div class="form-field">
-        <div class="form-lbl">Kortnummer</div>
-        <input class="form-inp" id="cardNum" type="tel" placeholder="0000 0000 0000 0000" maxlength="19">
-      </div>
-      <div class="form-row">
-        <div class="form-field">
-          <div class="form-lbl">Utløp</div>
-          <input class="form-inp" id="cardExp" type="tel" placeholder="MM/ÅÅ" maxlength="5">
-        </div>
-        <div class="form-field">
-          <div class="form-lbl">CVC</div>
-          <input class="form-inp" id="cardCvc" type="tel" placeholder="123" maxlength="3">
-        </div>
-      </div>
-      <div class="form-field">
-        <div class="form-lbl">Navn på kortet</div>
-        <input class="form-inp" id="cardName" type="text" placeholder="OLA NORDMANN">
-      </div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn gray" style="flex:1" onclick="closeModal('addPayModal')">Avbryt</button>
-      <button class="modal-btn green" style="flex:2" onclick="savePayment()">Legg til</button>
-    </div>
-  </div>
-</div>
-
-<!-- Top-up Modal -->
-<div class="modal-overlay" id="topupModal">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">💰 Fyll på saldo</div>
-    <div class="modal-sub">Velg beløp</div>
-    <div class="topup-amounts">
-      <div class="ta" onclick="selectTopup(50,this)"><div class="ta-n">50</div><div class="ta-l">kr</div></div>
-      <div class="ta sel" onclick="selectTopup(100,this)"><div class="ta-n">100</div><div class="ta-l">kr</div></div>
-      <div class="ta" onclick="selectTopup(200,this)"><div class="ta-n">200</div><div class="ta-l">kr</div></div>
-      <div class="ta" onclick="selectTopup(300,this)"><div class="ta-n">300</div><div class="ta-l">kr</div></div>
-      <div class="ta" onclick="selectTopup(500,this)"><div class="ta-n">500</div><div class="ta-l">kr</div></div>
-      <div class="ta" onclick="selectTopup(1000,this)"><div class="ta-n">1000</div><div class="ta-l">kr</div></div>
-    </div>
-    <div id="topupPayMethod" style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px">
-      <span id="topupPayIco" style="font-size:20px">🟠</span>
-      <span id="topupPayName">Vipps</span>
-      <span style="margin-left:auto;font-size:12px;color:var(--dim)">Aktiv betalingsmetode</span>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn gray" style="flex:1" onclick="closeModal('topupModal')">Avbryt</button>
-      <button class="modal-btn green" style="flex:2" id="topupConfirmBtn" onclick="confirmTopup()">Betal 100 kr</button>
-    </div>
-  </div>
-</div>
-
-<!-- Edit Profile Modal -->
-<div class="modal-overlay" id="editProfileModal">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">✏️ Rediger profil</div>
-    <div class="modal-sub">Velg avatar og navn</div>
-    <div class="avatar-picker" id="avatarPicker"></div>
-    <div class="form-field">
-      <div class="form-lbl">Navn</div>
-      <input class="form-inp" id="editName" type="text" placeholder="Ditt navn">
-    </div>
-    <div class="form-field">
-      <div class="form-lbl">By</div>
-      <input class="form-inp" id="editCity" type="text" placeholder="f.eks. Oslo">
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn gray" style="flex:1" onclick="closeModal('editProfileModal')">Avbryt</button>
-      <button class="modal-btn green" style="flex:2" onclick="saveProfile()">Lagre</button>
-    </div>
-  </div>
+  <div class="qrft"><div class="qrcb" onclick="closeQR()">✕ Lukk</div><div class="qrab" onclick="resetQR()">↻ Igjen</div></div>
 </div>
 
 <!-- TOP NAV -->
@@ -640,568 +402,378 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
   <div class="inner">
     <div class="logo">🛴 Spark<em>Norge</em></div>
     <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
-      <option value="oslo">Oslo</option>
-      <option value="bergen">Bergen</option>
-      <option value="trondheim">Trondheim</option>
-      <option value="stavanger">Stavanger</option>
-      <option value="kristiansand">Kristiansand</option>
-      <option value="lillestrom">Lillestrøm</option>
-      <option value="fredrikstad">Fredrikstad</option>
-      <option value="drammen">Drammen</option>
+      <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
+      <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
+      <option value="lillestrom">Lillestrøm</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
     </select>
     <button onclick="toggleSearch()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;margin-right:4px">🔍 Søk</button>
-<div class="nav-live"><span class="ldot" id="ldot"></span><span id="ltxt">–</span></div>
+    <div class="nav-live"><span class="ldot" id="ldot"></span><span id="ltxt">–</span></div>
   </div>
 </div>
 
 <!-- SØKEBOKS -->
 <div id="searchBox" style="display:none;position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:950;background:rgba(8,12,24,0.97);padding:12px 14px;border-bottom:1px solid var(--border);backdrop-filter:blur(20px)">
   <div style="display:flex;gap:8px;align-items:center">
-    <input id="searchInp" type="text" placeholder="Søk adresse i Norge..." autocomplete="off"
-      style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:14px;padding:10px 14px;border-radius:12px;outline:none"
-      oninput="searchDebounce(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
+    <input id="searchInp" type="text" placeholder="Søk adresse i Norge..." autocomplete="off" style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:14px;padding:10px 14px;border-radius:12px;outline:none" oninput="searchDebounce(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
     <button onclick="closeSearch()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:10px;padding:10px 14px;font-size:14px;cursor:pointer">✕</button>
   </div>
   <div id="searchResults" style="margin-top:8px;display:flex;flex-direction:column;gap:4px;max-height:240px;overflow-y:auto"></div>
 </div>
 
-<!-- KART PAGE --><!-- KART PAGE --><!-- KART PAGE -->
+<!-- KART PAGE -->
 <div id="pgMap" class="page on">
+
+  <!-- REISEPLANLEGGER-BAR (øverst) -->
+  <div id="plannerBar">
+    <div class="planner-collapsed" id="plannerCollapsed" onclick="expandPlanner()">
+      <span class="planner-pin" style="background:#00e5a0"></span>
+      <span class="planner-collapsed-txt" id="plannerCollapsedTxt">Planlegg tur — hvor skal du?</span>
+      <span class="planner-collapsed-chev">▾</span>
+    </div>
+    <div class="planner-expanded" id="plannerExpanded">
+      <div class="planner-head">
+        <div class="route-card-title" style="font-size:15px">🗺️ Planlegg turen din</div>
+        <button class="planner-min" onclick="collapsePlanner()" aria-label="Minimer planlegger">▴</button>
+      </div>
+      <div class="route-input-wrap">
+        <div class="route-dot" style="background:#00e5a0"></div>
+        <input id="routeFrom" class="route-input" type="text" placeholder="Din posisjon (automatisk)..." oninput="routeSearch(this.value,'from');toggleClear('from')" autocomplete="off" aria-label="Startpunkt">
+        <button class="route-gps-btn" id="fromGpsBtn" onclick="useGpsAsFrom()" aria-label="Bruk min posisjon">📍 GPS</button>
+        <button class="route-clear-btn" id="fromClearBtn" onclick="clearRouteField('from')" aria-label="Tøm startpunkt">✕</button>
+        <div class="route-autocomplete" id="fromResults"></div>
+      </div>
+      <div class="route-swap-wrap">
+        <button class="route-swap-btn" onclick="swapRoute()" aria-label="Bytt start og destinasjon">⇅</button>
+      </div>
+      <div class="route-input-wrap">
+        <div class="route-dot" style="background:#ff4d6a"></div>
+        <input id="routeTo" class="route-input" type="text" placeholder="Til: adresse eller sted..." oninput="routeSearch(this.value,'to');toggleClear('to')" autocomplete="off" aria-label="Destinasjon">
+        <button class="route-clear-btn" id="toClearBtn" onclick="clearRouteField('to')" aria-label="Tøm destinasjon">✕</button>
+        <div class="route-autocomplete" id="toResults"></div>
+      </div>
+      <div class="recent-chips-wrap" id="recentChipsWrap" style="display:none">
+        <div class="recent-label">Nylige mål</div>
+        <div class="recent-chips" id="recentChips"></div>
+      </div>
+      <button class="route-calc-btn" id="calcBtn" onclick="calcRoute()">Beregn pris →</button>
+      <div class="route-results" id="routeResult">
+        <div class="route-summary" id="routeDistInfo"></div>
+        <div class="best-scooters-panel" id="bestScootersPanel">
+          <div class="best-scooters-title">🛴 Anbefalte sykler nær deg</div>
+          <div class="best-scooters-hint">Nærmeste fra din posisjon · trykk for å se hele ruten til målet</div>
+          <div id="bestScootersList"></div>
+        </div>
+        <div class="price-compare-head" onclick="togglePriceCompare()">
+          <span>💸 Prissammenligning alle leverandører</span>
+          <span id="priceCompareChevron" style="transition:transform .2s">▾</span>
+        </div>
+        <div id="routePrices"></div>
+        <div class="route-disclaimer">Estimert — faktisk pris kan variere. Sjekk appen.</div>
+      </div>
+    </div>
+  </div>
+
   <div id="map"></div>
+  <div id="lastUpdBadge"><span class="lu-dot"></span><span id="lastUpdTxt">Oppdaterer…</span></div>
+  <div id="mapRouteBar">
+    <div class="mrb-top">
+      <div class="mrb-total"><span class="mrb-total-min" id="mrbTotalMin">–</span><span class="mrb-total-lbl">min total reisetid</span></div>
+      <button class="mrb-close" onclick="closeMapRouteBar()">✕</button>
+    </div>
+    <div class="mrb-legs" id="mrbLegs"></div>
+  </div>
+  <button id="mapOpenApp"></button>
   <div id="zoomBadge">zoom 14</div>
-  <div class="fab" id="fabGps" onclick="locateMe()">📍</div>
-  <div class="fab" id="fabQr" onclick="openQR()">⬛</div>
-  <div class="fab" id="fabRoute" onclick="clearRoute()">✕ Rute</div>
+  <div class="fab" id="fabGps" onclick="locateMe()" role="button" aria-label="Finn min posisjon">📍</div>
+  <div class="fab" id="fabQr" onclick="openQR()" role="button" aria-label="Skann QR-kode">⬛</div>
+  <div class="fab" id="fabRoute" onclick="clearRoute()" role="button" aria-label="Fjern rute">✕ Rute</div>
   <div id="strip"></div>
   <div class="sheet peek" id="sheet">
-    <div class="sh" onclick="toggleSheet()">
-      <div class="shb"></div>
-      <div class="shc" id="shc">Laster…</div>
-    </div>
+    <div class="sh" onclick="toggleSheet()"><div class="shb"></div><div class="shc" id="shc">Laster…</div></div>
     <div class="sf" id="fbar"></div>
     <div class="sort-bar" id="sortBar">
       <div class="sort-btn on" onclick="setSort('dist',this)">📍 Nærmest</div>
       <div class="sort-btn" onclick="setSort('battery',this)">🔋 Batteri</div>
       <div class="sort-btn" onclick="setSort('price',this)">💸 Billigst</div>
     </div>
-    <div class="sl" id="sbl">
-      <div class="shim"></div><div class="shim"></div><div class="shim"></div>
+    <div class="battery-filter">
+      <div class="battery-filter-toggle" onclick="toggleBatteryFilter(this)" role="button" aria-label="Skjul sykler med lavt batteri">
+        <div class="bf-tgl" id="bfTgl"></div>
+        <span>Skjul under 20% batteri</span>
+      </div>
     </div>
+    <div class="sl" id="sbl"><div class="shim"></div><div class="shim"></div><div class="shim"></div></div>
   </div>
 </div>
 
 <!-- PROFIL PAGE -->
 <div id="pgProfil" class="page">
   <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding-bottom:20px">
-    <div style="background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;border-bottom:1px solid var(--border)">
-      <div style="font-size:20px;font-weight:800">Innstillinger</div>
-      <div style="font-size:13px;color:var(--dim);margin-top:2px">SparkNorge v2.1</div>
-    </div>
+    <div style="background:linear-gradient(180deg,var(--surf2) 0%,var(--bg) 100%);padding:24px 16px 20px;border-bottom:1px solid var(--border)"><div style="font-size:20px;font-weight:800">Innstillinger</div><div style="font-size:13px;color:var(--dim);margin-top:2px">SparkNorge v2.1</div></div>
     <div class="sett-group" style="margin-top:16px">
-      <div class="sett-row">
-        <div class="sett-ico">&#128205;</div>
-        <div class="sett-body" style="flex:1"><div class="sett-lbl">Velg by</div><div class="sett-sub">Ellers brukes GPS automatisk</div></div>
+      <div class="sett-row"><div class="sett-ico">📍</div><div class="sett-body" style="flex:1"><div class="sett-lbl">Velg by</div><div class="sett-sub">Ellers brukes GPS automatisk</div></div>
         <select class="city-sel" onchange="changeCity(this.value);document.getElementById('citySel').value=this.value">
-          <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
-          <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
-          <option value="lillestrom">Lillestrom</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
+          <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option><option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option><option value="lillestrom">Lillestrom</option><option value="fredrikstad">Fredrikstad</option><option value="drammen">Drammen</option>
         </select>
       </div>
-      <div class="sett-row">
-        <div class="sett-ico">&#128205;</div>
-        <div class="sett-body" style="flex:1"><div class="sett-lbl">GPS-posisjon</div><div class="sett-sub">For gaavstand og naermeste sykkel</div></div>
-        <button class="sbtn" onclick="locateMe(false)" style="font-size:12px;padding:7px 12px">Finn meg</button>
-      </div>
-      <div class="sett-row">
-        <div class="sett-ico">&#128279;</div>
-        <div class="sett-body"><div class="sett-lbl">Datakilde</div><div class="sett-sub">Entur GBFS - api.entur.io - Apne data</div></div>
-        <span style="color:var(--accent);font-size:12px;font-weight:600">Live &#10003;</span>
-      </div>
-      <div class="sett-row">
-        <div class="sett-ico">&#128276;</div>
-        <div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Tilbud og nye sykler i naerheten</div></div>
-        <div class="tgl on" onclick="this.classList.toggle('on')"></div>
-      </div>
+      <div class="sett-row"><div class="sett-ico">📍</div><div class="sett-body" style="flex:1"><div class="sett-lbl">GPS-posisjon</div><div class="sett-sub">For gåavstand og nærmeste sykkel</div></div><button class="sbtn" onclick="locateMe(false)" style="font-size:12px;padding:7px 12px">Finn meg</button></div>
+      <div class="sett-row"><div class="sett-ico">🔗</div><div class="sett-body"><div class="sett-lbl">Datakilde</div><div class="sett-sub">Entur GBFS - Åpne data</div></div><span style="color:var(--accent);font-size:12px;font-weight:600">Live ✓</span></div>
+      <div class="sett-row"><div class="sett-ico">🔔</div><div class="sett-body" style="flex:1"><div class="sett-lbl">Push-varsler</div><div class="sett-sub">Tilbud og nye sykler i nærheten</div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
     </div>
     <div style="padding:16px 16px 8px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px">Tips og fakta<span style="flex:1;height:1px;background:var(--border);display:inline-block"></span></div>
     <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Hvilken sykkel passer deg?</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.7"><b style="color:var(--text)">Ryde</b> - storst hjul, best demping.<br><b style="color:var(--text)">Bolt</b> - billigst per minutt (2,5 kr).<br><b style="color:var(--text)">Voi</b> - storst dekning i Oslo.<br><b style="color:var(--text)">Dott</b> - kun Trondheim, sesong mars-des.</div>
-      </div>
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Norske trafikkregler</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Maks <b style="color:var(--text)">20 km/t</b><br>- Ikke lov pa <b style="color:var(--text)">fortau</b><br>- Promillegrense <b style="color:var(--text)">0,2 promille</b><br>- Kun <b style="color:var(--text)">en person</b> per sykkel</div>
-      </div>
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Oslo-regler 2025-2027</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Kun Voi, Bolt og Ryde godkjente<br>- Stengt <b style="color:var(--text)">kl. 23:00-05:00</b><br>- Maks <b style="color:var(--text)">8 000 sykler</b> i Oslo</div>
-      </div>
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Spar penger</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Bolt manedspass: <b style="color:var(--text)">389 kr/300 min</b><br>- Voi dagspass: <b style="color:var(--text)">69 kr/100 min</b><br>- Ryde 14-dagers: <b style="color:var(--text)">249 kr/200 min</b></div>
-      </div>
-      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Batteri-tips</div>
-        <div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Under 20% - velg en annen<br>- 50%+ rekker typisk 5-8 km<br>- Rodt under 20%, gult 20-50%, gront 50%+</div>
-      </div>
+      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px"><div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Hvilken sykkel passer deg?</div><div style="font-size:13px;color:#b0bdd0;line-height:1.7"><b style="color:var(--text)">Ryde</b> - størst hjul, best demping.<br><b style="color:var(--text)">Bolt</b> - billigst per minutt.<br><b style="color:var(--text)">Voi</b> - størst dekning i Oslo.<br><b style="color:var(--text)">Dott</b> - kun Trondheim, sesong mars-des.</div></div>
+      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px"><div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Norske trafikkregler</div><div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Maks <b style="color:var(--text)">20 km/t</b><br>- Ikke lov på <b style="color:var(--text)">fortau</b><br>- Promillegrense <b style="color:var(--text)">0,2 promille</b><br>- Kun <b style="color:var(--text)">en person</b> per sykkel</div></div>
+      <div style="background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:14px"><div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent)">Oslo-regler 2025-2027</div><div style="font-size:13px;color:#b0bdd0;line-height:1.7">- Kun Voi, Bolt og Ryde godkjente<br>- Stengt <b style="color:var(--text)">kl. 23:00-05:00</b><br>- Maks <b style="color:var(--text)">8 000 sykler</b> i Oslo</div></div>
     </div>
     <div class="sett-group" style="margin-top:16px">
-
-      <div class="sett-row"><div class="sett-ico">&#128202;</div><div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 - Entur GBFS - Mars 2026</div></div></div>
-      <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer"><div class="sett-ico">&#128274;</div><div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">Oppdatert mars 2026 - GDPR</div></div><span style="color:var(--dim);font-size:18px">&#8250;</span></div>
-      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer"><div class="sett-ico" style="color:var(--red)">&#128465;</div><div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div></div>
+      <div class="sett-row"><div class="sett-ico">📊</div><div class="sett-body"><div class="sett-lbl">Om SparkNorge</div><div class="sett-sub">v2.1 - Entur GBFS - Mars 2026</div></div></div>
+      <div class="sett-row" onclick="window.open('privacy.html','_blank')" style="cursor:pointer"><div class="sett-ico">🔒</div><div class="sett-body"><div class="sett-lbl">Personvern</div><div class="sett-sub">GDPR</div></div><span style="color:var(--dim);font-size:18px">›</span></div>
+      <div class="sett-row" onclick="if(confirm('Slette all data?')){localStorage.clear();showToast('Data slettet');setTimeout(()=>location.reload(),1500);}" style="cursor:pointer"><div class="sett-ico" style="color:var(--red)">🗑</div><div class="sett-body"><div class="sett-lbl" style="color:var(--red)">Slett konto</div><div class="sett-sub">Fjerner all data fra enheten</div></div></div>
     </div>
     <div style="height:20px"></div>
   </div>
 </div>
 
+<!-- PRISER PAGE -->
 <div id="pgPris" class="page">
   <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;padding:16px 14px 24px">
+  <div class="ph"><h1>💰 Prisguide 2026</h1><p style="color:#b0bdd0">Priser hentet direkte fra appene april 2026</p></div>
 
-  <div class="ph">
-    <h1>&#128184; Prisguide 2026</h1>
-    <p style="color:#b0bdd0">Priser hentet direkte fra appene april 2026</p>
-  </div>
-
-    <!-- RUTEPLANLEGGER -->
-  <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px">
-    <div style="font-size:16px;font-weight:800;color:#e0e8f0;margin-bottom:4px">&#128506;&#65039; Planlegg turen din</div>
-    <div style="font-size:12px;color:#b0bdd0;margin-bottom:14px">Skriv inn start og slutt &#8212; vi regner ut pris for alle leverand&#248;rer</div>
-
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <!-- Fra-felt -->
-      <div style="position:relative">
-        <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#00e5a0;z-index:1"></div>
-        <input id="routeFrom" type="text" placeholder="Fra: adresse eller sted..."
-          style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:14px;padding:12px 12px 12px 32px;border-radius:12px;outline:none"
-          oninput="routeSearch(this.value,'from')" autocomplete="off">
-        <div id="fromResults" style="position:absolute;top:100%;left:0;right:0;z-index:100;background:rgba(8,12,24,0.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:180px;overflow-y:auto"></div>
-      </div>
-
-      <!-- Til-felt -->
-      <div style="position:relative">
-        <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#ff4d6a;z-index:1"></div>
-        <input id="routeTo" type="text" placeholder="Til: adresse eller sted..."
-          style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:14px;padding:12px 12px 12px 32px;border-radius:12px;outline:none"
-          oninput="routeSearch(this.value,'to')" autocomplete="off">
-        <div id="toResults" style="position:absolute;top:100%;left:0;right:0;z-index:100;background:rgba(8,12,24,0.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:180px;overflow-y:auto"></div>
-      </div>
-
-      <!-- Beregn-knapp -->
-      <button onclick="calcRoute()" style="background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;width:100%">
-        Beregn pris &#8594;
-      </button>
-    </div>
-
-    <!-- Resultat -->
-    <div id="routeResult" style="display:none;margin-top:16px">
-      <div style="font-size:12px;color:#b0bdd0;margin-bottom:10px" id="routeDistInfo"></div>
-      <div id="routePrices" style="display:flex;flex-direction:column;gap:8px"></div>
-      <div style="font-size:11px;color:#b0bdd0;margin-top:10px;text-align:center">Estimert &#8212; faktisk pris kan variere. Sjekk appen.</div>
-    </div>
-  </div>
-
-  <!-- HVA LØNNER SEG FOR DEG? -->
+  <!-- HVA LØNNER SEG -->
   <div style="background:linear-gradient(135deg,rgba(0,229,160,0.08),rgba(0,229,160,0.03));border:1.5px solid rgba(0,229,160,0.25);border-radius:16px;padding:16px;margin-bottom:16px">
     <div style="font-size:16px;font-weight:800;color:#e0e8f0;margin-bottom:4px">🎯 Hva lønner seg for deg?</div>
     <div style="font-size:12px;color:#b0bdd0;margin-bottom:16px">Svar på 3 spørsmål — vi finner ditt beste abonnement</div>
-
     <div style="display:flex;flex-direction:column;gap:14px">
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvor mange turer per uke?</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="qbtn" onclick="setQ(1,1,this)">1–2</button>
-          <button class="qbtn" onclick="setQ(1,3,this)">3–4</button>
-          <button class="qbtn" onclick="setQ(1,5,this)">5–7</button>
-          <button class="qbtn" onclick="setQ(1,10,this)">Daglig+</button>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Minutter per tur i snitt?</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="qbtn" onclick="setQ(2,5,this)">Under 5</button>
-          <button class="qbtn" onclick="setQ(2,10,this)">5–10</button>
-          <button class="qbtn" onclick="setQ(2,15,this)">10–20</button>
-          <button class="qbtn" onclick="setQ(2,25,this)">20+</button>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvilken by?</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="qbtn" onclick="setQ(3,'oslo',this)">Oslo</button>
-          <button class="qbtn" onclick="setQ(3,'trondheim',this)">Trondheim</button>
-          <button class="qbtn" onclick="setQ(3,'bergen',this)">Bergen/annet</button>
-        </div>
-      </div>
-      <button onclick="calcBestPlan()" style="background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;width:100%">
-        Finn mitt beste abonnement →
-      </button>
+      <div><div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvor mange turer per uke?</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="qbtn" onclick="setQ(1,1,this)">1–2</button><button class="qbtn" onclick="setQ(1,3,this)">3–4</button><button class="qbtn" onclick="setQ(1,5,this)">5–7</button><button class="qbtn" onclick="setQ(1,10,this)">Daglig+</button></div></div>
+      <div><div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Minutter per tur i snitt?</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="qbtn" onclick="setQ(2,5,this)">Under 5</button><button class="qbtn" onclick="setQ(2,10,this)">5–10</button><button class="qbtn" onclick="setQ(2,15,this)">10–20</button><button class="qbtn" onclick="setQ(2,25,this)">20+</button></div></div>
+      <div><div style="font-size:13px;font-weight:600;color:#e0e8f0;margin-bottom:8px">Hvilken by?</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="qbtn" onclick="setQ(3,'oslo',this)">Oslo</button><button class="qbtn" onclick="setQ(3,'trondheim',this)">Trondheim</button><button class="qbtn" onclick="setQ(3,'bergen',this)">Bergen/annet</button></div></div>
+      <button onclick="calcBestPlan()" style="background:linear-gradient(135deg,#00e5a0,#00b87a);color:#001a0e;font-size:14px;font-weight:800;border:none;border-radius:12px;padding:13px;cursor:pointer;width:100%">Finn mitt beste abonnement →</button>
     </div>
     <div id="bestPlanResult" style="display:none;margin-top:16px"></div>
   </div>
 
-  <!-- SAMMENLIGN ABONNEMENT -->
-  <!-- SAMMENLIGNING -->
-  <div class="sec">&#128202; Sammenlign pass</div>
-  <div style="background:var(--surf);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;font-size:12px">
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;background:var(--surf2);padding:10px 12px;font-weight:700">
-      <div style="color:#b0bdd0">Pass</div>
-      <div style="text-align:center;color:var(--voi)">Voi</div>
-      <div style="text-align:center;color:var(--ryde)">Ryde</div>
-      <div style="text-align:center;color:var(--bolt)">Bolt</div>
-      <div style="text-align:center;color:#0066cc">Dott</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">Standard<br><span style="font-size:10px">kr/min</span></div>
-      <div style="text-align:center;font-weight:600">10kr+<br><span style="color:var(--voi)">2,50</span></div>
-      <div style="text-align:center;font-weight:600">5kr+<br><span style="color:var(--ryde)">2,50</span></div>
-      <div style="text-align:center;font-weight:600">9kr+<br><span style="color:var(--bolt)">2,20</span></div>
-      <div style="text-align:center;font-weight:600">5,90kr+<br><span style="color:#00aaff">2,50</span></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">30 min</span></div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">49 kr</div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">39 kr &#9733;</div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">21 kr*</div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">Dagspass<br><span style="font-size:10px">60 min</span></div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">89 kr</div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">59 kr &#9733;</div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">Ukespass<br><span style="font-size:10px">7 dager</span></div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">139kr<br><span style="font-size:10px;color:#b0bdd0">120min</span></div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">119kr &#9733;<br><span style="font-size:10px;color:#b0bdd0">120min</span></div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">59kr<br><span style="font-size:10px;color:#b0bdd0">80min</span></div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center">
-      <div style="color:#b0bdd0">14-dagers<br><span style="font-size:10px">200 min</span></div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">219kr &#9733;</div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-      <div style="text-align:center;color:#b0bdd0">&#8212;</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 0.9fr;padding:9px 12px;border-top:1px solid var(--border);align-items:center;background:rgba(255,255,255,.02)">
-      <div style="color:#b0bdd0">M&#229;nedspass<br><span style="font-size:10px">30 dager</span></div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">299kr &#9733;<br><span style="font-size:10px;color:#b0bdd0">300min</span></div>
-      <div style="text-align:center;font-weight:600;color:var(--accent)">299kr &#9733;<br><span style="font-size:10px;color:#b0bdd0">300min</span></div>
-      <div style="text-align:center;font-weight:600;color:#e0e8f0">139kr<br><span style="font-size:10px;color:#b0bdd0">240min</span></div>
-      <div style="text-align:center;color:#b0bdd0">&#128241;</div>
-    </div>
-    <div style="padding:8px 12px;font-size:11px;color:#b0bdd0;border-top:1px solid var(--border)">&#9733; = beste verdi &#183; *Kampanjepris</div>
-  </div>
-
   <!-- VOI -->
-  <div class="sec">Voi <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="sec">Voi <span class="oslo-badge">✓ Oslo</span></div>
   <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(233,30,140,.12);color:var(--voi)">V</div>
-      <div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline" style="color:#b0bdd0">St&#248;rst dekning i Oslo</div></div>
-      <div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Popul&#230;r</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--voi)">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Frie oppl&#229;sninger</div><div class="prow-s" style="color:#b0bdd0">Spar startavgift &#183; 30 dager</div></div><div class="prow-p">0 kr*</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">30 min pass</div><div class="prow-s" style="color:#b0bdd0">Gjelder 1 dag &#183; Spar 54%</div></div><div class="prow-p">49 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">60 min pass</div><div class="prow-s" style="color:#b0bdd0">Gjelder 3 dager &#183; Spar 58%</div></div><div class="prow-p">89 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">120 min pass</div><div class="prow-s" style="color:#b0bdd0">Gjelder 7 dager &#183; Spar 67%</div></div><div class="prow-p">139 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">300 min pass</div><div class="prow-s" style="color:#b0bdd0">Gjelder 30 dager &#183; Spar 72%</div></div><div class="prow-p">299 kr</div></div>
+    <div class="pcard-h"><div class="plogo" style="background:rgba(233,30,140,.12);color:var(--voi)">V</div><div><div class="pname" style="color:var(--voi)">Voi</div><div class="ptagline" style="color:#b0bdd0">Størst dekning i Oslo</div></div><div class="pbadge" style="background:rgba(233,30,140,.1);color:var(--voi)">Populær</div></div>
+    <div class="pgrid"><div class="pgcell"><div class="pgn" style="color:var(--voi)">10 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div><div class="pgcell"><div class="pgn" style="color:var(--voi)">3,00 kr/min</div><div class="pgl" style="color:#b0bdd0">Kjøring</div></div></div>
+    <div class="prow"><div><div class="prow-n">300 min pass</div><div class="prow-s">Gjelder 30 dager</div></div><div class="prow-p">299 kr</div></div>
+    <div class="prow"><div><div class="prow-n">120 min pass</div><div class="prow-s">Gjelder 7 dager</div></div><div class="prow-p">139 kr</div></div>
   </div>
 
   <!-- RYDE -->
-  <div class="sec">Ryde <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="sec">Ryde <span class="oslo-badge">✓ Oslo</span></div>
   <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div>
-      <div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline" style="color:#b0bdd0">Norsk &#183; St&#248;rst hjul &#183; Best demping</div></div>
-      <div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 24 timer</div></div><div class="prow-p">39 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 60 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 24 timer</div></div><div class="prow-p">59 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 120 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 7 dager</div></div><div class="prow-p">119 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">14-dagers 200 min</div><div class="prow-s" style="color:#b0bdd0">Beste verdi per minutt!</div></div><div class="prow-p">219 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 300 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 30 dager</div></div><div class="prow-p">299 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 750 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 30 dager</div></div><div class="prow-p">649 kr</div></div>
+    <div class="pcard-h"><div class="plogo" style="background:rgba(255,87,34,.12);color:var(--ryde)">R</div><div><div class="pname" style="color:var(--ryde)">Ryde</div><div class="ptagline" style="color:#b0bdd0">Norsk · Størst hjul · Best demping</div></div><div class="pbadge" style="background:rgba(255,87,34,.1);color:var(--ryde)">Norsk</div></div>
+    <div class="pgrid"><div class="pgcell"><div class="pgn" style="color:var(--ryde)">5 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div><div class="pgcell"><div class="pgn" style="color:var(--ryde)">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kjøring</div></div></div>
+    <div class="prow"><div><div class="prow-n">14-dagers 200 min</div><div class="prow-s">Beste verdi per minutt!</div></div><div class="prow-p">219 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Dagspass 60 min</div><div class="prow-s">Gjelder 24 timer</div></div><div class="prow-p">59 kr</div></div>
   </div>
 
   <!-- BOLT -->
-  <div class="sec">Bolt <span class="oslo-badge">&#10003; Oslo</span></div>
+  <div class="sec">Bolt <span class="oslo-badge">✓ Oslo</span></div>
   <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div>
-      <div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline" style="color:#b0bdd0">Lavest minuttpris</div></div>
-      <div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">2,20 kr/min</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">9 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,20 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Dagspass 30 min</div><div class="prow-s" style="color:#b0bdd0">Ubegrenset oppl&#229;sninger &#183; 24 timer</div></div><div class="prow-p">21 kr*</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Ukespass 80 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 7 dager</div></div><div class="prow-p">59 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Gratis oppl&#229;sning/mnd</div><div class="prow-s" style="color:#b0bdd0">Betal per minutt &#183; 30 dager</div></div><div class="prow-p">9 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">M&#229;nedspass 240 min</div><div class="prow-s" style="color:#b0bdd0">Gjelder 30 dager</div></div><div class="prow-p">139 kr</div></div>
-    <div class="prow"><div><div class="prow-s" style="font-size:11px;color:#b0bdd0">*Kampanjepris &#8212; sjekk Bolt-appen</div></div><div></div></div>
+    <div class="pcard-h"><div class="plogo" style="background:rgba(52,209,107,.12);color:var(--bolt)">B</div><div><div class="pname" style="color:var(--bolt)">Bolt</div><div class="ptagline" style="color:#b0bdd0">Lavest minuttpris</div></div><div class="pbadge" style="background:rgba(52,209,107,.1);color:var(--bolt)">2,50 kr/min</div></div>
+    <div class="pgrid"><div class="pgcell"><div class="pgn" style="color:var(--bolt)">0 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div><div class="pgcell"><div class="pgn" style="color:var(--bolt)">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kjøring</div></div></div>
+    <div class="prow"><div><div class="prow-n">Månedspass 240 min</div><div class="prow-s">Gjelder 30 dager</div></div><div class="prow-p">139 kr</div></div>
+    <div class="prow"><div><div class="prow-n">Ukespass 80 min</div><div class="prow-s">Gjelder 7 dager</div></div><div class="prow-p">59 kr</div></div>
   </div>
 
   <!-- DOTT -->
   <div class="sec">Dott <span class="city-badge">Trondheim</span></div>
   <div class="pcard">
-    <div class="pcard-h">
-      <div class="plogo" style="background:rgba(0,102,204,.12);color:#0066cc">D</div>
-      <div><div class="pname" style="color:#00aaff">Dott</div><div class="ptagline" style="color:#b0bdd0">Kun Trondheim &#183; Sesong 15. mars&#8211;1. des</div></div>
-      <div class="pbadge" style="background:rgba(0,102,204,.1);color:#0066cc">Trondheim</div>
-    </div>
-    <div class="pgrid">
-      <div class="pgcell"><div class="pgn" style="color:#00aaff">5,90 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div>
-      <div class="pgcell"><div class="pgn" style="color:#00aaff">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kj&#248;ring</div></div>
-    </div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Spar opptil 70%</div><div class="prow-s" style="color:#b0bdd0">Pass tilgjengelig i Dott-appen</div></div><div class="prow-p">&#128241;</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Reserver gratis</div><div class="prow-s" style="color:#b0bdd0">Gratis reservasjon</div></div><div class="prow-p">0 kr</div></div>
-    <div class="prow"><div><div class="prow-n" style="color:#e0e8f0">Aldersgrense</div><div class="prow-s" style="color:#b0bdd0">18 &#229;r</div></div><div class="prow-p">&#8212;</div></div>
+    <div class="pcard-h"><div class="plogo" style="background:rgba(0,102,204,.12);color:#0066cc">D</div><div><div class="pname" style="color:#00aaff">Dott</div><div class="ptagline" style="color:#b0bdd0">Kun Trondheim · Sesong 15. mars–1. des</div></div><div class="pbadge" style="background:rgba(0,102,204,.1);color:#0066cc">Trondheim</div></div>
+    <div class="pgrid"><div class="pgcell"><div class="pgn" style="color:#00aaff">5,90 kr</div><div class="pgl" style="color:#b0bdd0">Oppstart</div></div><div class="pgcell"><div class="pgn" style="color:#00aaff">2,50 kr/min</div><div class="pgl" style="color:#b0bdd0">Kjøring</div></div></div>
+    <div class="prow"><div><div class="prow-n">Spar opptil 70%</div><div class="prow-s">Pass i Dott-appen</div></div><div class="prow-p">📱</div></div>
   </div>
 
-  <!-- TIPS -->
-  <div class="sec">&#128161; Tips</div>
-  <div class="tip" style="color:#b0bdd0"><strong style="color:#e0e8f0">Daglig bruker?</strong> Bolt m&#229;nedspass 139 kr / 240 min = 0,58 kr/min!</div>
-  <div class="tip" style="color:#b0bdd0"><strong style="color:#e0e8f0">Kort tur?</strong> Bolt billigst med 2,20 kr/min og lav oppstart (9 kr).</div>
-  <div class="tip" style="color:#b0bdd0"><strong style="color:#e0e8f0">D&#229;rlig asfalt?</strong> Ryde har st&#248;rst hjul og best demping.</div>
-  <div class="tip" style="color:#b0bdd0"><strong style="color:#e0e8f0">Ukestur?</strong> Ryde ukespass 119 kr / 120 min &#8212; best verdi per minutt.</div>
-
+  <div class="sec">💡 Tips</div>
+  <div class="tip"><strong>Kort tur?</strong> Bolt billigst med 2,50 kr/min og ingen oppstart.</div>
+  <div class="tip"><strong>Dårlig asfalt?</strong> Ryde har størst hjul og best demping.</div>
   <div style="height:16px"></div>
   </div>
 </div>
 
 <!-- TAB BAR -->
 <div id="tabBar">
-  <div class="tab on" id="tab-kart" onclick="switchTab('kart')">
-    <div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div>
-  </div>
-  <div class="tab" id="tab-profil" onclick="switchTab('profil')">
-    <div class="tab-ico" id="tabProfilIco">😎</div><div class="tab-lbl">Innstillinger</div>
-  </div>
-  <div class="tab" id="tab-pris" onclick="switchTab('pris')">
-    <div class="tab-ico">💸</div><div class="tab-lbl">Priser</div>
-  </div>
-  <div class="tab" id="tab-qr" onclick="openQR()">
-    <div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div>
-    <div class="tab-lbl">Skann</div>
-  </div>
+  <div class="tab on" id="tab-kart" onclick="switchTab('kart')"><div class="tab-ico">🗺</div><div class="tab-lbl">Kart</div></div>
+  <div class="tab" id="tab-profil" onclick="switchTab('profil')"><div class="tab-ico">⚙️</div><div class="tab-lbl">Innstillinger</div></div>
+  <div class="tab" id="tab-pris" onclick="switchTab('pris')"><div class="tab-ico">💸</div><div class="tab-lbl">Priser</div></div>
+  <div class="tab" id="tab-qr" onclick="openQR()"><div class="tab-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg></div><div class="tab-lbl">Skann</div></div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════
-// CONFIG — REAL 2025/2026 DATA
-// Oslo: kun Voi, Bolt, Ryde godkjent apr 2025–mar 2027
-// Bergen: Voi, Bolt, Bird, TIER pilot
-// Trondheim: Voi, Ryde, Dott
-// ══════════════════════════════════════
 const SYS={
-  oslo:['voioslo','boltoslo','rydeoslo'],
-  bergen:['voibergen','boltbergen'],
-  trondheim:['voitrondheim','rydetrondheim','dotttrondheim'],
-  stavanger:['voistavanger','rydestavanger'],
-  kristiansand:['voikristiansand','boltkristiansand'],
-  lillestrom:['voilillestrom','boltlillestrom'],
-  fredrikstad:['voifredrikstad','boltfredrikstad','rydefredrikstad'],
-  drammen:['boltdrammen']
+  oslo:['voioslo','boltoslo','rydeoslo'],bergen:['voibergen','boltbergen'],
+  trondheim:['voitrondheim','rydetrondheim','dotttrondheim'],stavanger:['voistavanger','rydestavanger'],
+  kristiansand:['voikristiansand','boltkristiansand'],lillestrom:['voilillestrom','boltlillestrom'],
+  fredrikstad:['voifredrikstad','boltfredrikstad','rydefredrikstad'],drammen:['boltdrammen']
 };
-
-// Updated 2025 prices (source: Oslo commune, tek.no Jul 2024, Ryde/Bolt/Voi apps)
 const P={
-  voi: {label:'Voi',  color:'#e91e8c', tc:'#fff', start:10, pm:3.00,
-        deeplink:'https://link.voi.com/open', note:'3 kr/min · Oppstart 10 kr'},
-  bolt:{label:'Bolt', color:'#34d16b', tc:'#001408', start:0, pm:2.50,
-        deeplink:'https://bolt.eu/en/scooters/', note:'2,5 kr/min · Ingen oppstart'},
-  ryde:{label:'Ryde', color:'#ff5722', tc:'#fff', start:5, pm:2.50,
-        deeplink:'https://app.ryde-technology.com', note:'2,5 kr/min · Oppstart 5 kr'},
-  dott:{label:'Dott', color:'#00aaff', tc:'#fff', start:5.9, pm:2.50,
-        deeplink:'https://ridedott.com', note:'5,90 kr oppstart, 2,50 kr/min'},
+  voi:{label:'Voi',color:'#e91e8c',tc:'#fff',start:10,pm:3.00,deeplink:'https://link.voi.com/open',note:'3 kr/min · Oppstart 10 kr'},
+  bolt:{label:'Bolt',color:'#34d16b',tc:'#001408',start:0,pm:2.50,deeplink:'https://bolt.eu/en/scooters/',note:'2,5 kr/min · Ingen oppstart'},
+  ryde:{label:'Ryde',color:'#ff5722',tc:'#fff',start:5,pm:2.50,deeplink:'https://app.ryde-technology.com',note:'2,5 kr/min · Oppstart 5 kr'},
+  dott:{label:'Dott',color:'#00aaff',tc:'#fff',start:5.9,pm:2.50,deeplink:'https://ridedott.com',note:'5,90 kr oppstart, 2,50 kr/min'},
 };
-
 const ENTUR='https://api.entur.io/mobility/v2/gbfs';
 const ENTUR_HDR={'ET-Client-Name':'sparknorge-app'};
+const CEN={oslo:[59.9139,10.7522],bergen:[60.3913,5.3221],trondheim:[63.4305,10.3951],stavanger:[58.97,5.7331],kristiansand:[58.1467,7.9956],lillestrom:[59.9535,11.0501],fredrikstad:[59.2112,10.9298],drammen:[59.744,10.2045]};
+const QRPAT=[{p:'voi',re:/voiscooter|voi\.com|ride\.voi|link\.voi/i,url:'https://voi.com'},{p:'bolt',re:/bolt\.eu|sc\.bolt|account\.bolt/i,url:'https://account.bolt.eu'},{p:'ryde',re:/ryde|rideto\.me|ryde-technology/i,url:'https://app.ryde-technology.com'}];
 
-const CEN={
-  oslo:[59.9139,10.7522], bergen:[60.3913,5.3221], trondheim:[63.4305,10.3951],
-  stavanger:[58.97,5.7331], kristiansand:[58.1467,7.9956],
-  lillestrom:[59.9535,11.0501], fredrikstad:[59.2112,10.9298], drammen:[59.744,10.2045]
-};
-
-const QRPAT=[
-  {p:'voi',  re:/voiscooter|voi\\.com|ride\\.voi|link\\.voi/i, url:'https://voi.com'},
-  {p:'bolt', re:/bolt\\.eu|sc\\.bolt|account\\.bolt/i,         url:'https://account.bolt.eu'},
-  {p:'ryde', re:/ryde|rideto\\.me|ryde-technology/i,          url:'https://app.ryde-technology.com'},
-];
-
-const ACHIEVEMENTS=[
-  {id:'first',ico:'🚀',name:'Første tur',req:t=>t>=1},
-  {id:'five', ico:'⭐',name:'5 turer',   req:t=>t>=5},
-  {id:'ten',  ico:'🔟',name:'10 turer',  req:t=>t>=10},
-  {id:'eco',  ico:'🌿',name:'Grønn',     req:(t,km)=>km*0.21>=10},
-  {id:'dist', ico:'🗺',name:'50 km',     req:(t,km)=>km>=50},
-  {id:'speed',ico:'⚡',name:'Rask',      req:(t,km,lvl)=>lvl>=5},
-  {id:'night',ico:'🌙',name:'Nattugle',  req:()=>false},
-  {id:'diam', ico:'💎',name:'Diamond',   req:(t,km,lvl)=>lvl>=10},
-];
-
-const AVATARS=['😎','🧑','👩','🧔','👱','🧕','👨‍💻','🧑‍🎤','🏄','🚴','⚡','🛴'];
-
-const TRIP_DEMOS=[
-  {day:28,mon:'Mar',route:'Grünerløkka → Jernbanetorget',min:12,km:2.1,cost:46,prov:'voi'},
-  {day:27,mon:'Mar',route:'Majorstuen → St.Hanshaugen',min:8,km:1.4,cost:25,prov:'bolt'},
-  {day:26,mon:'Mar',route:'Aker Brygge → Tjuvholmen',min:5,km:0.8,cost:17,prov:'bolt'},
-  {day:24,mon:'Mar',route:'Grønland → Tøyen',min:15,km:2.8,cost:52,prov:'voi'},
-  {day:22,mon:'Mar',route:'Frogner → Vigelandsparken',min:18,km:3.2,cost:57,prov:'ryde'},
-];
-
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-let city='oslo', proxy='', demo=false;
-let scooters=[], markers=[], hidden=new Set();
-let ulat=null, ulng=null, gpsM=null, gpsP=null;
-let sheetOpen=false, leafMap, refreshTimer;
-let qStream=null, qFrame=null, qFound=false;
-let selectedPayOpt='vipps', topupAmount=100;
+let city='oslo',demo=false;
+let scooters=[],markers=[],hidden=new Set();
+let ulat=null,ulng=null,gpsM=null,gpsP=null;
+let sheetOpen=false,leafMap,refreshTimer;
+let qStream=null,qFrame=null,qFound=false;
 let currentSort='dist';
 let selectedScooterId=null;
 let routeLayer=null;
+let _routeFromCoord=null,_routeToCoord=null;
+let _routeFromName=null,_routeToName=null;
+let _rfTimer=null,_rtTimer=null;
+let _bestMarkersMap=[];
+let batteryFilter=false;
+let _lastUpdTs=null,_lastUpdTimer=null;
+let rideTimer=null,rideSeconds=0,rideProvider=null,ridePriceStart=0,ridePricePerMin=0;
 
-let profile = JSON.parse(localStorage.getItem('sn_profile')||JSON.stringify({
-  name:'Ole Anders', city:'Oslo', avatar:'😎',
-  wallet:124.5, trips:7, km:19.4, xp:200,
-  payments:[{type:'vipps',label:'Vipps',num:'400 00 000',ico:'🟠',active:true}],
-}));
-
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
   leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM',maxZoom:19}).addTo(leafMap);
-
-  // Zoom controls top-right
   L.control.zoom({position:'topright'}).addTo(leafMap);
-
-  // Update zoom badge on zoom
-  leafMap.on('zoomend',()=>{
-    const z=leafMap.getZoom();
-    document.getElementById('zoomBadge').textContent='zoom '+z;
-    // At low zoom, show cluster summary; at high zoom show individual scooters
-    renderMarkers();
-  });
-
-  // City sel default
+  leafMap.on('zoomend',()=>{document.getElementById('zoomBadge').textContent='zoom '+leafMap.getZoom();renderMarkers();});
   document.getElementById('citySel').value='oslo';
-
-  buildFilters(); updateCalc(); renderProfile(); buildAvatarPicker(); initOnboarding();
+  buildFilters();initOnboarding();renderRecents();
   document.getElementById('setup').classList.add('hide');
-  setTimeout(()=>leafMap.invalidateSize(),100);
-  loadDemo();
-  loadCity('oslo');
+  setTimeout(()=>{leafMap.invalidateSize();syncPlannerHeight();},100);
+  loadDemo();loadCity('oslo');
   setTimeout(()=>locateMe(false),2000);
 });
 
-// ══════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════
 function switchTab(t){
   ['kart','profil','pris'].forEach(x=>{
     document.getElementById('pg'+x.charAt(0).toUpperCase()+x.slice(1))?.classList.toggle('on',x===t);
     document.getElementById('tab-'+x)?.classList.toggle('on',x===t);
   });
   document.getElementById('tab-qr')?.classList.remove('on');
-  const statsEl=document.getElementById('pgStats');
-  if(statsEl) statsEl.style.display=t==='stats'?'flex':'none';
-  if(t==='kart') setTimeout(()=>leafMap.invalidateSize(),60);
-  if(t==='profil') renderProfile();
-  if(t==='stats') renderStats();
+  if(t==='kart') setTimeout(()=>{leafMap.invalidateSize();syncPlannerHeight();},60);
 }
 
-// ══════════════════════════════════════
-// SETUP
-// ══════════════════════════════════════
-async function testProxy(){
-  const u=document.getElementById('proxyUrl').value.trim(),r=document.getElementById('testRes');
-  r.className='tr';r.textContent='⏳ Tester…';r.style.display='block';document.getElementById('connectBtn').disabled=true;
-  try{const x=await fetch(`${u}/voioslo`,{signal:AbortSignal.timeout(9000)});if(!x.ok)throw new Error(`HTTP ${x.status}`);const j=await x.json(),n=j?.data?.bikes?.length??0;r.className='tr ok';r.textContent=`✅ ${n} Voi i Oslo!`;document.getElementById('connectBtn').disabled=false;}
-  catch(e){r.className='tr er';r.textContent=`❌ ${e.message}`;}
+// Reisplanlegger-bar: utvid / minimer
+function expandPlanner(){
+  document.getElementById('plannerCollapsed').classList.add('hide');
+  document.getElementById('plannerExpanded').classList.add('show');
+  renderRecents();
+  const lu=document.getElementById('lastUpdBadge');if(lu)lu.style.opacity='0';
+  setTimeout(()=>{syncPlannerHeight();leafMap.invalidateSize();},30);
 }
-function connectProxy(){const u=document.getElementById('proxyUrl').value.trim();if(!u)return;proxy=u;localStorage.setItem('sn_proxy',u);document.getElementById('puSett').value=u;document.getElementById('proxyStatus').textContent=u.replace('https://','');closeSetup();locateMe(true);loadCity('oslo');}
-function skipSetup(){demo=true;closeSetup();locateMe(true);loadDemo();}
-function closeSetup(){document.getElementById('setup').classList.add('hide');setTimeout(()=>leafMap.invalidateSize(),150);}
-function saveProxySett(){const u=document.getElementById('puSett').value.trim();if(!u)return;proxy=u;localStorage.setItem('sn_proxy',u);document.getElementById('proxyStatus').textContent=u.replace('https://','');demo=false;loadCity(city);showToast('✅ Tilkobling lagret');}
-
-// ══════════════════════════════════════
-// DISTANCE + WALK TIME
-// ══════════════════════════════════════
-function distTo(s){
-  if(ulat==null||!s.lat)return Infinity;
-  const R=6371000,dLa=(s.lat-ulat)*Math.PI/180,dLo=(s.lng-ulng)*Math.PI/180,
-    a=Math.sin(dLa/2)**2+Math.cos(ulat*Math.PI/180)*Math.cos(s.lat*Math.PI/180)*Math.sin(dLo/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+function collapsePlanner(){
+  document.getElementById('plannerExpanded').classList.remove('show');
+  document.getElementById('plannerCollapsed').classList.remove('hide');
+  const lu=document.getElementById('lastUpdBadge');if(lu)lu.style.opacity='1';
+  setTimeout(()=>{syncPlannerHeight();leafMap.invalidateSize();},30);
 }
-
-function fmtD(m){
-  if(m===Infinity) return '';
-  return m<1000 ? Math.round(m)+'m' : (m/1000).toFixed(1)+'km';
+// Sett kartets topp lik planner-barens høyde
+function syncPlannerHeight(){
+  const bar=document.getElementById('plannerBar');
+  if(!bar)return;
+  const h=bar.offsetHeight;
+  document.getElementById('pgMap').style.setProperty('--planner-h',h+'px');
+  // flytt rute-overlay og åpne-app-knapp under baren
+  const mrb=document.getElementById('mapRouteBar');
+  if(mrb)mrb.style.top=(h+10)+'px';
 }
 
-// Walking time: average 1.2 m/s = 72 m/min
-function walkMinutes(m){
-  if(m===Infinity) return null;
-  const mins=Math.ceil(m/72);
-  return mins;
-}
-
-function walkLabel(m){
-  if(m===Infinity) return null;
-  const mins=walkMinutes(m);
-  if(mins<1) return '&lt;1 min';
-  return mins+' min';
-}
-
-// ══════════════════════════════════════
-// GPS
-// ══════════════════════════════════════
 function locateMe(silent=false){
   if(!navigator.geolocation){if(!silent)alert('GPS støttes ikke.');return;}
   const btn=document.getElementById('fabGps');
   btn.classList.add('spinning');btn.textContent='↻';
   navigator.geolocation.getCurrentPosition(pos=>{
     ulat=pos.coords.latitude;ulng=pos.coords.longitude;
-      btn.classList.remove('spinning');btn.classList.add('on');btn.textContent='📍';
-    if(gpsP)leafMap.removeLayer(gpsP);
-    if(gpsM)leafMap.removeLayer(gpsM);
+    btn.classList.remove('spinning');btn.classList.add('on');btn.textContent='📍';
+    if(gpsP)leafMap.removeLayer(gpsP);if(gpsM)leafMap.removeLayer(gpsM);
     gpsP=L.marker([ulat,ulng],{icon:L.divIcon({className:'',html:'<div class="gp"></div>',iconSize:[50,50],iconAnchor:[25,25]}),zIndexOffset:900}).addTo(leafMap);
     gpsM=L.marker([ulat,ulng],{icon:L.divIcon({className:'',html:'<div class="gm"></div>',iconSize:[18,18],iconAnchor:[9,9]}),zIndexOffset:1000}).addTo(leafMap);
     leafMap.flyTo([ulat,ulng],15,{duration:1.2});
     const cl=Object.entries(CEN).sort((a,b)=>Math.hypot(a[1][0]-ulat,a[1][1]-ulng)-Math.hypot(b[1][0]-ulat,b[1][1]-ulng))[0][0];
     if(cl!==city){city=cl;document.getElementById('citySel').value=city;demo?loadDemo():loadCity(city);}
     else renderList();
-  },err=>{
-    btn.classList.remove('spinning');btn.textContent='📍';
-    if(!silent){if(err.code===1)alert('GPS blokkert. iPhone Safari: Innstillinger → Personvern → Stedstjenester → Safari → "Mens appen brukes"');else alert('Kunne ikke hente posisjon (kode '+err.code+'). Prøv igjen.');}
-  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+  },err=>{btn.classList.remove('spinning');btn.textContent='📍';if(!silent)alert('Kunne ikke hente posisjon. Sjekk GPS-tillatelser.');},{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
 }
 
-// ══════════════════════════════════════
-// MAP DATA
-// ══════════════════════════════════════
+function useGpsAsFrom(){
+  if(ulat!=null){_routeFromCoord={lat:ulat,lon:ulng};_routeFromName='📍 Min posisjon';document.getElementById('routeFrom').value='📍 Min posisjon';toggleClear('from');showToast('GPS satt som startpunkt');}
+  else{showToast('Henter GPS...');navigator.geolocation.getCurrentPosition(pos=>{ulat=pos.coords.latitude;ulng=pos.coords.longitude;_routeFromCoord={lat:ulat,lon:ulng};_routeFromName='📍 Min posisjon';document.getElementById('routeFrom').value='📍 Min posisjon';toggleClear('from');showToast('GPS-posisjon satt som start');},()=>showToast('Kunne ikke hente GPS'));}
+}
+
+// Bytt start og destinasjon
+function swapRoute(){
+  const fromInp=document.getElementById('routeFrom'), toInp=document.getElementById('routeTo');
+  [_routeFromCoord,_routeToCoord]=[_routeToCoord,_routeFromCoord];
+  [_routeFromName,_routeToName]=[_routeToName,_routeFromName];
+  const tmp=fromInp.value; fromInp.value=toInp.value; toInp.value=tmp;
+  toggleClear('from');toggleClear('to');
+  if(navigator.vibrate)navigator.vibrate(30);
+  showToast('Byttet start og mål');
+}
+
+// Tøm-knapp synlighet
+function toggleClear(field){
+  const inp=document.getElementById(field==='from'?'routeFrom':'routeTo');
+  const btn=document.getElementById(field==='from'?'fromClearBtn':'toClearBtn');
+  const gps=document.getElementById('fromGpsBtn');
+  const has=inp.value.trim().length>0;
+  btn.classList.toggle('show',has);
+  // GPS-knapp skjules når feltet har innhold (gjør plass til tøm-knapp)
+  if(field==='from'&&gps) gps.style.display=has?'none':'block';
+}
+
+function clearRouteField(field){
+  const inp=document.getElementById(field==='from'?'routeFrom':'routeTo');
+  inp.value='';
+  if(field==='from'){_routeFromCoord=null;_routeFromName=null;}
+  else{_routeToCoord=null;_routeToName=null;}
+  document.getElementById(field==='from'?'fromResults':'toResults').style.display='none';
+  toggleClear(field);
+  inp.focus();
+}
+
+// ── NYLIGE MÅL ──
+function getRecents(){try{return JSON.parse(localStorage.getItem('sn_recents')||'[]');}catch(e){return [];}}
+function saveRecent(name,lat,lon){
+  if(!name||name.startsWith('📍'))return;
+  let r=getRecents().filter(x=>x.name!==name);
+  r.unshift({name:name.split(',')[0],fullName:name,lat,lon,ts:Date.now()});
+  r=r.slice(0,5);
+  localStorage.setItem('sn_recents',JSON.stringify(r));
+  renderRecents();
+}
+function renderRecents(){
+  const wrap=document.getElementById('recentChipsWrap');
+  const list=document.getElementById('recentChips');
+  if(!wrap||!list)return;
+  const r=getRecents();
+  if(!r.length){wrap.style.display='none';return;}
+  list.innerHTML=r.map(x=>`<div class="recent-chip" onclick="pickRecent(${x.lat},${x.lon},'${x.fullName.replace(/'/g,"")}')"><span class="recent-chip-ico">🕐</span>${x.name}</div>`).join('');
+  wrap.style.display='block';
+  setTimeout(syncPlannerHeight,30);
+}
+function pickRecent(lat,lon,name){
+  _routeToCoord={lat:+lat,lon:+lon};_routeToName=name;
+  document.getElementById('routeTo').value=name.split(',')[0];
+  toggleClear('to');
+  if(navigator.vibrate)navigator.vibrate(20);
+  calcRoute();
+}
+
+function distTo(s){if(ulat==null||!s.lat)return Infinity;const R=6371000,dLa=(s.lat-ulat)*Math.PI/180,dLo=(s.lng-ulng)*Math.PI/180,a=Math.sin(dLa/2)**2+Math.cos(ulat*Math.PI/180)*Math.cos(s.lat*Math.PI/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function distBetween(lat1,lng1,lat2,lng2){const R=6371000,dLa=(lat2-lat1)*Math.PI/180,dLo=(lng2-lng1)*Math.PI/180,a=Math.sin(dLa/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function fmtD(m){if(m===Infinity)return '';return m<1000?Math.round(m)+'m':(m/1000).toFixed(1)+'km';}
+function walkMinutes(m){if(m===Infinity)return null;return Math.ceil(m/72);}
+function walkLabel(m){if(m===Infinity)return null;const mins=walkMinutes(m);return mins<1?'<1 min':mins+' min';}
+
 async function loadCity(c){
   clearTimeout(refreshTimer);
   document.getElementById('shc').textContent='Henter…';
@@ -1216,12 +788,7 @@ async function loadCity(c){
         const j=await r.json();
         const bikes=j?.data?.bikes??j?.data?.vehicles??[];
         if(!bikes.length) continue;
-        bikes.filter(b=>b.lat&&b.lon).forEach(b=>all.push({
-          id:b.bike_id||b.vehicle_id||Math.random().toString(36).slice(2),
-          provider:pv,lat:+b.lat,lng:+b.lon,battery:pb(b),
-          disabled:!!(b.is_disabled||b.is_reserved),
-          name:`${P[pv].label} #${(b.bike_id||b.vehicle_id||'????').slice(-4).toUpperCase()}`
-        }));
+        bikes.filter(b=>b.lat&&b.lon).forEach(b=>all.push({id:b.bike_id||b.vehicle_id||Math.random().toString(36).slice(2),provider:pv,lat:+b.lat,lng:+b.lon,battery:pb(b),disabled:!!(b.is_disabled||b.is_reserved),name:`${P[pv].label} #${(b.bike_id||b.vehicle_id||'????').slice(-4).toUpperCase()}`}));
         return;
       }catch(e){}
     }
@@ -1231,300 +798,53 @@ async function loadCity(c){
   const n=scooters.filter(s=>!s.disabled).length;
   document.getElementById('ldot').classList.toggle('on',n>0);
   document.getElementById('ltxt').textContent=n>0?`${n} live`:'Ingen';
-  startLastUpdTimer();
+  markUpdated();
   refreshTimer=setTimeout(()=>loadCity(city),60000);
 }
-function navigateToScooter(lat,lng){
-  leafMap.closePopup();
-  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  if(isIOS){window.location.href='maps://maps.apple.com/?daddr='+lat+','+lng+'&dirflg=w';}
-  else{window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng+'&travelmode=walking','_blank');}
-  showToast('Apner Apple Maps...');
-}
-
-// ── SØKEFUNKSJONER ──
-function toggleSearch(){
-  const box=document.getElementById('searchBox');
-  if(box.style.display==='none'){
-    box.style.display='block';
-    setTimeout(()=>document.getElementById('searchInp').focus(),100);
-  } else { closeSearch(); }
-}
-function closeSearch(){
-  document.getElementById('searchBox').style.display='none';
-  document.getElementById('searchInp').value='';
-  document.getElementById('searchResults').innerHTML='';
-}
-let _sTimer=null;
-function searchDebounce(q){
-  clearTimeout(_sTimer);
-  if(q.length<2){document.getElementById('searchResults').innerHTML='';return;}
-  _sTimer=setTimeout(()=>doSearch(q),350);
-}
-async function doSearch(q){
-  try{
-    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+' Norge')}&format=json&limit=5&countrycodes=no`,
-      {headers:{'Accept-Language':'no'}});
-    const res=await r.json();
-    document.getElementById('searchResults').innerHTML=res.length?
-      res.map(p=>`<div onclick="flyToResult(${p.lat},${p.lon})"
-        style="background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;gap:8px">
-        <span style="color:#00e5a0;font-size:16px">📍</span>
-        <div>
-          <div style="font-weight:600">${p.display_name.split(',')[0]}</div>
-          <div style="font-size:11px;color:#b0bdd0">${p.display_name.split(',').slice(1,3).join(',')}</div>
-        </div>
-      </div>`).join('')
-      :'<div style="color:#b0bdd0;font-size:13px;padding:10px">Ingen resultater</div>';
-  }catch(e){}
-}
-function flyToResult(lat,lon){
-  leafMap.flyTo([+lat,+lon],17,{duration:1.2});
-  closeSearch();
-  showToast('Laster sparkesykler i området...');
-  // Load scooters for this area by finding nearest city
-  const cities={
-    oslo:[59.9139,10.7522],bergen:[60.3913,5.3221],
-    trondheim:[63.4305,10.3951],stavanger:[58.9700,5.7331],
-    kristiansand:[58.1462,7.9957],lillestrom:[59.9548,11.0401],
-    fredrikstad:[59.2167,10.9333],drammen:[59.7440,10.2045]
-  };
-  let nearest='oslo', minD=Infinity;
-  Object.entries(cities).forEach(([c,[la,lo]])=>{
-    const d=Math.abs(la-lat)+Math.abs(lo-lon);
-    if(d<minD){minD=d;nearest=c;}
-  });
-  if(nearest!==city){
-    city=nearest;
-    document.getElementById('citySel').value=nearest;
-    loadCity(nearest);
-  }
-}
-
-// ── STATISTIKK ──
-
-
-// ── RUTEPLANLEGGER ──
-let _routeFromCoord=null, _routeToCoord=null;
-let _rfTimer=null, _rtTimer=null;
-
-function routeSearch(q, field){
-  clearTimeout(field==='from'?_rfTimer:_rtTimer);
-  const resId=field==='from'?'fromResults':'toResults';
-  if(q.length<2){document.getElementById(resId).style.display='none';return;}
-  const timer=setTimeout(async()=>{
-    try{
-      const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+' Norge')}&format=json&limit=4&countrycodes=no`,
-        {headers:{'Accept-Language':'no'}});
-      const res=await r.json();
-      const el=document.getElementById(resId);
-      if(!res.length){el.style.display='none';return;}
-      el.innerHTML=res.map(p=>`
-        <div onclick="selectRouteAddr('${field}',${p.lat},${p.lon},'${p.display_name.split(',').slice(0,2).join(',').replace(/'/g,'')}')"
-          style="padding:10px 12px;cursor:pointer;font-size:13px;color:#e0e8f0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center">
-          <span style="color:${field==='from'?'#00e5a0':'#ff4d6a'}">&#9679;</span>
-          <div>
-            <div style="font-weight:600">${p.display_name.split(',')[0]}</div>
-            <div style="font-size:11px;color:#b0bdd0">${p.display_name.split(',').slice(1,3).join(',')}</div>
-          </div>
-        </div>`).join('');
-      el.style.display='block';
-    }catch(e){}
-  },350);
-  if(field==='from') _rfTimer=timer; else _rtTimer=timer;
-}
-
-function selectRouteAddr(field, lat, lon, name){
-  if(field==='from'){
-    _routeFromCoord={lat:+lat,lon:+lon};
-    document.getElementById('routeFrom').value=name;
-    document.getElementById('fromResults').style.display='none';
-  } else {
-    _routeToCoord={lat:+lat,lon:+lon};
-    document.getElementById('routeTo').value=name;
-    document.getElementById('toResults').style.display='none';
-  }
-}
-
-async function calcRoute(){
-  if(!_routeFromCoord||!_routeToCoord){
-    showToast('Velg både start og slutt');
-    return;
-  }
-  showToast('Beregner rute...');
-  document.getElementById('routeResult').style.display='none';
-
-  try{
-    // Get walking route duration via OSRM
-    const url=`https://router.project-osrm.org/route/v1/foot/${_routeFromCoord.lon},${_routeFromCoord.lat};${_routeToCoord.lon},${_routeToCoord.lat}?overview=false`;
-    const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
-    const data=await resp.json();
-    const route=data.routes[0];
-    const durationMin=Math.ceil(route.duration/60);
-    const distM=Math.round(route.distance);
-    const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
-
-    // Calculate prices for all providers
-    const prices=Object.entries(P).map(([key,p])=>{
-      const cost=p.start+p.pm*durationMin;
-      return {key,p,cost:Math.round(cost),min:durationMin};
-    }).sort((a,b)=>a.cost-b.cost);
-
-    const cheapest=prices[0];
-
-    document.getElementById('routeDistInfo').innerHTML=
-      `&#128694; ${durationMin} min gange &nbsp;&middot;&nbsp; ${distTxt} &nbsp;&middot;&nbsp; <span style="color:#00e5a0;font-weight:700">Billigst: ${cheapest.p.label} (${cheapest.cost} kr)</span>`;
-
-    document.getElementById('routePrices').innerHTML=prices.map((item,i)=>`
-      <div style="background:${i===0?item.p.color+'18':'rgba(255,255,255,0.04)'};border:1.5px solid ${i===0?item.p.color+'44':'rgba(255,255,255,0.08)'};border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px">
-        <div style="width:36px;height:36px;border-radius:10px;background:${item.p.color}20;color:${item.p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0">${item.p.label[0]}</div>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:#e0e8f0">${item.p.label} ${i===0?'<span style="background:#00e5a0;color:#001a0e;font-size:10px;padding:2px 7px;border-radius:20px;margin-left:4px;font-weight:800">BILLIGST</span>':''}</div>
-          <div style="font-size:12px;color:#b0bdd0;margin-top:2px">${item.p.start} kr oppstart + ${item.p.pm} kr/min &times; ${durationMin} min</div>
-        </div>
-        <div style="font-size:20px;font-weight:800;color:${i===0?item.p.color:'#e0e8f0'}">${item.cost} kr</div>
-      </div>`).join('');
-
-    document.getElementById('routeResult').style.display='block';
-    showToast(cheapest.p.label+' billigst: '+cheapest.cost+' kr');
-
-  }catch(e){
-    showToast('Kunne ikke beregne rute');
-  }
-}
-
-// ── HVA LØNNER SEG ──
-const qAnswers={1:null,2:null,3:null};
-function setQ(q,val,btn){
-  qAnswers[q]=val;
-  // Highlight selected
-  btn.parentElement.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
-
-function calcBestPlan(){
-  const tripsPerWeek=qAnswers[1], minsPerTrip=qAnswers[2], city=qAnswers[3];
-  if(!tripsPerWeek||!minsPerTrip||!city){showToast('Svar på alle 3 spørsmål');return;}
-
-  const monthlyTrips=tripsPerWeek*4.3;
-  const monthlyMins=Math.round(monthlyTrips*minsPerTrip);
-
-  // Available providers per city
-  const cityProviders={oslo:['voi','bolt','ryde'],trondheim:['voi','ryde','dott'],bergen:['voi','bolt']};
-  const providers=cityProviders[city]||['voi','bolt','ryde'];
-
-  // Calculate options: pay-as-you-go vs passes
-  const passes={
-    voi:[
-      {name:'Betal per tur',cost:monthlyTrips*(P.voi.start)+monthlyMins*P.voi.pm},
-      {name:'Frie opplåsninger (0 kr/mnd)',cost:0+monthlyMins*P.voi.pm},
-      {name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.voi.pm},
-    ],
-    ryde:[
-      {name:'Betal per tur',cost:monthlyTrips*(P.ryde.start)+monthlyMins*P.ryde.pm},
-      {name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.ryde.pm},
-      {name:'750 min pass (649 kr)',cost:649+Math.max(0,monthlyMins-750)*P.ryde.pm},
-    ],
-    bolt:[
-      {name:'Betal per tur',cost:monthlyTrips*(P.bolt.start)+monthlyMins*P.bolt.pm},
-      {name:'Gratis opplåsning (9 kr/mnd)',cost:9+monthlyMins*P.bolt.pm},
-      {name:'240 min pass (139 kr)',cost:139+Math.max(0,monthlyMins-240)*P.bolt.pm},
-    ],
-    dott:[
-      {name:'Betal per tur',cost:monthlyTrips*(P.dott.start)+monthlyMins*P.dott.pm},
-    ]
-  };
-
-  // Find best overall
-  let best=null, bestCost=Infinity;
-  const allOptions=[];
-  providers.forEach(pv=>{
-    (passes[pv]||[]).forEach(opt=>{
-      const cost=Math.round(opt.cost);
-      allOptions.push({pv,name:opt.name,cost});
-      if(cost<bestCost){bestCost=cost;best={pv,name:opt.name,cost};}
-    });
-  });
-
-  allOptions.sort((a,b)=>a.cost-b.cost);
-  const top3=allOptions.slice(0,3);
-
-  document.getElementById('bestPlanResult').style.display='block';
-  document.getElementById('bestPlanResult').innerHTML=`
-    <div style="background:${P[best.pv].color}15;border:1.5px solid ${P[best.pv].color}44;border-radius:14px;padding:14px;margin-bottom:12px">
-      <div style="font-size:12px;color:#b0bdd0;margin-bottom:4px">&#11088; Anbefalt for deg (${monthlyMins} min/mnd)</div>
-      <div style="font-size:18px;font-weight:800;color:${P[best.pv].color}">${P[best.pv].label} — ${best.name}</div>
-      <div style="font-size:24px;font-weight:800;color:#e0e8f0;margin-top:4px">~${best.cost} kr/mnd</div>
-    </div>
-    <div style="font-size:13px;font-weight:600;color:#b0bdd0;margin-bottom:8px">Alle alternativer:</div>
-    ${top3.map((o,i)=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:10px;margin-bottom:6px">
-        <div style="width:28px;height:28px;border-radius:8px;background:${P[o.pv].color}18;color:${P[o.pv].color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${P[o.pv].label[0]}</div>
-        <div style="flex:1;font-size:13px;color:#e0e8f0">${P[o.pv].label} — ${o.name}</div>
-        <div style="font-weight:700;color:${i===0?P[o.pv].color:'#e0e8f0'}">${o.cost} kr</div>
-      </div>`).join('')}
-    <div style="font-size:11px;color:#b0bdd0;margin-top:8px;text-align:center">Basert p&#229; ${Math.round(monthlyTrips)} turer &#215; ${minsPerTrip} min/mnd</div>`;
-}
-
-
-function manualRefresh(){
-  clearTimeout(refreshTimer);
-  const el=document.getElementById('lastUpd');
-  if(el)el.textContent='';
-  loadCity(city);
-  showToast('↻ Oppdaterer...');
-}
-let _lut=null;
-function startLastUpdTimer(){
-  clearInterval(_lut);let s=0;
-  _lut=setInterval(()=>{s++;const el=document.getElementById('lastUpd');if(el)el.textContent=s<60?s+'s siden':Math.floor(s/60)+'m siden';},1000);
-}
-function pb(b){
-  if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));
-  if(b.vehicle_type_capacity_remaining!=null)return b.vehicle_type_capacity_remaining;
-  if(b.battery_level!=null)return b.battery_level;
-  return null;
-}
-
+function pb(b){if(b.current_range_meters!=null)return Math.min(100,Math.round(b.current_range_meters/200));if(b.vehicle_type_capacity_remaining!=null)return b.vehicle_type_capacity_remaining;if(b.battery_level!=null)return b.battery_level;return null;}
 function loadDemo(){
   const c=CEN[city];
-  const mk=(pv,n)=>Array.from({length:n},(_,i)=>({
-    id:`${pv}-${i}`,provider:pv,
-    lat:c[0]+(Math.random()-.5)*.04,
-    lng:c[1]+(Math.random()-.5)*.07,
-    battery:Math.floor(Math.random()*85)+10,
-    disabled:Math.random()<.07,
-    name:`${P[pv].label} #${1000+i}`
-  }));
+  const mk=(pv,n)=>Array.from({length:n},(_,i)=>({id:`${pv}-${i}`,provider:pv,lat:c[0]+(Math.random()-.5)*.04,lng:c[1]+(Math.random()-.5)*.07,battery:Math.floor(Math.random()*85)+10,disabled:Math.random()<.07,name:`${P[pv].label} #${1000+i}`}));
   const dp=city==='trondheim'?['voi','ryde','dott']:city==='oslo'?['voi','bolt','ryde']:city==='drammen'?['bolt']:['voi','bolt'];
   const dc={voi:20,bolt:16,ryde:12,dott:10};
   scooters=dp.flatMap(pv=>mk(pv,dc[pv]||12));
   renderList();renderMarkers();renderStrip();
   document.getElementById('ldot').classList.add('on');
   document.getElementById('ltxt').textContent='Demo';
+  markUpdated();
 }
 
-// ══════════════════════════════════════
-// SORTING
-// ══════════════════════════════════════
-function setSort(s,el){
-  currentSort=s;
-  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  renderList();
+// Synlige sykler (respekterer leverandør- + batterifilter)
+function visibleScooters(){
+  let v=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));
+  if(batteryFilter) v=v.filter(s=>s.battery==null||s.battery>=20);
+  return v;
 }
 
-function sortedScooters(list){
-  const copy=[...list];
-  if(currentSort==='dist') return copy.sort((a,b)=>distTo(a)-distTo(b));
-  if(currentSort==='battery') return copy.sort((a,b)=>(b.battery??0)-(a.battery??0));
-  if(currentSort==='price') return copy.sort((a,b)=>P[a.provider].pm-P[b.provider].pm);
-  return copy;
+// Manuell oppdatering
+function manualRefresh(){
+  clearTimeout(refreshTimer);
+  showToast('↻ Oppdaterer...');
+  demo?loadDemo():loadCity(city);
 }
 
-// ══════════════════════════════════════
-// LIST RENDERING — with walk time
-// ══════════════════════════════════════
+// "Sist oppdatert"-badge på kartet
+function markUpdated(){
+  _lastUpdTs=Date.now();
+  updateLastUpdLabel();
+  clearInterval(_lastUpdTimer);
+  _lastUpdTimer=setInterval(updateLastUpdLabel,5000);
+}
+function updateLastUpdLabel(){
+  const el=document.getElementById('lastUpdTxt');
+  if(!el||_lastUpdTs==null)return;
+  const s=Math.floor((Date.now()-_lastUpdTs)/1000);
+  el.textContent=s<5?'Nettopp oppdatert':s<60?`Oppdatert ${s}s siden`:`Oppdatert ${Math.floor(s/60)}m siden`;
+}
+
+function setSort(s,el){currentSort=s;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderList();}
+function sortedScooters(list){const copy=[...list];if(currentSort==='dist')return copy.sort((a,b)=>distTo(a)-distTo(b));if(currentSort==='battery')return copy.sort((a,b)=>(b.battery??0)-(a.battery??0));if(currentSort==='price')return copy.sort((a,b)=>P[a.provider].pm-P[b.provider].pm);return copy;}
+
 function buildFilters(){
   const bar=document.getElementById('fbar');
   Object.entries(P).forEach(([k,p])=>{
@@ -1537,213 +857,90 @@ function buildFilters(){
   });
 }
 
+function toggleBatteryFilter(el){
+  batteryFilter=!batteryFilter;
+  document.getElementById('bfTgl').classList.toggle('on',batteryFilter);
+  if(navigator.vibrate)navigator.vibrate(20);
+  renderList();renderMarkers();renderStrip();
+}
+
 function renderList(){
   const list=document.getElementById('sbl');
   let vis=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));
+  if(batteryFilter) vis=vis.filter(s=>s.battery==null||s.battery>=20);
   vis=sortedScooters(vis);
   document.getElementById('shc').textContent=vis.length?`${vis.length} sparkesykler`:'Ingen tilgjengelig';
-  if(!vis.length){list.innerHTML=`<div class="empty">Ingen tilgjengelig</div>`;return;}
+  if(!vis.length){
+    const anyInCity=scooters.filter(s=>!s.disabled).length>0;
+    list.innerHTML=`<div class="empty-rich">
+      <div class="empty-rich-ico">${batteryFilter&&anyInCity?'🔋':'🛴'}</div>
+      <div class="empty-rich-title">${batteryFilter&&anyInCity?'Ingen med nok batteri':'Ingen sykler her akkurat nå'}</div>
+      <div class="empty-rich-sub">${batteryFilter&&anyInCity?'Alle sykler i nærheten har under 20% batteri. Skru av filteret for å se alle.':'Det er ingen ledige sparkesykler i denne byen for øyeblikket. Prøv en annen by eller oppdater.'}</div>
+      <button class="empty-rich-btn" onclick="${batteryFilter&&anyInCity?'toggleBatteryFilter()':'manualRefresh()'}">${batteryFilter&&anyInCity?'Vis alle sykler':'↻ Oppdater'}</button>
+    </div>`;
+    return;
+  }
   list.innerHTML=vis.slice(0,60).map(s=>{
     const p=P[s.provider]||P.voi,bt=s.battery;
     const bc=bt==null?'#555':bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const dm=distTo(s),ds=fmtD(dm),wl=walkLabel(dm);
     const isSelected=s.id===selectedScooterId;
-    return `<div class="card ${isSelected?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')">
-      <div class="cbar" style="background:${p.color}"></div>
-      <div class="cico" style="background:${p.color}15;color:${p.color}">${p.label[0]}</div>
-      <div class="cbody">
-        <div class="cn" style="color:#e0e8f0;font-weight:700">${s.name}</div>
-        <div class="cm">
-          ${bt!=null?`<div class="cb" style="color:${bc}"><div class="bb"><div class="bf" style="width:${bt}%;background:${bc}"></div></div>${bt}%</div>`:''}
-          ${wl?`<div class="walk-badge" style="color:#fff;font-weight:600">${wl}</div>`:''}
-          ${ds&&ulat!=null?`<span style="font-size:12px;color:#b0bdd0;font-weight:600">${ds}</span>`:''}
-          <span style="color:${p.color};font-weight:700;font-size:12px">${p.pm} kr/min</span>
-        </div>
-        ${ulat!=null?`<button onclick="event.stopPropagation();showRoute('${s.id}')" style="margin-top:6px;background:#00e5a018;color:#00e5a0;border:1px solid #00e5a044;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;width:100%">Vis gangvei hit</button>`:''}
-      </div>
-      <button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">Lei</button>
-    </div>`;
+    return `<div class="card ${isSelected?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')"><div class="cbar" style="background:${p.color}"></div><div class="cico" style="background:${p.color}15;color:${p.color}">${p.label[0]}</div><div class="cbody"><div class="cn" style="color:#e0e8f0;font-weight:700">${s.name}</div><div class="cm">${bt!=null?`<div class="cb" style="color:${bc}"><div class="bb"><div class="bf" style="width:${bt}%;background:${bc}"></div></div>${bt}%</div>`:''}${wl?`<div class="walk-badge">${wl}</div>`:''}${ds&&ulat!=null?`<span style="font-size:12px;color:#b0bdd0;font-weight:600">${ds}</span>`:''}<span style="color:${p.color};font-weight:700;font-size:12px">${p.pm} kr/min</span></div>${ulat!=null?`<button onclick="event.stopPropagation();showRoute('${s.id}')" style="margin-top:6px;background:#00e5a018;color:#00e5a0;border:1px solid #00e5a044;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;width:100%">Vis gangvei hit</button>`:''}</div><button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">Lei</button></div>`;
   }).join('')+(vis.length>60?`<div class="empty">+${vis.length-60} til</div>`:'');
 }
-
 function showShimmers(){document.getElementById('sbl').innerHTML=Array(4).fill('<div class="shim"></div>').join('');}
 
-// ══════════════════════════════════════
-// MAP MARKERS — smarter zoom behavior
-// ══════════════════════════════════════
 function renderMarkers(){
   if(window._clusterGroup) leafMap.removeLayer(window._clusterGroup);
   markers=[];
   const zoom=leafMap.getZoom();
-
   window._clusterGroup=L.markerClusterGroup({
-    // At low zoom, cluster aggressively; at high zoom spread out
-    maxClusterRadius: zoom<12 ? 120 : zoom<14 ? 80 : zoom<16 ? 50 : 30,
-    iconCreateFunction:function(cluster){
-      const n=cluster.getChildCount();
-      // Color cluster by majority provider
-      const children=cluster.getAllChildMarkers();
-      const counts={};
-      children.forEach(m=>{if(m._snProvider) counts[m._snProvider]=(counts[m._snProvider]||0)+1;});
-      const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
-      const col=top?P[top[0]]?.color:'rgba(0,229,160,.85)';
-      const size=n>20?44:n>10?38:32;
-      return L.divIcon({
-        html:`<div style="width:${size}px;height:${size}px;border-radius:50%;
-          background:${col};opacity:.9;
-          display:flex;align-items:center;justify-content:center;
-          font-size:${n>9?11:13}px;font-weight:800;color:white;
-          box-shadow:0 2px 12px rgba(0,0,0,.4),0 0 0 3px rgba(255,255,255,.15)">${n}</div>`,
-        className:'',iconSize:[size,size],iconAnchor:[size/2,size/2]
-      });
-    },
-    spiderfyOnMaxZoom:true,showCoverageOnHover:false,zoomToBoundsOnClick:true,
-    animate:true,animateAddingMarkers:false,
+    maxClusterRadius:zoom<12?120:zoom<14?80:zoom<16?50:30,
+    iconCreateFunction:function(cluster){const n=cluster.getChildCount();const children=cluster.getAllChildMarkers();const counts={};children.forEach(m=>{if(m._snProvider)counts[m._snProvider]=(counts[m._snProvider]||0)+1;});const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];const col=top?P[top[0]]?.color:'rgba(0,229,160,.85)';const size=n>20?44:n>10?38:32;return L.divIcon({html:`<div style="width:${size}px;height:${size}px;border-radius:50%;background:${col};opacity:.9;display:flex;align-items:center;justify-content:center;font-size:${n>9?11:13}px;font-weight:800;color:white;box-shadow:0 2px 12px rgba(0,0,0,.4),0 0 0 3px rgba(255,255,255,.15)">${n}</div>`,className:'',iconSize:[size,size],iconAnchor:[size/2,size/2]});},
+    spiderfyOnMaxZoom:true,showCoverageOnHover:false,zoomToBoundsOnClick:true,animate:true,animateAddingMarkers:false,
   });
-
-  scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{
+  visibleScooters().forEach(s=>{
     const p=P[s.provider],bt=s.battery;
     const col=bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d';
     const tc=bt!=null&&bt<=20?'#fff':p.tc;
-    const dm=distTo(s);
-    const wl=walkLabel(dm);
-    const isSelected=s.id===selectedScooterId;
-
-    // Show detail level based on zoom
+    const dm=distTo(s);const wl=walkLabel(dm);const isSelected=s.id===selectedScooterId;
     let pinHtml;
-    if(zoom>=16){
-      // Full detail pin
-      pinHtml=`<div class="pin">
-        <div class="pbub" style="background:${col};color:${tc};outline:${isSelected?'2px solid white':''};outline-offset:2px">
-          ${p.label}${bt!=null?' '+bt+'%':''}${wl?` · 🚶${wl}`:''}
-        </div>
-        <div class="ptail" style="border-top-color:${col}"></div>
-      </div>`;
-    } else if(zoom>=14){
-      // Medium pin — provider + battery
-      pinHtml=`<div class="pin">
-        <div class="pbub" style="background:${col};color:${tc}">${p.label}${bt!=null?' '+bt+'%':''}</div>
-        <div class="ptail" style="border-top-color:${col}"></div>
-      </div>`;
-    } else {
-      // Minimal dot at low zoom
-      pinHtml=`<div style="width:12px;height:12px;border-radius:50%;background:${col};border:2px solid rgba(255,255,255,.5);box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>`;
-    }
-
+    if(zoom>=16){pinHtml=`<div class="pin"><div class="pbub" style="background:${col};color:${tc};${isSelected?'outline:2px solid white;outline-offset:2px':''}">${p.label}${bt!=null?' '+bt+'%':''}${wl?` · 🚶${wl}`:''}</div><div class="ptail" style="border-top-color:${col}"></div></div>`;}
+    else if(zoom>=14){pinHtml=`<div class="pin"><div class="pbub" style="background:${col};color:${tc}">${p.label}${bt!=null?' '+bt+'%':''}</div><div class="ptail" style="border-top-color:${col}"></div></div>`;}
+    else{pinHtml=`<div style="width:12px;height:12px;border-radius:50%;background:${col};border:2px solid rgba(255,255,255,.5);box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>`;}
     const icon=L.divIcon({className:'',html:pinHtml,iconSize:[0,0],iconAnchor:[zoom>=14?30:6,zoom>=14?28:6]});
-    const m=L.marker([s.lat,s.lng],{icon});
-    m._snProvider=s.provider;
-
-    // Popup with walk time
-    const popupHtml=`<div style="min-width:200px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="width:38px;height:38px;border-radius:11px;background:${p.color}15;color:${p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">${p.label[0]}</div>
-        <div>
-          <div style="font-weight:700;font-size:15px">${s.name}</div>
-          <div style="font-size:12px;color:${p.color};font-weight:600">${p.label} · ${p.pm} kr/min</div>
-        </div>
-      </div>
-      <div class="pst">
-        <div class="psc">
-          <div class="psn" style="color:${bt!=null?(bt>50?p.color:bt>20?'#ffb800':'#ff4d4d'):'var(--dim)'}">${bt!=null?bt+'%':'–'}</div>
-          <div class="psl">Batteri</div>
-        </div>
-        <div class="psc">
-          <div class="psn" style="color:var(--blue)">${dm!==Infinity?fmtD(dm):'–'}</div>
-          <div class="psl">Avstand</div>
-        </div>
-        <div class="psc">
-          <div class="psn" style="color:var(--accent)">${dm!==Infinity?(walkMinutes(dm)+'min'):'–'}</div>
-          <div class="psl">🚶 Gange</div>
-        </div>
-      </div>
-      <button class="pbtn" style="background:${p.color};color:${p.tc}" onclick="openApp('${s.id}')">Åpne ${p.label}-appen →</button>
-      ${ulat!=null?`<div class="pnav" style="background:#00e5a018;color:#00e5a0;font-weight:700;border:1px solid #00e5a033;padding:10px;border-radius:10px;text-align:center;margin-top:8px;font-size:14px" onclick="showRoute('${s.id}')">Vis gangvei hit</div>`:''}
-    </div>`;
-
+    const m=L.marker([s.lat,s.lng],{icon});m._snProvider=s.provider;
+    const popupHtml=`<div style="min-width:200px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:11px;background:${p.color}15;color:${p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">${p.label[0]}</div><div><div style="font-weight:700;font-size:15px">${s.name}</div><div style="font-size:12px;color:${p.color};font-weight:600">${p.label} · ${p.pm} kr/min</div></div></div><div class="pst"><div class="psc"><div class="psn" style="color:${bt!=null?(bt>50?p.color:bt>20?'#ffb800':'#ff4d4d'):'var(--dim)'}">${bt!=null?bt+'%':'–'}</div><div class="psl">Batteri</div></div><div class="psc"><div class="psn" style="color:var(--blue)">${dm!==Infinity?fmtD(dm):'–'}</div><div class="psl">Avstand</div></div><div class="psc"><div class="psn" style="color:var(--accent)">${dm!==Infinity?(walkMinutes(dm)+'min'):'–'}</div><div class="psl">🚶 Gange</div></div></div><button class="pbtn" style="background:${p.color};color:${p.tc}" onclick="openApp('${s.id}')">Åpne ${p.label}-appen →</button>${ulat!=null?`<div class="pnav" onclick="showRoute('${s.id}')">🗺 Vis gangvei hit</div>`:''}</div>`;
     m.bindPopup(popupHtml,{maxWidth:240});
     m.on('click',()=>{m.openPopup();selectScooter(s.id);});
-    markers.push(m);
-    window._clusterGroup.addLayer(m);
+    markers.push(m);window._clusterGroup.addLayer(m);
   });
   leafMap.addLayer(window._clusterGroup);
 }
 
 function renderStrip(){
   const c={};
-  scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)).forEach(s=>{c[s.provider]=(c[s.provider]||0)+1;});
+  visibleScooters().forEach(s=>{c[s.provider]=(c[s.provider]||0)+1;});
   const t=Object.values(c).reduce((a,b)=>a+b,0);
-  document.getElementById('strip').innerHTML=
-    Object.entries(c).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`
-      <div class="chip"><span class="cdot" style="background:${P[k].color}"></span><b>${P[k].label}</b> ${n}</div>`).join('')
-    +(t?`<div class="chip" style="border-color:rgba(0,229,160,.2)"><b>${t}</b> total</div>`:'');
+  document.getElementById('strip').innerHTML=Object.entries(c).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<div class="chip"><span class="cdot" style="background:${P[k].color}"></span><b>${P[k].label}</b> ${n}</div>`).join('')+(t?`<div class="chip" style="border-color:rgba(0,229,160,.2)"><b>${t}</b> total</div>`:'');
 }
 
-// ══════════════════════════════════════
-// ROUTE — walking path to scooter
-// ══════════════════════════════════════
 async function showRoute(scooterId){
   try{trackRoute();}catch(e){}
   const s=scooters.find(x=>x.id===scooterId);
   if(!s){showToast('Finner ikke sykkelen');return;}
   if(ulat==null){showToast('Slå på GPS først');locateMe(false);return;}
-  clearRoute();
-  leafMap.closePopup();
-  showToast('Beregner gangrute...');
-
-  let coords=null, durMin=null, distM=null;
-
-  // Valhalla pedestrian routing - best for walking paths
+  clearRoute();leafMap.closePopup();showToast('Beregner gangrute...');
+  let coords=null,durMin=null,distM=null;
   try{
-    const body={
-      locations:[
-        {lon:ulng, lat:ulat},
-        {lon:s.lng, lat:s.lat}
-      ],
-      costing:'pedestrian',
-      costing_options:{pedestrian:{use_ferry:0,use_living_streets:1,use_tracks:1,use_hills:0.5}},
-      directions_options:{units:'kilometers'},
-      shape_match:'map_snap'
-    };
-    const resp=await fetch('https://valhalla1.openstreetmap.de/route',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(body),
-      signal:AbortSignal.timeout(8000)
-    });
-    if(resp.ok){
-      const data=await resp.json();
-      if(data.trip&&data.trip.legs&&data.trip.legs[0]){
-        const leg=data.trip.legs[0];
-        // Decode polyline6
-        coords=decodePolyline6(leg.shape);
-        durMin=Math.ceil(data.trip.summary.time/60);
-        distM=Math.round(data.trip.summary.length*1000);
-      }
-    }
+    const body={locations:[{lon:ulng,lat:ulat},{lon:s.lng,lat:s.lat}],costing:'pedestrian',costing_options:{pedestrian:{use_ferry:0,use_living_streets:1}},directions_options:{units:'kilometers'},shape_match:'map_snap'};
+    const resp=await fetch('https://valhalla1.openstreetmap.de/route',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(8000)});
+    if(resp.ok){const data=await resp.json();if(data.trip&&data.trip.legs&&data.trip.legs[0]){const leg=data.trip.legs[0];coords=decodePolyline6(leg.shape);durMin=Math.ceil(data.trip.summary.time/60);distM=Math.round(data.trip.summary.length*1000);}}
   }catch(e){}
-
-  // Fallback: OSRM foot
   if(!coords||coords.length<2){
-    try{
-      const resp=await fetch(
-        `https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`,
-        {signal:AbortSignal.timeout(6000)}
-      );
-      if(resp.ok){
-        const data=await resp.json();
-        if(data.routes&&data.routes[0]){
-          const route=data.routes[0];
-          coords=route.geometry.coordinates.map(([ln,la])=>[la,ln]);
-          durMin=Math.ceil(route.duration/60);
-          distM=Math.round(route.distance);
-        }
-      }
-    }catch(e){}
+    try{const resp=await fetch(`https://router.project-osrm.org/route/v1/foot/${ulng},${ulat};${s.lng},${s.lat}?geometries=geojson&overview=full`,{signal:AbortSignal.timeout(6000)});if(resp.ok){const data=await resp.json();if(data.routes&&data.routes[0]){const route=data.routes[0];coords=route.geometry.coordinates.map(([ln,la])=>[la,ln]);durMin=Math.ceil(route.duration/60);distM=Math.round(route.distance);}}}catch(e){}
   }
-
   window._routeLayers=[];
-
   if(coords&&coords.length>1){
     const distTxt=distM<1000?distM+'m':(distM/1000).toFixed(1)+'km';
     const glow=L.polyline(coords,{color:'#00e5a0',weight:18,opacity:0.08,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
@@ -1751,302 +948,368 @@ async function showRoute(scooterId){
     routeLayer=L.polyline(coords,{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
     const anim=L.polyline(coords,{color:'#fff',weight:2.5,opacity:0.7,lineCap:'round',dashArray:'8,16',dashOffset:'0'}).addTo(leafMap);
     window._routeLayers.push(glow,shadow,routeLayer,anim);
-
-    const startM=L.marker([ulat,ulng],{icon:L.divIcon({
-      html:`<div style="width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #00e5a0;box-shadow:0 0 0 4px rgba(0,229,160,0.25),0 2px 8px rgba(0,0,0,0.4)"></div>`,
-      iconSize:[16,16],iconAnchor:[8,8],className:''
-    }),zIndexOffset:2000}).addTo(leafMap);
-
-    const p=P[s.provider]||P.voi;
-    const bt=s.battery!=null?' '+s.battery+'%':'';
-    const endM=L.marker([s.lat,s.lng],{icon:L.divIcon({
-      html:`<div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 3px 14px rgba(0,0,0,0.5)">${p.label}${bt}</div>`,
-      iconSize:[90,30],iconAnchor:[45,15],className:''
-    }),zIndexOffset:2000}).addTo(leafMap);
-
+    const p=P[s.provider]||P.voi;const bt=s.battery!=null?' '+s.battery+'%':'';
+    const endM=L.marker([s.lat,s.lng],{icon:L.divIcon({html:`<div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 3px 14px rgba(0,0,0,0.5)">${p.label}${bt}</div>`,iconSize:[90,30],iconAnchor:[45,15],className:''}),zIndexOffset:2000}).addTo(leafMap);
     const mid=coords[Math.floor(coords.length/2)];
-    const infoM=L.marker(mid,{icon:L.divIcon({
-      html:`<div style="background:rgba(8,12,24,0.92);color:#00e5a0;border:1.5px solid #00e5a0;border-radius:14px;padding:5px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,0.5)">${durMin} min · ${distTxt}</div>`,
-      iconSize:[110,28],iconAnchor:[55,14],className:''
-    }),zIndexOffset:1500}).addTo(leafMap);
-
-    window._routeLayers.push(startM,endM,infoM);
+    const infoM=L.marker(mid,{icon:L.divIcon({html:`<div style="background:rgba(8,12,24,0.92);color:#00e5a0;border:1.5px solid #00e5a0;border-radius:14px;padding:5px 12px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,0.5)">${durMin} min · ${distTxt}</div>`,iconSize:[110,28],iconAnchor:[55,14],className:''}),zIndexOffset:1500}).addTo(leafMap);
+    window._routeLayers.push(endM,infoM);
     leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,140]});
     document.getElementById('fabRoute').style.display='flex';
-
-    let off=0;
-    window._routeAnim=setInterval(()=>{off=(off-1+24)%24;anim.setStyle({dashOffset:String(off)});},40);
+    let off=0;window._routeAnim=setInterval(()=>{off=(off-1+24)%24;anim.setStyle({dashOffset:String(off)});},40);
     showToast(durMin+' min gange · '+distTxt);
-
   } else {
-    // Rett linje fallback
-    const dm=distTo(s);
-    const distTxt=dm<1000?Math.round(dm)+'m':(dm/1000).toFixed(1)+'km';
-    const g2=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:16,opacity:0.1,lineCap:'round'}).addTo(leafMap);
+    const dm=distTo(s);const distTxt=dm<1000?Math.round(dm)+'m':(dm/1000).toFixed(1)+'km';
     routeLayer=L.polyline([[ulat,ulng],[s.lat,s.lng]],{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',dashArray:'10,8'}).addTo(leafMap);
-    window._routeLayers.push(g2,routeLayer);
+    window._routeLayers.push(routeLayer);
     leafMap.fitBounds(routeLayer.getBounds(),{paddingTopLeft:[50,100],paddingBottomRight:[50,140]});
     document.getElementById('fabRoute').style.display='flex';
     showToast('~'+walkMinutes(dm)+' min · '+distTxt);
   }
 }
+function decodePolyline6(str){let index=0,lat=0,lng=0;const coords=[];while(index<str.length){let b,shift=0,result=0;do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);lat+=(result&1)?~(result>>1):(result>>1);shift=0;result=0;do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);lng+=(result&1)?~(result>>1):(result>>1);coords.push([lat/1e6,lng/1e6]);}return coords;}
+function clearRoute(){if(window._routeAnim){clearInterval(window._routeAnim);window._routeAnim=null;}if(window._routeLayers){window._routeLayers.forEach(l=>{try{leafMap.removeLayer(l);}catch(e){}});window._routeLayers=null;}if(routeLayer){try{leafMap.removeLayer(routeLayer);}catch(e){}routeLayer=null;}document.getElementById('fabRoute').style.display='none';const mrb=document.getElementById('mapRouteBar');if(mrb)mrb.classList.remove('show');const moa=document.getElementById('mapOpenApp');if(moa)moa.classList.remove('show');const strip=document.getElementById('strip');if(strip)strip.style.display='flex';}
 
-function decodePolyline6(str){
-  // Decode Valhalla polyline6 encoding
-  let index=0,lat=0,lng=0;
-  const coords=[];
-  while(index<str.length){
-    let b,shift=0,result=0;
-    do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);
-    lat+=(result&1)?~(result>>1):(result>>1);
-    shift=0;result=0;
-    do{b=str.charCodeAt(index++)-63;result|=(b&0x1f)<<shift;shift+=5;}while(b>=0x20);
-    lng+=(result&1)?~(result>>1):(result>>1);
-    coords.push([lat/1e6,lng/1e6]);
+// ── RUTEPLANLEGGER ──
+function routeSearch(q,field){
+  clearTimeout(field==='from'?_rfTimer:_rtTimer);
+  const resId=field==='from'?'fromResults':'toResults';
+  if(q.length<2){document.getElementById(resId).style.display='none';return;}
+  const timer=setTimeout(async()=>{
+    try{
+      const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+' Norge')}&format=json&limit=5&countrycodes=no`,{headers:{'Accept-Language':'no'}});
+      const res=await r.json();
+      const el=document.getElementById(resId);
+      if(!res.length){el.style.display='none';return;}
+      el.innerHTML=res.map(p=>`<div class="route-autocomplete-item" onclick="selectRouteAddr('${field}',${p.lat},${p.lon},'${p.display_name.split(',').slice(0,2).join(',').replace(/'/g,'')}')"><span style="color:${field==='from'?'#00e5a0':'#ff4d6a'};font-size:16px;flex-shrink:0">●</span><div><div class="route-autocomplete-name">${p.display_name.split(',')[0]}</div><div class="route-autocomplete-sub">${p.display_name.split(',').slice(1,3).join(',')}</div></div></div>`).join('');
+      el.style.display='block';
+    }catch(e){}
+  },350);
+  if(field==='from') _rfTimer=timer; else _rtTimer=timer;
+}
+function selectRouteAddr(field,lat,lon,name){
+  if(field==='from'){_routeFromCoord={lat:+lat,lon:+lon};_routeFromName=name;document.getElementById('routeFrom').value=name;document.getElementById('fromResults').style.display='none';}
+  else{_routeToCoord={lat:+lat,lon:+lon};_routeToName=name;document.getElementById('routeTo').value=name;document.getElementById('toResults').style.display='none';}
+  toggleClear(field);
+}
+
+async function calcRoute(){
+  if(!_routeFromCoord && ulat!=null){_routeFromCoord={lat:ulat,lon:ulng};_routeFromName='📍 Min posisjon';document.getElementById('routeFrom').value='📍 Min posisjon';toggleClear('from');}
+  if(!_routeFromCoord){showToast('Trykk GPS eller velg startpunkt');return;}
+  if(!_routeToCoord){showToast('Velg destinasjon (Til-feltet)');return;}
+  const calcBtn=document.getElementById('calcBtn');
+  calcBtn.disabled=true;
+  calcBtn.innerHTML='<span class="btn-spinner"></span> Beregner...';
+  document.getElementById('routeResult').style.display='none';
+  try{
+    // Total scooter-tur: fra start → destinasjon (sykkeldistanse)
+    const url=`https://router.project-osrm.org/route/v1/foot/${_routeFromCoord.lon},${_routeFromCoord.lat};${_routeToCoord.lon},${_routeToCoord.lat}?overview=false`;
+    const resp=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    const data=await resp.json();
+    const route=data.routes[0];
+    const rideDistM=Math.round(route.distance);
+    // sykkel ~15 km/t = 250 m/min
+    const rideMin=Math.max(1,Math.ceil(rideDistM/250));
+    const distTxt=rideDistM<1000?rideDistM+'m':(rideDistM/1000).toFixed(1)+'km';
+
+    const prices=Object.entries(P).map(([key,p])=>({key,p,cost:Math.round(p.start+p.pm*rideMin),min:rideMin})).sort((a,b)=>a.cost-b.cost);
+    const cheapest=prices[0];
+
+    document.getElementById('routeDistInfo').innerHTML=`<span>🛴 ${rideMin} min tur</span><span style="color:#5a6a8a">·</span><span>${distTxt}</span><span style="color:#5a6a8a">·</span><span class="route-summary-badge">Billigst: ${cheapest.p.label} ${cheapest.cost} kr</span>`;
+    document.getElementById('routePrices').innerHTML=prices.map((item,i)=>`<div class="route-provider-row ${i===0?'winner':''}"><div class="route-provider-ico" style="background:${item.p.color}18;color:${item.p.color}">${item.p.label[0]}</div><div style="flex:1"><div class="route-provider-name">${item.p.label}${i===0?'<span class="route-winner-badge">BILLIGST</span>':''}</div><div class="route-provider-detail">${item.p.start} kr oppstart + ${item.p.pm} kr/min × ${rideMin} min</div></div><div class="route-provider-price" style="color:${i===0?item.p.color:'#e0e8f0'}">${item.cost} kr</div></div>`).join('');
+    document.getElementById('routeResult').style.display='block';
+
+    // Lagre destinasjon som nylig mål
+    if(_routeToName) saveRecent(_routeToName,_routeToCoord.lat,_routeToCoord.lon);
+
+    // Anbefal sykkel ut fra DIN posisjon (gangavstand til sykkel)
+    recommendScooters(rideMin,cheapest);
+    setTimeout(syncPlannerHeight,40);
+    showToast(cheapest.p.label+' billigst: '+cheapest.cost+' kr');
+    if(navigator.vibrate)navigator.vibrate(30);
+  }catch(e){showToast('Kunne ikke beregne rute');console.error(e);}
+  finally{calcBtn.disabled=false;calcBtn.innerHTML='Beregn pris →';}
+}
+
+// Anbefal sykler basert på DIN posisjon (gange til sykkel) + total reisetid
+function recommendScooters(rideMin,cheapest){
+  const panel=document.getElementById('bestScootersPanel');
+  const list=document.getElementById('bestScootersList');
+  const avail=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));
+  if(!avail.length||ulat==null){
+    // Uten GPS kan vi ikke måle "nærmest fra deg" — be om GPS
+    if(ulat==null){
+      list.innerHTML=`<div style="text-align:center;padding:14px;color:#b0bdd0;font-size:13px">📍 Slå på GPS for å finne nærmeste sykkel fra din posisjon<br><button onclick="locateMe(false)" style="margin-top:10px;background:#00e5a0;color:#001a0e;border:none;border-radius:10px;padding:9px 18px;font-weight:700;font-size:13px;cursor:pointer">Finn min posisjon</button></div>`;
+      panel.style.display='block';
+      return;
+    }
+    panel.style.display='none';return;
   }
-  return coords;
-}
-function clearRoute(){
-  if(window._routeAnim){clearInterval(window._routeAnim);window._routeAnim=null;}
-  if(window._routeLayers){window._routeLayers.forEach(l=>{try{leafMap.removeLayer(l);}catch(e){}});window._routeLayers=null;}
-  if(routeLayer){try{leafMap.removeLayer(routeLayer);}catch(e){} routeLayer=null;}
-  document.getElementById('fabRoute').style.display='none';
+
+  // Avstand fra DIN posisjon til hver sykkel
+  const withWalk=avail.map(s=>{
+    const walkM=distTo(s); // fra GPS
+    return {...s, walkM, walkMin:walkMinutes(walkM)};
+  });
+
+  const nearest    =[...withWalk].sort((a,b)=>a.walkM-b.walkM)[0];
+  const cheapestSc =[...withWalk].sort((a,b)=>P[a.provider].pm-P[b.provider].pm || a.walkM-b.walkM)[0];
+  const mostBattery=[...withWalk].sort((a,b)=>(b.battery??0)-(a.battery??0) || a.walkM-b.walkM)[0];
+
+  const winners=[
+    {s:nearest,     label:'📍 Nærmest',   color:'#00e5a0', bg:'rgba(0,229,160,.15)'},
+    {s:cheapestSc,  label:'💸 Billigst',   color:'#ffb800', bg:'rgba(255,184,0,.15)'},
+    {s:mostBattery, label:'🔋 Mest strøm', color:'#00b8ff', bg:'rgba(0,184,255,.15)'},
+  ];
+  const seen=new Set();
+  const unique=winners.filter(w=>{if(!w.s||seen.has(w.s.id))return false;seen.add(w.s.id);return true;});
+
+  list.innerHTML=unique.map(({s,label,color,bg})=>{
+    const p=P[s.provider];
+    const bt=s.battery!=null?s.battery+'%':'–';
+    const walkTxt=s.walkMin+' min';
+    const totalMin=s.walkMin+rideMin;          // gå til sykkel + kjør til mål
+    const totalCost=Math.round(p.start+p.pm*rideMin);
+    return `<div class="best-scooter-row" onclick="showFullRoute('${s.id}')">
+      <div class="best-scooter-ico" style="background:${p.color}18;color:${p.color}">${p.label[0]}</div>
+      <div class="best-scooter-info">
+        <div class="best-scooter-badge" style="background:${bg};color:${color}">${label}</div>
+        <div class="best-scooter-name">${s.name}</div>
+        <div class="best-scooter-detail">🚶 ${walkTxt} til sykkel · ${bt} batteri · ${totalCost} kr</div>
+        <div class="best-scooter-go">🗺 Vis hele ruten på kart →</div>
+      </div>
+      <div class="best-scooter-metric">
+        <div class="best-scooter-metric-val" style="color:${color}">${totalMin}</div>
+        <div class="best-scooter-metric-lbl">min totalt</div>
+      </div>
+    </div>`;
+  }).join('');
+  panel.style.display='block';
 }
 
-// ══════════════════════════════════════
-// SELECT / FLY
-// ══════════════════════════════════════
-function selectScooter(id){
-  selectedScooterId=id;
-  // Highlight card
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-  const card=document.getElementById('card-'+id);
-  if(card){card.classList.add('selected');card.scrollIntoView({block:'nearest',behavior:'smooth'});}
+// Trykk på en sykkel: tegn GPS → sykkel → destinasjon på kartet
+async function showFullRoute(scooterId){
+  const s=scooters.find(x=>x.id===scooterId);
+  if(!s){showToast('Finner ikke sykkelen');return;}
+  if(!_routeToCoord){showToast('Beregn en rute først');return;}
+  if(ulat==null){
+    showToast('Slår på GPS...');
+    locateMe(false);
+    // vent litt på GPS, prøv igjen
+    setTimeout(()=>{if(ulat!=null)showFullRoute(scooterId);},2500);
+    return;
+  }
+  switchTab('kart');
+  collapsePlanner();
+  clearRoute();
+  setTimeout(async()=>{
+    leafMap.invalidateSize();
+    showToast('Tegner gangvei...');
+
+    // SEGMENT 1: GPS → sykkel (gange)
+    const seg1=await fetchWalkRoute(ulng,ulat,s.lng,s.lat);
+    // SEGMENT 2: sykkel → destinasjon (kjøring/gange på sykkel)
+    const seg2=await fetchWalkRoute(s.lng,s.lat,_routeToCoord.lon,_routeToCoord.lat);
+
+    window._routeLayers=[];
+    const bounds=L.latLngBounds();
+
+    // Segment 1 — grønn gangvei til sykkelen
+    if(seg1&&seg1.coords.length>1){
+      const g=L.polyline(seg1.coords,{color:'#00e5a0',weight:16,opacity:0.08,lineCap:'round'}).addTo(leafMap);
+      const main=L.polyline(seg1.coords,{color:'#00e5a0',weight:5,opacity:1,lineCap:'round',lineJoin:'round'}).addTo(leafMap);
+      const anim=L.polyline(seg1.coords,{color:'#fff',weight:2.5,opacity:0.7,lineCap:'round',dashArray:'8,16'}).addTo(leafMap);
+      window._routeLayers.push(g,main,anim);
+      seg1.coords.forEach(c=>bounds.extend(c));
+      let off=0;window._routeAnim=setInterval(()=>{off=(off-1+24)%24;anim.setStyle({dashOffset:String(off)});},40);
+    }
+    // Segment 2 — blå stiplet (sykkeltur til mål)
+    if(seg2&&seg2.coords.length>1){
+      const g2=L.polyline(seg2.coords,{color:'#00b8ff',weight:14,opacity:0.08,lineCap:'round'}).addTo(leafMap);
+      const main2=L.polyline(seg2.coords,{color:'#00b8ff',weight:5,opacity:.95,lineCap:'round',lineJoin:'round',dashArray:'2,10'}).addTo(leafMap);
+      window._routeLayers.push(g2,main2);
+      seg2.coords.forEach(c=>bounds.extend(c));
+    }
+
+    const p=P[s.provider]||P.voi;
+    const bt=s.battery!=null?' '+s.battery+'%':'';
+    // Startmarkør (GPS)
+    const startM=L.marker([ulat,ulng],{icon:L.divIcon({html:`<div style="width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #00e5a0;box-shadow:0 0 0 4px rgba(0,229,160,0.25),0 2px 8px rgba(0,0,0,0.4)"></div>`,iconSize:[16,16],iconAnchor:[8,8],className:''}),zIndexOffset:2000}).addTo(leafMap);
+    // Sykkelmarkør (midtpunkt)
+    const bikeM=L.marker([s.lat,s.lng],{icon:L.divIcon({html:`<div style="display:flex;flex-direction:column;align-items:center"><div style="background:${p.color};color:${p.tc};border-radius:22px;padding:6px 12px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.25)">🛴 ${p.label}${bt}</div><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid ${p.color}"></div></div>`,iconSize:[0,0],iconAnchor:[0,38],className:''}),zIndexOffset:2200}).addTo(leafMap);
+    // Destinasjonsmarkør
+    const destM=L.marker([_routeToCoord.lat,_routeToCoord.lon],{icon:L.divIcon({html:`<div style="display:flex;flex-direction:column;align-items:center"><div style="background:#ff4d6a;color:#fff;border-radius:22px;padding:6px 12px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.25)">🎯 Mål</div><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ff4d6a"></div></div>`,iconSize:[0,0],iconAnchor:[0,38],className:''}),zIndexOffset:2200}).addTo(leafMap);
+    window._routeLayers.push(startM,bikeM,destM);
+
+    bounds.extend([ulat,ulng]);bounds.extend([s.lat,s.lng]);bounds.extend([_routeToCoord.lat,_routeToCoord.lon]);
+    if(bounds.isValid()) leafMap.fitBounds(bounds,{paddingTopLeft:[40,180],paddingBottomRight:[40,120]});
+    document.getElementById('fabRoute').style.display='flex';
+    selectScooter(s.id);
+
+    // Reisetider
+    const walkMin=seg1?seg1.durMin:walkMinutes(distTo(s));
+    const rideDistM=seg2?seg2.distM:Math.round(distBetween(s.lat,s.lng,_routeToCoord.lat,_routeToCoord.lon));
+    const rideMin=Math.max(1,Math.ceil(rideDistM/250)); // sykkel ~15 km/t
+    const totalMin=walkMin+rideMin;
+    const cost=Math.round(p.start+p.pm*rideMin);
+
+    // Google-Maps-stil rutebar (kompakt, øverst)
+    document.getElementById('mrbTotalMin').textContent=totalMin;
+    document.getElementById('mrbLegs').innerHTML=`
+      <div class="mrb-leg"><div class="mrb-leg-ico" style="background:rgba(0,229,160,.15);color:#00e5a0">🚶</div>${walkMin} min</div>
+      <span class="mrb-arrow">→</span>
+      <div class="mrb-leg"><div class="mrb-leg-ico" style="background:${p.color}22;color:${p.color}">🛴</div>${rideMin} min · ${cost} kr</div>
+      <span class="mrb-arrow">→</span>
+      <div class="mrb-leg"><div class="mrb-leg-ico" style="background:rgba(255,77,106,.15);color:#ff4d6a">🎯</div>Mål</div>`;
+    document.getElementById('mapRouteBar').classList.add('show');
+
+    // Åpne-app-knapp (nederst på kartet)
+    const oa=document.getElementById('mapOpenApp');
+    oa.textContent=`Åpne ${p.label}-appen →`;
+    oa.style.background=p.color;oa.style.color=p.tc;
+    oa.onclick=()=>{try{trackProviderClick(s.provider);}catch(e){}window.open(p.deeplink||'#','_blank');};
+    oa.classList.add('show');
+    const strip=document.getElementById('strip');if(strip)strip.style.display='none';
+
+    showToast(`${totalMin} min total · 🚶${walkMin} + 🛴${rideMin} min`);
+    if(navigator.vibrate)navigator.vibrate([20,40,20]);
+  },180);
 }
 
-function flyTo(id){
-  const s=scooters.find(x=>x.id===id);
-  if(!s)return;
-  selectScooter(id);
-  leafMap.flyTo([s.lat,s.lng],17,{duration:.7});
-  sheetOpen=false;
-  document.getElementById('sheet').classList.add('peek');
+function closeMapRouteBar(){
+  document.getElementById('mapRouteBar').classList.remove('show');
+  document.getElementById('mapOpenApp').classList.remove('show');
+  clearRoute();
 }
 
+// Hjelper: hent gangrute mellom to punkt → {coords,durMin,distM}
+async function fetchWalkRoute(lon1,lat1,lon2,lat2){
+  try{
+    const body={locations:[{lon:lon1,lat:lat1},{lon:lon2,lat:lat2}],costing:'pedestrian',costing_options:{pedestrian:{use_ferry:0,use_living_streets:1}},directions_options:{units:'kilometers'},shape_match:'map_snap'};
+    const resp=await fetch('https://valhalla1.openstreetmap.de/route',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(7000)});
+    if(resp.ok){const data=await resp.json();if(data.trip&&data.trip.legs&&data.trip.legs[0]){const leg=data.trip.legs[0];return {coords:decodePolyline6(leg.shape),durMin:Math.ceil(data.trip.summary.time/60),distM:Math.round(data.trip.summary.length*1000)};}}
+  }catch(e){}
+  try{
+    const resp=await fetch(`https://router.project-osrm.org/route/v1/foot/${lon1},${lat1};${lon2},${lat2}?geometries=geojson&overview=full`,{signal:AbortSignal.timeout(6000)});
+    if(resp.ok){const data=await resp.json();if(data.routes&&data.routes[0]){const r=data.routes[0];return {coords:r.geometry.coordinates.map(([ln,la])=>[la,ln]),durMin:Math.ceil(r.duration/60),distM:Math.round(r.distance)};}}
+  }catch(e){}
+  // fallback: rett linje
+  return {coords:[[lat1,lon1],[lat2,lon2]],durMin:Math.ceil(distBetween(lat1,lon1,lat2,lon2)/72),distM:Math.round(distBetween(lat1,lon1,lat2,lon2))};
+}
+
+function togglePriceCompare(){
+  const el=document.getElementById('routePrices');
+  const chev=document.getElementById('priceCompareChevron');
+  el.classList.toggle('open');
+  chev.style.transform=el.classList.contains('open')?'rotate(180deg)':'rotate(0)';
+  setTimeout(syncPlannerHeight,30);
+}
+
+function goToMapWithBest(){
+  if(!_routeToCoord){showToast('Beregn en rute først');return;}
+  const avail=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider));
+  if(!avail.length){showToast('Laster sykler...');switchTab('kart');return;}
+  _bestMarkersMap.forEach(m=>leafMap.removeLayer(m));_bestMarkersMap=[];
+  const withDist=avail.map(s=>({...s,distToDest:distBetween(s.lat,s.lng,_routeToCoord.lat,_routeToCoord.lon)}));
+  const nearest=[...withDist].sort((a,b)=>a.distToDest-b.distToDest)[0];
+  const cheapest=[...withDist].sort((a,b)=>P[a.provider].pm-P[b.provider].pm)[0];
+  const mostBattery=[...withDist].sort((a,b)=>(b.battery??0)-(a.battery??0))[0];
+  const winners=[{s:nearest,emoji:'📍',label:'Nærmest',color:'#00e5a0'},{s:cheapest,emoji:'💸',label:'Billigst',color:'#ffb800'},{s:mostBattery,emoji:'🔋',label:'Mest strøm',color:'#00b8ff'}];
+  const seen=new Set();const bounds=L.latLngBounds();
+  winners.forEach(({s,emoji,label,color})=>{
+    if(!s||seen.has(s.id))return;seen.add(s.id);
+    const p=P[s.provider];const bt=s.battery!=null?' '+s.battery+'%':'';
+    const m=L.marker([s.lat,s.lng],{icon:L.divIcon({html:`<div style="display:flex;flex-direction:column;align-items:center;pointer-events:none"><div style="background:${color};color:#001a0e;border-radius:22px;padding:6px 13px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.25)">${emoji} ${label} · ${p.label}${bt}</div><div style="width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid ${color}"></div></div>`,iconSize:[0,0],iconAnchor:[-60,40],className:''}),zIndexOffset:3000}).addTo(leafMap);
+    m.on('click',()=>{selectScooter(s.id);leafMap.flyTo([s.lat,s.lng],17);});
+    _bestMarkersMap.push(m);bounds.extend([s.lat,s.lng]);
+  });
+  const destM=L.marker([_routeToCoord.lat,_routeToCoord.lon],{icon:L.divIcon({html:`<div style="background:#ff4d6a;color:#fff;border-radius:22px;padding:6px 13px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.25)">🎯 Destinasjon</div>`,iconSize:[0,0],iconAnchor:[-55,36],className:''}),zIndexOffset:3000}).addTo(leafMap);
+  _bestMarkersMap.push(destM);bounds.extend([_routeToCoord.lat,_routeToCoord.lon]);
+  switchTab('kart');
+  setTimeout(()=>{leafMap.invalidateSize();if(bounds.isValid())leafMap.fitBounds(bounds,{padding:[70,90]});showToast('3 beste sykler vist på kartet');},200);
+}
+
+function selectScooter(id){selectedScooterId=id;document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));const card=document.getElementById('card-'+id);if(card){card.classList.add('selected');card.scrollIntoView({block:'nearest',behavior:'smooth'});}}
+function flyTo(id){const s=scooters.find(x=>x.id===id);if(!s)return;selectScooter(id);leafMap.flyTo([s.lat,s.lng],17,{duration:.7});sheetOpen=false;document.getElementById('sheet').classList.add('peek');if(navigator.vibrate)navigator.vibrate(15);}
 function toggleSheet(){sheetOpen=!sheetOpen;document.getElementById('sheet').classList.toggle('peek',!sheetOpen);}
 
-// ══════════════════════════════════════
-// OPEN APP / RIDE
-// ══════════════════════════════════════
 function openApp(id){
   try{const s=scooters.find(x=>x.id===id);if(s)trackProviderClick(s.provider);}catch(e){}
-
   const s=scooters.find(x=>x.id===id);if(!s)return;
   const p=P[s.provider];
   if(rideTimer){showToast('⚠️ Du har allerede en aktiv tur!');return;}
-  if(confirm(`Lei ${s.name}?
-
-${p.note}
-
-Trykk OK for å starte turen.`)){
-    startRide(s);
-  } else {
-    window.open(p.deeplink||'#','_blank');
-  }
+  if(confirm(`Lei ${s.name}?\n\n${p.note}\n\nTrykk OK for å starte turen.`)){startRide(s);}else{window.open(p.deeplink||'#','_blank');}
 }
 
-// ══════════════════════════════════════
-// CITY CHANGE
-// ══════════════════════════════════════
 function changeCity(c){
   city=c;clearTimeout(refreshTimer);
   leafMap.flyTo(CEN[c]||CEN.oslo,14,{duration:.9});
   scooters=[];markers.forEach(m=>leafMap.removeLayer(m));markers=[];
   if(window._clusterGroup)leafMap.removeLayer(window._clusterGroup);
+  _bestMarkersMap.forEach(m=>leafMap.removeLayer(m));_bestMarkersMap=[];
   renderList();renderStrip();clearRoute();
   demo?loadDemo():loadCity(c);
 }
 
-// ══════════════════════════════════════
-// PRICE CALC — updated 2025 prices
-// ══════════════════════════════════════
-function updateCalc(){
-  const cmin=document.getElementById('cmin');
-  if(!cmin) return;
-  const min=+cmin.value;
-  const cml=document.getElementById('cml');
-  if(cml) cml.textContent=min+' min';
-  const cgrid=document.getElementById('cgrid');
-  if(!cgrid) return;
-  const pr=Object.entries(P).map(([k,p])=>({label:p.label,color:p.color,cost:Math.round(p.start+p.pm*min)}));
-  cgrid.innerHTML=pr.map(x=>`<div class="calc-cell"><div class="calc-n" style="color:${x.color}">${x.cost} kr</div><div class="calc-l">${x.label}</div></div>`).join('');
+function toggleSearch(){const box=document.getElementById('searchBox');if(box.style.display==='none'){box.style.display='block';setTimeout(()=>document.getElementById('searchInp').focus(),100);}else{closeSearch();}}
+function closeSearch(){document.getElementById('searchBox').style.display='none';document.getElementById('searchInp').value='';document.getElementById('searchResults').innerHTML='';}
+let _sTimer=null;
+function searchDebounce(q){clearTimeout(_sTimer);if(q.length<2){document.getElementById('searchResults').innerHTML='';return;}_sTimer=setTimeout(()=>doSearch(q),350);}
+async function doSearch(q){
+  try{
+    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+' Norge')}&format=json&limit=5&countrycodes=no`,{headers:{'Accept-Language':'no'}});
+    const res=await r.json();
+    document.getElementById('searchResults').innerHTML=res.length?res.map(p=>`<div onclick="flyToResult(${p.lat},${p.lon})" style="background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;gap:8px"><span style="color:#00e5a0;font-size:16px">📍</span><div><div style="font-weight:600">${p.display_name.split(',')[0]}</div><div style="font-size:11px;color:#b0bdd0">${p.display_name.split(',').slice(1,3).join(',')}</div></div></div>`).join(''):'<div style="color:#b0bdd0;font-size:13px;padding:10px">Ingen resultater</div>';
+  }catch(e){}
+}
+function flyToResult(lat,lon){
+  leafMap.flyTo([+lat,+lon],17,{duration:1.2});closeSearch();
+  const cities={oslo:[59.9139,10.7522],bergen:[60.3913,5.3221],trondheim:[63.4305,10.3951],stavanger:[58.9700,5.7331],kristiansand:[58.1462,7.9957],lillestrom:[59.9548,11.0401],fredrikstad:[59.2167,10.9333],drammen:[59.7440,10.2045]};
+  let nearest='oslo',minD=Infinity;Object.entries(cities).forEach(([c,[la,lo]])=>{const d=Math.abs(la-lat)+Math.abs(lo-lon);if(d<minD){minD=d;nearest=c;}});
+  if(nearest!==city){city=nearest;document.getElementById('citySel').value=nearest;loadCity(nearest);}
 }
 
-
-// ══════════════════════════════════════
-// PROFILE
-// ══════════════════════════════════════
-function saveProfileData(){localStorage.setItem('sn_profile',JSON.stringify(profile));}
-
-function renderProfile(){}
-
-function renderPayments2(){
-  document.getElementById('payList').innerHTML=profile.payments.map((pm,i)=>`
-    <div class="pay-card2 ${pm.active?'active-card':''}" onclick="setActivePayment(${i})">
-      <div class="pay-ico2">${pm.ico}</div>
-      <div class="pay-body2"><div class="pay-name2">${pm.label}</div><div class="pay-sub2">${pm.num}</div></div>
-      <div class="pay-check ${pm.active?'on':''}">${pm.active?'✓':''}</div>
-    </div>`).join('');
-  const ap=profile.payments.find(p=>p.active)||profile.payments[0];
-  if(ap){document.getElementById('topupPayIco').textContent=ap.ico;document.getElementById('topupPayName').textContent=ap.label;}
+const qAnswers={1:null,2:null,3:null};
+function setQ(q,val,btn){qAnswers[q]=val;btn.parentElement.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function calcBestPlan(){
+  const tripsPerWeek=qAnswers[1],minsPerTrip=qAnswers[2],qcity=qAnswers[3];
+  if(!tripsPerWeek||!minsPerTrip||!qcity){showToast('Svar på alle 3 spørsmål');return;}
+  const monthlyTrips=tripsPerWeek*4.3;const monthlyMins=Math.round(monthlyTrips*minsPerTrip);
+  const cityProviders={oslo:['voi','bolt','ryde'],trondheim:['voi','ryde','dott'],bergen:['voi','bolt']};
+  const providers=cityProviders[qcity]||['voi','bolt','ryde'];
+  const passes={voi:[{name:'Betal per tur',cost:monthlyTrips*(P.voi.start)+monthlyMins*P.voi.pm},{name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.voi.pm}],ryde:[{name:'Betal per tur',cost:monthlyTrips*(P.ryde.start)+monthlyMins*P.ryde.pm},{name:'300 min pass (299 kr)',cost:299+Math.max(0,monthlyMins-300)*P.ryde.pm}],bolt:[{name:'Betal per tur',cost:monthlyTrips*(P.bolt.start)+monthlyMins*P.bolt.pm},{name:'240 min pass (139 kr)',cost:139+Math.max(0,monthlyMins-240)*P.bolt.pm}],dott:[{name:'Betal per tur',cost:monthlyTrips*(P.dott.start)+monthlyMins*P.dott.pm}]};
+  let bestCost=Infinity,best=null;const allOptions=[];
+  providers.forEach(pv=>{(passes[pv]||[]).forEach(opt=>{const cost=Math.round(opt.cost);allOptions.push({pv,name:opt.name,cost});if(cost<bestCost){bestCost=cost;best={pv,name:opt.name,cost};}});});
+  allOptions.sort((a,b)=>a.cost-b.cost);const top3=allOptions.slice(0,3);
+  document.getElementById('bestPlanResult').style.display='block';
+  document.getElementById('bestPlanResult').innerHTML=`<div style="background:${P[best.pv].color}15;border:1.5px solid ${P[best.pv].color}44;border-radius:14px;padding:14px;margin-bottom:12px"><div style="font-size:12px;color:#b0bdd0;margin-bottom:4px">⭐ Anbefalt (${monthlyMins} min/mnd)</div><div style="font-size:18px;font-weight:800;color:${P[best.pv].color}">${P[best.pv].label} — ${best.name}</div><div style="font-size:24px;font-weight:800;color:#e0e8f0;margin-top:4px">~${best.cost} kr/mnd</div></div>${top3.map((o,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:10px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:8px;background:${P[o.pv].color}18;color:${P[o.pv].color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${P[o.pv].label[0]}</div><div style="flex:1;font-size:13px;color:#e0e8f0">${P[o.pv].label} — ${o.name}</div><div style="font-weight:700;color:${i===0?P[o.pv].color:'#e0e8f0'}">${o.cost} kr</div></div>`).join('')}<div style="font-size:11px;color:#b0bdd0;margin-top:8px;text-align:center">Basert på ${Math.round(monthlyTrips)} turer × ${minsPerTrip} min/mnd</div>`;
 }
 
-function setActivePayment(i){profile.payments.forEach((p,j)=>p.active=j===i);saveProfileData();renderPayments2();showToast('✅ Betalingsmetode endret');}
-
-function renderAchievements(){
-  document.getElementById('achGrid').innerHTML=ACHIEVEMENTS.map(a=>{
-    const earned=a.req(profile.trips,profile.km,Math.floor(profile.xp/100)+1);
-    return `<div class="ach ${earned?'earned':''}">
-      ${earned?'<div class="ach-glow"></div>':''}
-      <div class="ach-ico">${a.ico}</div>
-      <div class="ach-name">${a.name}</div>
-    </div>`;
-  }).join('');
+function startRide(scooter){
+  const p=P[scooter.provider];rideProvider=scooter.provider;rideSeconds=0;ridePriceStart=p.start;ridePricePerMin=p.pm;
+  document.getElementById('arMeta').textContent=`${scooter.name} · ${p.label} · ${p.note}`;
+  document.getElementById('activeRideBanner').classList.add('show');
+  document.getElementById('pgMap').classList.add('with-banner');
+  if(rideTimer)clearInterval(rideTimer);
+  rideTimer=setInterval(()=>{rideSeconds++;const m=Math.floor(rideSeconds/60),s=rideSeconds%60;document.getElementById('arTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);document.getElementById('arCost').textContent=cost.toFixed(0)+' kr';document.getElementById('arCost').style.color=cost>50?'#ff4d4d':'var(--text)';},1000);
+  if(navigator.vibrate)navigator.vibrate(50);
 }
+function stopRide(){if(!rideTimer)return;clearInterval(rideTimer);rideTimer=null;const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);const mins=Math.ceil(rideSeconds/60);document.getElementById('activeRideBanner').classList.remove('show');document.getElementById('pgMap').classList.remove('with-banner');rideProvider=null;showToast(`✅ Tur avsluttet · ${mins} min · ${cost.toFixed(0)} kr`);if(navigator.vibrate)navigator.vibrate([50,50,100]);}
 
-function renderTrips(){
-  document.getElementById('tripList').innerHTML=TRIP_DEMOS.slice(0,3).map(t=>`
-    <div class="trip">
-      <div class="trip-date"><div class="trip-day">${t.day}</div><div class="trip-mon">${t.mon}</div></div>
-      <div class="trip-div"></div>
-      <div class="trip-body">
-        <div class="trip-route">${t.route}</div>
-        <div class="trip-meta"><span>🕐 ${t.min} min</span><span>📍 ${t.km} km</span></div>
-      </div>
-      <div class="trip-cost">${t.cost} kr</div>
-    </div>`).join('');
-}
-
-function showTripHistory(){
-  document.getElementById('tripList').innerHTML=TRIP_DEMOS.map(t=>`
-    <div class="trip">
-      <div class="trip-date"><div class="trip-day">${t.day}</div><div class="trip-mon">${t.mon}</div></div>
-      <div class="trip-div"></div>
-      <div class="trip-body">
-        <div class="trip-route">${t.route}</div>
-        <div class="trip-meta"><span>🕐 ${t.min} min</span><span>📍 ${t.km} km</span></div>
-      </div>
-      <div class="trip-cost">${t.cost} kr</div>
-    </div>`).join('');
-  showToast('📋 Viser alle turer');
-}
-
-// ══════════════════════════════════════
-// PAYMENT
-// ══════════════════════════════════════
-function selectPayOpt(t){
-  selectedPayOpt=t;
-  document.getElementById('payOptVipps').classList.toggle('selected',t==='vipps');
-  document.getElementById('payOptCard').classList.toggle('selected',t==='card');
-  document.getElementById('vippsForm').style.display=t==='vipps'?'block':'none';
-  document.getElementById('cardForm').style.display=t==='card'?'block':'none';
-}
-
-function savePayment(){
-  if(selectedPayOpt==='vipps'){
-    const num=document.getElementById('vippsNum').value.trim();
-    if(!num){showToast('⚠️ Skriv inn mobilnummer');return;}
-    profile.payments.push({type:'vipps',label:'Vipps',num,ico:'🟠',active:false});
-  } else {
-    const num=document.getElementById('cardNum').value.trim();
-    if(num.length<10){showToast('⚠️ Ugyldig kortnummer');return;}
-    const last4=num.replace(/\\s/g,'').slice(-4);
-    const brand=num.startsWith('4')?'Visa':'Mastercard';
-    profile.payments.push({type:'card',label:brand,num:`•••• ${last4}`,ico:'💳',active:false});
-  }
-  saveProfileData();renderPayments2();closeModal('addPayModal');
-  showToast('✅ Betalingsmetode lagt til');
-}
-
-function selectTopup(amt,el){
-  topupAmount=amt;
-  document.querySelectorAll('.ta').forEach(x=>x.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('topupConfirmBtn').textContent=`Betal ${amt} kr`;
-}
-
-function confirmTopup(){
-  const ap=profile.payments.find(p=>p.active)||profile.payments[0];
-  if(!ap){showToast('⚠️ Ingen betalingsmetode');return;}
-  profile.wallet+=topupAmount;profile.xp+=10;
-  saveProfileData();closeModal('topupModal');renderProfile();
-  showToast(`✅ ${topupAmount} kr lagt til via ${ap.label}! 🎉`);
-}
-
-// ══════════════════════════════════════
-// EDIT PROFILE
-// ══════════════════════════════════════
-function buildAvatarPicker(){
-  document.getElementById('avatarPicker').innerHTML=AVATARS.map(a=>`
-    <div class="av-opt ${a===profile.avatar?'sel':''}" onclick="selectAvatar('${a}',this)">${a}</div>`).join('');
-}
-function selectAvatar(a,el){document.querySelectorAll('.av-opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
-function openEditProfile(){document.getElementById('editName').value=profile.name;document.getElementById('editCity').value=profile.city;buildAvatarPicker();openModal('editProfileModal');}
-function saveProfile(){
-  const name=document.getElementById('editName').value.trim(),city2=document.getElementById('editCity').value.trim();
-  const sel=document.querySelector('.av-opt.sel');
-  if(name)profile.name=name;if(city2)profile.city=city2;if(sel)profile.avatar=sel.textContent;
-  saveProfileData();renderProfile();closeModal('editProfileModal');showToast('✅ Profil oppdatert');
-}
-function logOut(){if(confirm('Logger ut?')){localStorage.removeItem('sn_profile');showToast('👋 Logget ut');}}
-
-// ══════════════════════════════════════
-// MODALS
-// ══════════════════════════════════════
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.addEventListener('click',e=>{document.querySelectorAll('.modal-overlay.open').forEach(m=>{if(e.target===m)m.classList.remove('open');});});
-
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
-let toastTimer=null;
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
-}
-
-// ══════════════════════════════════════
-// QR
-// ══════════════════════════════════════
 async function openQR(){
   document.getElementById('qrModal').classList.add('open');
   document.getElementById('qrRes').classList.remove('show');
   qFound=false;setQrSt('Starter kamera…','');
-  try{
-    qStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}}});
-    const v=document.getElementById('qrVid');v.srcObject=qStream;v.play();
-    v.addEventListener('loadedmetadata',()=>{setQrSt('Rett mot QR-koden','');scanLoop();},{once:true});
-  }catch(e){setQrSt('Kameratilgang avslatt. Innstillinger - Safari - Kamera - Tillat','err');}
+  try{qStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}}});const v=document.getElementById('qrVid');v.srcObject=qStream;v.play();v.addEventListener('loadedmetadata',()=>{setQrSt('Rett mot QR-koden','');scanLoop();},{once:true});}catch(e){setQrSt('Kameratilgang avslått. Innstillinger → Safari → Kamera → Tillat','err');}
 }
 function scanLoop(){if(qFound)return;const v=document.getElementById('qrVid'),c=document.getElementById('qrCvs');if(v.readyState===v.HAVE_ENOUGH_DATA){c.width=v.videoWidth;c.height=v.videoHeight;const ctx=c.getContext('2d');ctx.drawImage(v,0,0,c.width,c.height);const code=jsQR(ctx.getImageData(0,0,c.width,c.height).data,c.width,c.height,{inversionAttempts:'dontInvert'});if(code){handleQR(code.data);return;}}qFrame=requestAnimationFrame(scanLoop);}
 function handleQR(raw){
-  qFound=true;cancelAnimationFrame(qFrame);stopCam();
-  setQrSt('QR-kode funnet!','found');
-  const m=QRPAT.find(x=>x.re.test(raw));
-  const pv=m?P[m.p]:{label:'Ukjent',color:'#00e5a0',tc:'#040a14'};
-  document.getElementById('qrRi').textContent=pv.label[0];
-  document.getElementById('qrRi').style.cssText='background:'+pv.color+'18;color:'+pv.color;
+  qFound=true;cancelAnimationFrame(qFrame);stopCam();setQrSt('QR-kode funnet!','found');
+  const m=QRPAT.find(x=>x.re.test(raw));const pv=m?P[m.p]:{label:'Ukjent',color:'#00e5a0',tc:'#040a14'};
+  document.getElementById('qrRi').textContent=pv.label[0];document.getElementById('qrRi').style.cssText='background:'+pv.color+'18;color:'+pv.color;
   document.getElementById('qrRn').textContent=pv.label+' sparkesykkel';
-  const idM=raw.match(/[/]([A-Z0-9-]{4,12})[/]?([?]|$)/i);
-  document.getElementById('qrRid').textContent=idM?'ID: '+idM[1]:raw.slice(0,40)+'...';
-  const mb=document.getElementById('qrMb');
-  mb.textContent=(m?'Apne i '+pv.label:'Apne link')+' ->';
-  mb.style.cssText='background:'+pv.color+';color:'+pv.tc;
-  mb.onclick=function(){window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');};
-  const sb=document.getElementById('qrSb2');
-  if(m){sb.textContent='Apne '+pv.label+'.com';sb.onclick=function(){window.open(m.url,'_blank');};}
-  else{sb.textContent='Kopier link';sb.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(raw);sb.textContent='Kopiert!';};}
+  const idM=raw.match(/[/]([A-Z0-9-]{4,12})[/]?([?]|$)/i);document.getElementById('qrRid').textContent=idM?'ID: '+idM[1]:raw.slice(0,40)+'...';
+  const mb=document.getElementById('qrMb');mb.textContent=(m?'Åpne i '+pv.label:'Åpne link')+' →';mb.style.cssText='background:'+pv.color+';color:'+pv.tc;mb.onclick=function(){window.open(raw.startsWith('http')?raw:'https://'+raw,'_blank');};
+  const sb=document.getElementById('qrSb2');if(m){sb.textContent='Åpne '+pv.label+'.com';sb.onclick=function(){window.open(m.url,'_blank');};}else{sb.textContent='Kopier link';sb.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(raw);sb.textContent='Kopiert!';};}
   document.getElementById('qrRes').classList.add('show');
 }
 function resetQR(){qFound=false;document.getElementById('qrRes').classList.remove('show');setQrSt('Starter kamera igjen…','');openQR();}
@@ -2054,73 +1317,15 @@ function closeQR(){stopCam();document.getElementById('qrModal').classList.remove
 function stopCam(){cancelAnimationFrame(qFrame);if(qStream){qStream.getTracks().forEach(t=>t.stop());qStream=null;}}
 function setQrSt(msg,cls){const e=document.getElementById('qrSt');e.textContent=msg;e.className='qrst '+cls;}
 
-// ══════════════════════════════════════
-// ACTIVE RIDE
-// ══════════════════════════════════════
-let rideTimer=null, rideSeconds=0, rideProvider=null, ridePriceStart=0, ridePricePerMin=0;
-
-function startRide(scooter){
-  const p=P[scooter.provider];
-  rideProvider=scooter.provider;rideSeconds=0;
-  ridePriceStart=p.start;ridePricePerMin=p.pm;
-  document.getElementById('arMeta').textContent=`${scooter.name} · ${p.label} · ${p.note}`;
-  document.getElementById('activeRideBanner').classList.add('show');
-  document.getElementById('pgMap').classList.add('with-banner');
-  if(rideTimer)clearInterval(rideTimer);
-  rideTimer=setInterval(()=>{
-    rideSeconds++;
-    const m=Math.floor(rideSeconds/60),s=rideSeconds%60;
-    document.getElementById('arTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-    const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);
-    document.getElementById('arCost').textContent=cost.toFixed(0)+' kr';
-    document.getElementById('arCost').style.color=cost>50?'#ff4d4d':'var(--text)';
-  },1000);
-  if(navigator.vibrate)navigator.vibrate(50);
-}
-
-function stopRide(){
-  if(!rideTimer)return;clearInterval(rideTimer);rideTimer=null;
-  const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);
-  const mins=Math.ceil(rideSeconds/60);
-  profile.trips++;profile.km+=parseFloat((Math.random()*2+0.5).toFixed(1));
-  profile.wallet=Math.max(0,profile.wallet-cost);profile.xp+=10+mins;
-  saveProfileData();
-  document.getElementById('activeRideBanner').classList.remove('show');
-  document.getElementById('pgMap').classList.remove('with-banner');
-  rideProvider=null;
-  showToast(`✅ Tur avsluttet · ${mins} min · ${cost.toFixed(0)} kr`);
-  if(navigator.vibrate)navigator.vibrate([50,50,100]);
-}
-
-// ══════════════════════════════════════
-// ONBOARDING
-// ══════════════════════════════════════
 let obCurrent=0;
-function initOnboarding(){
-  if(!localStorage.getItem('sn_onboarded2')){
-    document.getElementById('onboarding').classList.remove('hide');
-  } else {
-    document.getElementById('onboarding').classList.add('hide');
-  }
-}
-function obNextSlide(){
-  if(obCurrent>=3){finishOnboarding();return;}
-  obCurrent++;
-  document.getElementById('obSlides').style.transform=`translateX(-${obCurrent*100}%)`;
-  for(let i=0;i<4;i++) document.getElementById('dot'+i)?.classList.toggle('on',i===obCurrent);
-  if(obCurrent===3) document.getElementById('obNext').textContent='🚀 Start appen';
-}
-function finishOnboarding(){
-  localStorage.setItem('sn_onboarded2','1');
-  document.getElementById('onboarding').style.animation='fadeout .4s ease forwards';
-  setTimeout(()=>document.getElementById('onboarding').classList.add('hide'),400);
-}
+function initOnboarding(){if(!localStorage.getItem('sn_onboarded3')){document.getElementById('onboarding').classList.remove('hide');}else{document.getElementById('onboarding').classList.add('hide');}}
+function obNextSlide(){if(obCurrent>=4){finishOnboarding();return;}obCurrent++;document.getElementById('obSlides').style.transform=`translateX(-${obCurrent*100}%)`;for(let i=0;i<5;i++)document.getElementById('dot'+i)?.classList.toggle('on',i===obCurrent);if(obCurrent===4)document.getElementById('obNext').textContent='🚀 Start appen';}
+function finishOnboarding(){localStorage.setItem('sn_onboarded3','1');document.getElementById('onboarding').style.animation='fadeout .4s ease forwards';setTimeout(()=>document.getElementById('onboarding').classList.add('hide'),400);}
 
-// Card number formatting
-document.addEventListener('input',e=>{
-  if(e.target.id==='cardNum'){let v=e.target.value.replace(/\\D/g,'').slice(0,16);e.target.value=v.match(/.{1,4}/g)?.join(' ')||v;}
-  if(e.target.id==='cardExp'){let v=e.target.value.replace(/\\D/g,'').slice(0,4);if(v.length>=2)v=v.slice(0,2)+'/'+v.slice(2);e.target.value=v;}
-});
+function skipSetup(){demo=true;document.getElementById('setup').classList.add('hide');setTimeout(()=>leafMap.invalidateSize(),150);}
+
+let toastTimer=null;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
 
 if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
