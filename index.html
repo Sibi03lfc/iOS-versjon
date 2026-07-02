@@ -1208,7 +1208,7 @@ function updateLastUpdLabel(){
   el.textContent=s<5?'Nettopp oppdatert':s<60?`Oppdatert ${s}s siden`:`Oppdatert ${Math.floor(s/60)}m siden`;
 }
 
-function setSort(s,el){currentSort=s;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderList();}
+function setSort(s,el){currentSort=s;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));if(el){el.classList.add('on');}else{const idx={dist:0,battery:1,price:2}[s];const btns=document.querySelectorAll('.sort-btn');if(btns[idx])btns[idx].classList.add('on');}renderList();}
 function sortedScooters(list){const copy=[...list];if(currentSort==='dist')return copy.sort((a,b)=>distTo(a)-distTo(b));if(currentSort==='battery')return copy.sort((a,b)=>(b.battery??0)-(a.battery??0));if(currentSort==='price')return copy.sort((a,b)=>(P[a.provider].pm??999)-(P[b.provider].pm??999));return copy;}
 
 function buildFilters(){
@@ -1701,13 +1701,25 @@ function snapY(state){const H=sheetHeight();if(state==='full')return 0;if(state=
 function setSheetSnap(state){sheetSnap=state;sheetOpen=(state!=='peek');const s=document.getElementById('sheet');if(!s)return;s.style.transform='translateY('+snapY(state)+'px)';}
 function toggleSheet(){setSheetSnap(sheetSnap==='peek'?'half':sheetSnap==='half'?'full':'peek');}
 function findNearest(){
-  setSort('dist');
-  const avail=sortedScooters(scooters.filter(s=>!s.disabled&&(!batteryFilter||s.battery==null||s.battery>=20)));
-  if(!ulat&&!ulng){try{locateMe();}catch(e){}}
-  const n=avail[0];
-  if(n){selectScooter(n.id);try{leafMap.flyTo([n.lat,n.lng],16,{duration:.7});}catch(e){}}
-  setSheetSnap('half');
-  if(navigator.vibrate)navigator.vibrate(15);
+  const run=()=>{
+    setSort('dist');
+    let avail=scooters.filter(s=>!s.disabled&&!hidden.has(s.provider)&&(!batteryFilter||s.battery==null||s.battery>=20));
+    if(!avail.length){showToast('Ingen ledige sykler i nærheten');setSheetSnap('half');return;}
+    avail=sortedScooters(avail);
+    const n=avail[0];
+    setSheetSnap('half');
+    selectScooter(n.id);
+    try{if(leafMap)leafMap.flyTo([n.lat,n.lng],16,{duration:.7});}catch(e){}
+    if(navigator.vibrate)navigator.vibrate(15);
+  };
+  if(ulat==null&&navigator.geolocation){
+    showToast('Henter posisjon…');
+    navigator.geolocation.getCurrentPosition(pos=>{
+      ulat=pos.coords.latitude;ulng=pos.coords.longitude;
+      try{renderList();renderMarkers();}catch(e){}
+      run();
+    },()=>{showToast('Fikk ikke GPS – viser ledige sykler');run();},{enableHighAccuracy:true,timeout:8000});
+  } else { run(); }
 }
 (function initSheetDrag(){
   const sheet=document.getElementById('sheet'),handle=document.getElementById('sheetHandle');
