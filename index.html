@@ -78,8 +78,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .page.on{display:block}
 #pgMap{overflow:hidden}
 #map{position:absolute;left:0;right:0;bottom:0;top:var(--planner-h,56px);z-index:1;transition:top .25s cubic-bezier(.32,.72,0,1)}
-.leaflet-tile-pane{filter:brightness(.62) saturate(.55) contrast(1.02)}
-.leaflet-control-attribution{font-size:9px!important;opacity:.2}
+.leaflet-control-attribution{font-size:9px!important;opacity:.35}
 
 /* ── REISEPLANLEGGER-BAR (øverst på kart) ── */
 #plannerBar{position:absolute;top:0;left:0;right:0;z-index:700;background:rgba(13,18,36,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,.4);max-height:78%;overflow-y:auto;overscroll-behavior:contain}
@@ -305,13 +304,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .route-map-cta{width:100%;margin-top:10px;padding:12px;border-radius:12px;border:1px solid rgba(52,200,138,.3);background:rgba(52,200,138,.07);color:#34c88a;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .route-map-cta:active{opacity:.8}
 .route-disclaimer{font-size:11px;color:#5a6a8a;text-align:center;margin-top:10px}
-.route-results-page{position:fixed;inset:0;z-index:850;background:var(--bg);display:none;flex-direction:column}
+.route-results-page{position:fixed;inset:0;z-index:1100;background:var(--bg);display:none;flex-direction:column}
 .route-results-page.show{display:flex;animation:rrpIn .28s cubic-bezier(.32,.72,0,1)}
 @keyframes rrpIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .rrp-header{display:flex;align-items:center;gap:12px;padding:calc(14px + env(safe-area-inset-top)) 14px 14px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0}
 .rrp-back{width:34px;height:34px;border-radius:10px;background:var(--surf2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0}
 .rrp-back:active{opacity:.7}
 .rrp-title{font-size:16px;font-weight:800;color:var(--text)}
+.rrp-cancel{margin-left:auto;padding:8px 15px;border-radius:10px;background:transparent;border:1px solid var(--border);color:var(--dim);font-size:13px;font-weight:600;cursor:pointer}
+.rrp-cancel:active{opacity:.7}
 .rrp-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px calc(16px + env(safe-area-inset-bottom))}
 .route-results-page .route-results{display:block;margin-top:0}
 .route-autocomplete{position:absolute;top:100%;left:0;right:0;z-index:200;background:rgba(8,12,24,.98);border:1px solid var(--border);border-radius:12px;margin-top:4px;display:none;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5)}
@@ -400,7 +401,7 @@ html.light{
   --border:rgba(17,24,39,.10); --text:#141922; --dim:#697588;
 }
 html.light body{background:var(--bg)}
-html.light .leaflet-tile-pane{filter:saturate(.9) brightness(1.02) contrast(.98)}
+html.light .leaflet-popup-content-wrapper{box-shadow:0 12px 40px rgba(17,24,39,.18)!important}
 html.light #topNav{background:rgba(255,255,255,.9)!important;box-shadow:0 1px 0 rgba(17,24,39,.06)}
 html.light #tabBar{background:rgba(255,255,255,.94)!important;box-shadow:0 -1px 0 rgba(17,24,39,.07)}
 html.light #zoomBadge,html.light .chip,html.light #lastUpdBadge{background:rgba(255,255,255,.92)!important;color:var(--text)}
@@ -562,8 +563,9 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
   <!-- REISEFORSLAG (steg 2) — full side -->
   <div class="route-results-page" id="routeResultsPage">
     <div class="rrp-header">
-      <button class="rrp-back" onclick="expandRouteEdit()" aria-label="Tilbake">←</button>
+      <button class="rrp-back" onclick="expandRouteEdit()" aria-label="Tilbake til redigering">←</button>
       <div class="rrp-title">Reiseforslag</div>
+      <button class="rrp-cancel" onclick="cancelRoutePlanning()">Avbryt</button>
     </div>
     <div class="rrp-content">
       <div class="route-results" id="routeResult">
@@ -747,12 +749,16 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <div id="toast"></div>
 
 <script>
+function tileUrl(){return document.documentElement.classList.contains('light')
+  ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+  : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';}
 function applyTheme(t){
   const root=document.documentElement;
   root.classList.toggle('light',t==='light');
   try{localStorage.setItem('sn_theme',t);}catch(e){}
   const mc=document.querySelector('meta[name=theme-color]');if(mc)mc.setAttribute('content',t==='light'?'#ffffff':'#080c18');
   document.querySelectorAll('[data-theme-opt]').forEach(b=>b.classList.toggle('on',b.getAttribute('data-theme-opt')===t));
+  try{if(window._tileLayer)window._tileLayer.setUrl(tileUrl());}catch(e){}
   try{if(window.leafMap)setTimeout(()=>leafMap.invalidateSize(),50);}catch(e){}
 }
 function initTheme(){let t;try{t=localStorage.getItem('sn_theme');}catch(e){}if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';applyTheme(t);}
@@ -846,7 +852,7 @@ let rideTimer=null,rideSeconds=0,rideProvider=null,ridePriceStart=0,ridePricePer
 
 window.addEventListener('DOMContentLoaded',()=>{
   leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM',maxZoom:19}).addTo(leafMap);
+  window._tileLayer=L.tileLayer(tileUrl(),{attribution:'&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; OpenStreetMap',subdomains:'abcd',maxZoom:20,detectRetina:true}).addTo(leafMap);
   L.control.zoom({position:'topright'}).addTo(leafMap);
   leafMap.on('zoomend',()=>{document.getElementById('zoomBadge').textContent='zoom '+leafMap.getZoom();clearTimeout(window._zoomRender);window._zoomRender=setTimeout(renderMarkers,150);});
   leafMap.on('moveend',()=>{clearTimeout(window._moveRender);window._moveRender=setTimeout(renderMarkers,200);});
@@ -871,10 +877,25 @@ function switchTab(t){
 function openRouteResultsPage(){
   const pg=document.getElementById('routeResultsPage');
   if(pg) pg.classList.add('show');
+  const tn=document.getElementById('topNav');if(tn)tn.style.display='none';
+  const tb=document.getElementById('tabBar');if(tb)tb.style.display='none';
 }
 function closeRouteResultsPage(){
   const pg=document.getElementById('routeResultsPage');
   if(pg) pg.classList.remove('show');
+  const tn=document.getElementById('topNav');if(tn)tn.style.display='';
+  const tb=document.getElementById('tabBar');if(tb)tb.style.display='';
+}
+function cancelRoutePlanning(){
+  closeRouteResultsPage();
+  try{clearRoute();}catch(e){}
+  ['routeFrom','routeTo'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  try{_routeFromCoord=null;_routeToCoord=null;_routeFromName=null;_routeToName=null;}catch(e){}
+  const rc=document.getElementById('routeCompact');if(rc) rc.style.display='none';
+  try{expandRouteEdit();}catch(e){}
+  try{setListVisible(true);}catch(e){}
+  try{setSheetSnap('peek');}catch(e){}
+  try{if(leafMap)setTimeout(()=>leafMap.invalidateSize(),120);}catch(e){}
 }
 function expandPlanner(){
   document.getElementById('plannerCollapsed').classList.add('hide');
@@ -1477,7 +1498,7 @@ function recommendScooters(rideMin,cheapest){
   }
 
   // Avstand fra STARTPUNKTET til hver sykkel + kjøretid fra sykkel til mål
-  const withWalk=avail.map(s=>{
+  const withWalkAll=avail.map(s=>{
     const walkM=distBetween(fromLat,fromLng,s.lat,s.lng);
     // Kjøretid: fra denne sykkelen til destinasjonen (~15 km/t = 250 m/min)
     let rideMinSc=rideMin;
@@ -1487,6 +1508,16 @@ function recommendScooters(rideMin,cheapest){
     }
     return {...s, walkM, walkMin:walkMinutes(walkM), rideMinSc};
   });
+  // Bare sykler innen rimelig gangavstand fra startpunktet (unngå å "finne" sykler i en annen by)
+  const MAX_WALK_M=2500;
+  const withWalk=withWalkAll.filter(s=>s.walkM<=MAX_WALK_M);
+  if(!withWalk.length){
+    const nearestAny=[...withWalkAll].sort((a,b)=>a.walkM-b.walkM)[0];
+    const km=nearestAny?(nearestAny.walkM/1000).toFixed(1):'–';
+    list.innerHTML=`<div style="text-align:center;padding:18px 14px;color:var(--dim);font-size:13px;line-height:1.6">Ingen sykler nær startpunktet.<br>Nærmeste ledige er ${km} km unna — bytt by øverst til der du starter.</div>`;
+    panel.style.display='block';
+    return;
+  }
 
   const nearest    =[...withWalk].sort((a,b)=>a.walkM-b.walkM)[0];
   // Billigst: bare blant prissatte sparkesykler; ellers nærmest
