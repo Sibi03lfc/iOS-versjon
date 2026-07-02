@@ -1529,10 +1529,9 @@ function recommendScooters(rideMin,cheapest){
   const nearestBike=bikeStations.sort((a,b)=>a.walkM-b.walkM)[0];
 
   const winners=[
-    {s:nearest,     label:'📍 Nærmest',   color:'#34c88a', bg:'rgba(52,200,138,.15)'},
-    {s:nearestBike, label:'🚲 Bysykkel',  color:'#e2231a', bg:'rgba(226,35,26,.15)'},
-    {s:cheapestSc,  label:'💸 Billigst',   color:'#ffb800', bg:'rgba(255,184,0,.15)'},
-    {s:mostBattery, label:'🔋 Mest strøm', color:'#00b8ff', bg:'rgba(0,184,255,.15)'},
+    {s:cheapestSc,  label:'Billigst',      color:'#eab04a', bg:'rgba(234,176,74,.15)'},
+    {s:mostBattery, label:'Mest strøm',    color:'#5aa9d8', bg:'rgba(90,169,216,.15)'},
+    {s:nearestBike, label:'Bysykkel nærmest', color:'#e2231a', bg:'rgba(226,35,26,.15)'},
   ];
   const seen=new Set();
   const unique=winners.filter(w=>{if(!w.s||seen.has(w.s.id))return false;seen.add(w.s.id);return true;});
