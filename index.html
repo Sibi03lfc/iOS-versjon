@@ -42,9 +42,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .ob-next{width:100%;max-width:320px;padding:16px;border-radius:16px;border:none;background:var(--accent);color:#040a14;font-size:16px;font-weight:800;cursor:pointer}
 .ob-next:active{opacity:.8;transform:scale(.97)}
 .ob-skip{font-size:13px;color:var(--dim);cursor:pointer;padding:4px}
-#activeRideBanner{position:fixed;top:calc(52px + env(safe-area-inset-top));left:0;right:0;z-index:800;background:linear-gradient(135deg,rgba(0,20,10,.97),rgba(0,30,20,.97));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,160,.3);padding:12px 16px;display:none;align-items:center;gap:12px;transform:translateY(-100%);transition:transform .4s cubic-bezier(.32,.72,0,1)}
-#activeRideBanner.show{display:flex;transform:translateY(0)}
-#pgMap.with-banner{top:calc(108px + env(safe-area-inset-top))!important}
+
 .ar-pulse{width:10px;height:10px;border-radius:50%;background:var(--accent);position:relative;flex-shrink:0}
 .ar-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent);animation:arpulse 1.5s ease infinite}
 @keyframes arpulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.6);opacity:0}}
@@ -77,7 +75,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
 .page.on{display:block}
 #pgMap{overflow:hidden}
 #map{position:absolute;left:0;right:0;bottom:0;top:var(--planner-h,56px);z-index:1;transition:top .25s cubic-bezier(.32,.72,0,1)}
-.leaflet-tile-pane{filter:none}
+.leaflet-tile-pane{filter:grayscale(.25) brightness(1.06) contrast(.95)}
 .leaflet-control-attribution{font-size:9px!important;opacity:.2}
 
 /* ── REISEPLANLEGGER-BAR (øverst på kart) ── */
@@ -416,14 +414,6 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
   </div>
 </div>
 
-<!-- ACTIVE RIDE BANNER -->
-<div id="activeRideBanner">
-  <div class="ar-pulse"></div>
-  <div class="ar-info"><div class="ar-timer" id="arTimer">00:00</div><div class="ar-meta" id="arMeta">Aktiv tur…</div></div>
-  <div class="ar-cost"><div class="ar-cost-n" id="arCost">0 kr</div><div class="ar-cost-l">Kostnad</div></div>
-  <button class="ar-stop" onclick="stopRide()">⬛ Stopp</button>
-</div>
-
 <!-- SETUP -->
 <div id="setup" class="hide">
   <div class="sbox">
@@ -488,7 +478,6 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
     <div class="planner-expanded show" id="plannerExpanded">
       <div class="planner-head" style="margin-bottom:8px">
         <div style="font-size:13px;font-weight:700;color:#5b6472;letter-spacing:.5px">PLANLEGG TUR</div>
-        <button onclick="cancelPlanner()" style="background:none;border:none;color:#b83232;font-size:12px;font-weight:700;cursor:pointer;padding:4px 2px">Avbryt</button>
       </div>
       <div class="route-input-wrap">
         <div class="route-dot" style="background:#00e5a0"></div>
@@ -798,7 +787,6 @@ let _rfTimer=null,_rtTimer=null;
 let _bestMarkersMap=[];
 let batteryFilter=false;
 let _lastUpdTs=null,_lastUpdTimer=null;
-let rideTimer=null,rideSeconds=0,rideProvider=null,ridePriceStart=0,ridePricePerMin=0;
 
 window.addEventListener('DOMContentLoaded',()=>{
   leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
@@ -1221,7 +1209,7 @@ function renderList(){
       : (p.pm!=null?`<span style="color:${p.color};font-weight:700;font-size:12px">${p.pm} kr/min</span>`:`<span style="color:#667085;font-size:12px">Se app</span>`);
     const battTxt=(!isStation&&bt!=null)?`<div class="cb" style="color:${bc}"><div class="bb"><div class="bf" style="width:${bt}%;background:${bc}"></div></div>${bt}%</div>`:'';
     const icoChar=isStation?'🚲':p.label[0];
-    return `<div class="card ${isSelected?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')"><div class="cbar" style="background:${p.color}"></div><div class="cico" style="background:${p.color}15;color:${p.color};font-size:${isStation?'16px':'13px'}">${icoChar}</div><div class="cbody"><div class="cn" style="color:#1a1d29;font-weight:700">${s.name}</div><div class="cm">${battTxt}${wl?`<div class="walk-badge">${wl}</div>`:''}${ds&&ulat!=null?`<span style="font-size:12px;color:#5b6472;font-weight:600">${ds}</span>`:''}${priceTxt}</div>${ulat!=null&&dm<=10000?`<button onclick="event.stopPropagation();showRoute('${s.id}')" style="display:inline-block;margin-top:5px;font-size:11px;color:var(--accent-text);font-weight:600;cursor:pointer;opacity:.8">🗺 Vis gangvei</span>`:''}</div><button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">${isStation?'Åpne':'Lei'}</button></div>`;
+    return `<div class="card ${isSelected?'selected':''}" id="card-${s.id}" onclick="flyTo('${s.id}')"><div class="cbar" style="background:${p.color}"></div><div class="cico" style="background:${p.color}15;color:${p.color};font-size:${isStation?'16px':'13px'}">${icoChar}</div><div class="cbody"><div class="cn" style="color:#1a1d29;font-weight:700">${s.name}</div><div class="cm">${battTxt}${wl?`<div class="walk-badge">${wl}</div>`:''}${ds&&ulat!=null?`<span style="font-size:12px;color:#5b6472;font-weight:600">${ds}</span>`:''}${priceTxt}</div>${ulat!=null&&dm<=10000?`<button onclick="event.stopPropagation();showRoute('${s.id}')" style="display:inline-block;margin-top:5px;font-size:11px;color:var(--accent-text);font-weight:600;cursor:pointer;opacity:.8">🗺 Vis gangvei</span>`:''}</div><button class="lei" style="background:${p.color};color:${p.tc}" onclick="event.stopPropagation();openApp('${s.id}')">Åpne</button></div>`;
   }).join('')+(vis.length>60?`<div class="empty">+${vis.length-60} til</div>`:'');
 }
 function showShimmers(){document.getElementById('sbl').innerHTML=Array(4).fill('<div class="shim"></div>').join('');}
@@ -1230,17 +1218,12 @@ function renderMarkers(){
   if(window._clusterGroup) leafMap.removeLayer(window._clusterGroup);
   markers=[];
   const zoom=leafMap.getZoom();
-  // Padded synlig område — render bare markører i nærheten (stor iPhone-gevinst)
-  let viewBounds=null;
-  try{viewBounds=leafMap.getBounds().pad(0.4);}catch(e){}
   window._clusterGroup=L.markerClusterGroup({
     maxClusterRadius:zoom<12?120:zoom<14?80:zoom<16?50:30,
     iconCreateFunction:function(cluster){const n=cluster.getChildCount();const children=cluster.getAllChildMarkers();const counts={};children.forEach(m=>{if(m._snProvider)counts[m._snProvider]=(counts[m._snProvider]||0)+1;});const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];const col=top?P[top[0]]?.color:'rgba(0,229,160,.85)';const size=n>20?44:n>10?38:32;return L.divIcon({html:`<div style="width:${size}px;height:${size}px;border-radius:50%;background:${col};opacity:.9;display:flex;align-items:center;justify-content:center;font-size:${n>9?11:13}px;font-weight:800;color:white;box-shadow:0 2px 10px rgba(0,0,0,.18),0 0 0 3px rgba(255,255,255,.9)">${n}</div>`,className:'',iconSize:[size,size],iconAnchor:[size/2,size/2]});},
     spiderfyOnMaxZoom:true,showCoverageOnHover:false,zoomToBoundsOnClick:true,animate:true,animateAddingMarkers:false,
   });
   visibleScooters().forEach(s=>{
-    // iPhone-ytelse: hopp over markører langt utenfor synlig kartområde
-    if(viewBounds && !viewBounds.contains([s.lat,s.lng])) return;
     const p=P[s.provider],bt=s.battery;
     const isStation=s.station;
     const col=isStation?p.color:(bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d');
@@ -1338,16 +1321,6 @@ function clearMapLayers(){
   if(window._routeAnim){clearInterval(window._routeAnim);window._routeAnim=null;}
   if(window._routeLayers){window._routeLayers.forEach(l=>{try{leafMap.removeLayer(l);}catch(e){}});window._routeLayers=null;}
   if(routeLayer){try{leafMap.removeLayer(routeLayer);}catch(e){}routeLayer=null;}
-}
-function cancelPlanner(){
-  document.getElementById('routeFrom').value='';
-  document.getElementById('routeTo').value='';
-  _routeFromCoord=null;_routeFromName=null;_routeToCoord=null;_routeToName=null;
-  document.getElementById('fromResults').style.display='none';
-  document.getElementById('toResults').style.display='none';
-  toggleClear('from');toggleClear('to');
-  clearRoute();
-  showToast('Avbrutt');
 }
 function clearRoute(){clearMapLayers();document.getElementById('fabRoute').style.display='none';const mrb=document.getElementById('mapRouteBar');if(mrb)mrb.classList.remove('show');const moa=document.getElementById('mapOpenApp');if(moa)moa.classList.remove('show');const strip=document.getElementById('strip');if(strip)strip.style.display='flex';setListVisible(true);closeRouteResultsPage();expandRouteEdit();}
 
@@ -1657,14 +1630,8 @@ function openApp(id){
   try{const s=scooters.find(x=>x.id===id);if(s)trackProviderClick(s.provider);}catch(e){}
   const s=scooters.find(x=>x.id===id);if(!s)return;
   const p=P[s.provider];
-  // Bysykkel-stasjon eller leverandør uten pris: bare åpne app/nettside
-  if(s.station||p.pm==null){
-    window.open(p.deeplink&&p.deeplink!=='#'?p.deeplink:'#','_blank');
-    showToast(`Åpner ${p.label}`);
-    return;
-  }
-  if(rideTimer){showToast('⚠️ Du har allerede en aktiv tur!');return;}
-  if(confirm(`Lei ${s.name}?\n\n${p.note}\n\nTrykk OK for å starte turen.`)){startRide(s);}else{window.open(p.deeplink||'#','_blank');}
+  window.open(p.deeplink&&p.deeplink!=='#'?p.deeplink:'#','_blank');
+  showToast(`Åpner ${p.label}`);
 }
 
 function changeCity(c){
@@ -1711,17 +1678,6 @@ function calcBestPlan(){
   document.getElementById('bestPlanResult').style.display='block';
   document.getElementById('bestPlanResult').innerHTML=`<div style="background:${P[best.pv].color}15;border:1.5px solid ${P[best.pv].color}44;border-radius:14px;padding:14px;margin-bottom:12px"><div style="font-size:12px;color:#5b6472;margin-bottom:4px">⭐ Anbefalt (${monthlyMins} min/mnd)</div><div style="font-size:18px;font-weight:800;color:${P[best.pv].color}">${P[best.pv].label} — ${best.name}</div><div style="font-size:24px;font-weight:800;color:#1a1d29;margin-top:4px">~${best.cost} kr/mnd</div></div>${top3.map((o,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(0,0,0,0.03);border-radius:10px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:8px;background:${P[o.pv].color}18;color:${P[o.pv].color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${P[o.pv].label[0]}</div><div style="flex:1;font-size:13px;color:#1a1d29">${P[o.pv].label} — ${o.name}</div><div style="font-weight:700;color:${i===0?P[o.pv].color:'#1a1d29'}">${o.cost} kr</div></div>`).join('')}<div style="font-size:11px;color:#5b6472;margin-top:8px;text-align:center">Basert på ${Math.round(monthlyTrips)} turer × ${minsPerTrip} min/mnd</div>`;
 }
-
-function startRide(scooter){
-  const p=P[scooter.provider];rideProvider=scooter.provider;rideSeconds=0;ridePriceStart=p.start;ridePricePerMin=p.pm;
-  document.getElementById('arMeta').textContent=`${scooter.name} · ${p.label} · ${p.note}`;
-  document.getElementById('activeRideBanner').classList.add('show');
-  document.getElementById('pgMap').classList.add('with-banner');
-  if(rideTimer)clearInterval(rideTimer);
-  rideTimer=setInterval(()=>{rideSeconds++;const m=Math.floor(rideSeconds/60),s=rideSeconds%60;document.getElementById('arTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);document.getElementById('arCost').textContent=cost.toFixed(0)+' kr';document.getElementById('arCost').style.color=cost>50?'#ff4d4d':'var(--text)';},1000);
-  if(navigator.vibrate)navigator.vibrate(50);
-}
-function stopRide(){if(!rideTimer)return;clearInterval(rideTimer);rideTimer=null;const cost=ridePriceStart+ridePricePerMin*(rideSeconds/60);const mins=Math.ceil(rideSeconds/60);document.getElementById('activeRideBanner').classList.remove('show');document.getElementById('pgMap').classList.remove('with-banner');rideProvider=null;showToast(`✅ Tur avsluttet · ${mins} min · ${cost.toFixed(0)} kr`);if(navigator.vibrate)navigator.vibrate([50,50,100]);}
 
 async function openQR(){
   document.getElementById('qrModal').classList.add('open');
