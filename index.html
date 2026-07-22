@@ -859,6 +859,8 @@ function collapsePlannerToRoute(){
   if(rcw) rcw.style.display='none';
   const head=document.querySelector('#plannerExpanded .planner-head');
   if(head) head.style.display='none';
+  // Skjul "Ledige i nærheten"-arket — man vil ha mer plass til kartet mens en rute er planlagt
+  const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='none';
   setTimeout(()=>{syncPlannerHeight();leafMap.invalidateSize();},40);
 }
 function showRouteCompact(){
@@ -877,6 +879,8 @@ function showRouteCompact(){
     document.getElementById('compactFrom').textContent=_routeFromName||'Start';
     document.getElementById('compactTo').textContent=_routeToName||'Mål';
   }
+  // Skjul "Ledige i nærheten"-arket etter at en tur er beregnet
+  const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='none';
   syncPlannerHeight();
 }
 function expandRouteEdit(){
@@ -897,6 +901,8 @@ function expandRouteEdit(){
   clearMapLayers();
   document.getElementById('fabRoute').style.display='none';
   setListVisible(true);
+  // Vis "Ledige i nærheten"-arket igjen — tilbake i vanlig utforsking av kartet
+  const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='';
   syncPlannerHeight();
 }
 function collapsePlanner(){
