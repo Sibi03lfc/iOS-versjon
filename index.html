@@ -7,12 +7,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SparkNorge">
 <title>SparkNorge</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="libs/leaflet.css"/>
+<script src="libs/leaflet.js"></script>
+<script src="libs/jsQR.min.js"></script>
+<link rel="stylesheet" href="libs/MarkerCluster.css"/>
+<link rel="stylesheet" href="libs/MarkerCluster.Default.css"/>
+<script src="libs/leaflet.markercluster.js"></script>
 <style>
 :root {
   --bg:#f7f8fa; --bg2:#ffffff; --surf:#f2f3f5; --surf2:#e9ebee;
@@ -445,7 +445,7 @@ function trackRoute(){try{gtag('event','show_route',{event_category:'engagement'
 <!-- TOP NAV -->
 <div id="topNav">
   <div class="inner">
-    <div class="logo">🛴 Spark<em>Norge</em></div>
+    <div class="logo" onclick="goHome()" style="cursor:pointer">🛴 Spark<em>Norge</em></div>
     <select class="city-sel" id="citySel" onchange="changeCity(this.value)">
       <option value="oslo">Oslo</option><option value="bergen">Bergen</option><option value="trondheim">Trondheim</option>
       <option value="stavanger">Stavanger</option><option value="kristiansand">Kristiansand</option>
@@ -792,8 +792,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   leafMap=L.map('map',{zoomControl:false}).setView(CEN.oslo,14);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; OSM &copy; CARTO',maxZoom:20,subdomains:'abcd'}).addTo(leafMap);
   L.control.zoom({position:'topright'}).addTo(leafMap);
-  leafMap.on('zoomend',()=>{document.getElementById('zoomBadge').textContent='zoom '+leafMap.getZoom();clearTimeout(window._zoomRender);window._zoomRender=setTimeout(renderMarkers,150);});
-  leafMap.on('moveend',()=>{clearTimeout(window._moveRender);window._moveRender=setTimeout(renderMarkers,200);});
+  leafMap.on('zoomend',()=>{document.getElementById('zoomBadge').textContent='zoom '+leafMap.getZoom();scheduleRenderMarkers();});
+  leafMap.on('moveend',()=>{scheduleRenderMarkers();});
   document.getElementById('citySel').value='oslo';
   initOnboarding();renderRecents();
   document.getElementById('setup').classList.add('hide');
@@ -1214,7 +1214,18 @@ function renderList(){
 }
 function showShimmers(){document.getElementById('sbl').innerHTML=Array(4).fill('<div class="shim"></div>').join('');}
 
+function scheduleRenderMarkers(){
+  clearTimeout(window._markerRenderTimer);
+  window._markerRenderTimer=setTimeout(()=>{
+    // Hvis forrige rendering fortsatt pågår (f.eks. på en treg telefon), vent litt til og prøv igjen
+    // i stedet for å starte en ny tung rendering oppå den gamle — det er det som fikk kartet til å henge seg opp.
+    if(window._renderingMarkers){scheduleRenderMarkers();return;}
+    renderMarkers();
+  },180);
+}
 function renderMarkers(){
+  window._renderingMarkers=true;
+  try{
   if(window._clusterGroup) leafMap.removeLayer(window._clusterGroup);
   markers=[];
   const zoom=leafMap.getZoom();
@@ -1223,7 +1234,12 @@ function renderMarkers(){
     iconCreateFunction:function(cluster){const n=cluster.getChildCount();const children=cluster.getAllChildMarkers();const counts={};children.forEach(m=>{if(m._snProvider)counts[m._snProvider]=(counts[m._snProvider]||0)+1;});const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];const col=top?P[top[0]]?.color:'rgba(0,229,160,.85)';const size=n>20?44:n>10?38:32;return L.divIcon({html:`<div style="width:${size}px;height:${size}px;border-radius:50%;background:${col};opacity:.9;display:flex;align-items:center;justify-content:center;font-size:${n>9?11:13}px;font-weight:800;color:white;box-shadow:0 2px 10px rgba(0,0,0,.18),0 0 0 3px rgba(255,255,255,.9)">${n}</div>`,className:'',iconSize:[size,size],iconAnchor:[size/2,size/2]});},
     spiderfyOnMaxZoom:true,showCoverageOnHover:false,zoomToBoundsOnClick:true,animate:true,animateAddingMarkers:false,
   });
-  visibleScooters().forEach(s=>{
+  // Bare bygg markører for sykler innenfor (utvidet) kartutsnitt — å bygge ALLE sykler i hele byen
+  // på hver zoom/pan er det som fikk kartet til å henge seg opp på mobil.
+  let bounds=null;
+  try{bounds=leafMap.getBounds().pad(0.5);}catch(e){}
+  const toRender=bounds?visibleScooters().filter(s=>bounds.contains([s.lat,s.lng])):visibleScooters();
+  toRender.forEach(s=>{
     const p=P[s.provider],bt=s.battery;
     const isStation=s.station;
     const col=isStation?p.color:(bt==null?p.color:bt>50?p.color:bt>20?'#ffb800':'#ff4d4d');
@@ -1248,6 +1264,9 @@ function renderMarkers(){
     markers.push(m);window._clusterGroup.addLayer(m);
   });
   leafMap.addLayer(window._clusterGroup);
+  }finally{
+    window._renderingMarkers=false;
+  }
 }
 function buildPopup(s){
   const p=P[s.provider],bt=s.battery,isStation=s.station;
@@ -1322,7 +1341,7 @@ function clearMapLayers(){
   if(window._routeLayers){window._routeLayers.forEach(l=>{try{leafMap.removeLayer(l);}catch(e){}});window._routeLayers=null;}
   if(routeLayer){try{leafMap.removeLayer(routeLayer);}catch(e){}routeLayer=null;}
 }
-function clearRoute(){clearMapLayers();document.getElementById('fabRoute').style.display='none';const mrb=document.getElementById('mapRouteBar');if(mrb)mrb.classList.remove('show');const moa=document.getElementById('mapOpenApp');if(moa)moa.classList.remove('show');const strip=document.getElementById('strip');if(strip)strip.style.display='flex';setListVisible(true);closeRouteResultsPage();expandRouteEdit();}
+function clearRoute(){clearMapLayers();document.getElementById('fabRoute').style.display='none';const mrb=document.getElementById('mapRouteBar');if(mrb)mrb.classList.remove('show');const moa=document.getElementById('mapOpenApp');if(moa)moa.classList.remove('show');const strip=document.getElementById('strip');if(strip)strip.style.display='flex';const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='';setListVisible(true);closeRouteResultsPage();expandRouteEdit();}
 
 // ── RUTEPLANLEGGER ──
 function routeSearch(q,field){
@@ -1558,6 +1577,8 @@ async function showFullRoute(scooterId){
     oa.onclick=()=>{try{trackProviderClick(s.provider);}catch(e){}window.open(p.deeplink||'#','_blank');};
     oa.classList.add('show');
     const strip=document.getElementById('strip');if(strip)strip.style.display='none';
+    // Skjul "Ledige i nærheten"-arket helt — det har ingen funksjon mens ruten vises
+    const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='none';
 
     showToast(`${totalMin} min total · 🚶${walkMin} + 🛴${rideMin} min`);
     if(navigator.vibrate)navigator.vibrate([20,40,20]);
@@ -1567,6 +1588,7 @@ async function showFullRoute(scooterId){
 function closeMapRouteBar(){
   document.getElementById('mapRouteBar').classList.remove('show');
   document.getElementById('mapOpenApp').classList.remove('show');
+  const sheetEl=document.getElementById('sheet');if(sheetEl)sheetEl.style.display='';
   clearRoute();
 }
 
@@ -1647,6 +1669,15 @@ function changeCity(c){
 
 function toggleSearch(){const box=document.getElementById('searchBox');if(box.style.display==='none'){box.style.display='block';setTimeout(()=>document.getElementById('searchInp').focus(),100);}else{closeSearch();}}
 function closeSearch(){document.getElementById('searchBox').style.display='none';document.getElementById('searchInp').value='';document.getElementById('searchResults').innerHTML='';}
+// Trykk på SparkNorge-logoen: gå tilbake til hjem/standardmodus
+function goHome(){
+  switchTab('kart');
+  closeSearch();
+  clearRoute();
+  document.getElementById('sheet')?.classList.add('peek');
+  sheetOpen=false;
+  if(navigator.vibrate)navigator.vibrate(15);
+}
 let _sTimer=null;
 function searchDebounce(q){clearTimeout(_sTimer);if(q.length<2){document.getElementById('searchResults').innerHTML='';return;}_sTimer=setTimeout(()=>doSearch(q),350);}
 async function doSearch(q){
